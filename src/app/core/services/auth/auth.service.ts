@@ -1,17 +1,31 @@
-
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { jwtDecode } from "jwt-decode";
+import { isPlatformBrowser } from '@angular/common';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
-  constructor(private httpClient: HttpClient) { }
-
   userData: BehaviorSubject<any> = new BehaviorSubject(null);
+
+  constructor(private httpClient: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
+
+  // On App Initialization, check if the user is already logged in
+  initializeUser() {
+    if (isPlatformBrowser(this.platformId)) {
+      const userToken = localStorage.getItem('userToken');
+      if (userToken) {
+        try {
+          this.userData.next(jwtDecode(userToken));
+        } catch (error) {
+          console.error('Error decoding JWT token:', error);
+        }
+      }
+    }
+  }
+
   sendRegistertoAPI(data: object): Observable<any> {
     return this.httpClient.post(`https://ecommerce.routemisr.com/api/v1/auth/signup`, data);
   }
@@ -21,8 +35,15 @@ export class AuthService {
   }
 
   saveDataUser() {
-
-    this.userData.next(jwtDecode(JSON.stringify(localStorage.getItem('userToken'))));
-
+    if (isPlatformBrowser(this.platformId)) {
+      const userToken = localStorage.getItem('userToken');
+      if (userToken) {
+        try {
+          this.userData.next(jwtDecode(userToken));
+        } catch (error) {
+          console.error('Error decoding JWT token:', error);
+        }
+      }
+    }
   }
 }

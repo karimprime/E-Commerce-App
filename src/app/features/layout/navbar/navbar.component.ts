@@ -11,7 +11,6 @@ import { ModeService } from '../../../core/services/mode/mode.service';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
-
   isDarkMode = false;
   @ViewChild('mobileMenu') mobileMenu!: ElementRef;
   private authService = inject(AuthService);
@@ -29,28 +28,29 @@ export class NavbarComponent {
 
   toggleMobileMenu() {
     if (this.mobileMenu) {
-      this.mobileMenu.nativeElement.classList.toggle("hidden");
+      this.mobileMenu.nativeElement.classList.toggle('hidden');
     }
   }
 
   closeMobileMenu() {
-    if (this.mobileMenu && !this.mobileMenu.nativeElement.classList.contains("hidden")) {
-      this.mobileMenu.nativeElement.classList.add("hidden");
+    if (this.mobileMenu && !this.mobileMenu.nativeElement.classList.contains('hidden')) {
+      this.mobileMenu.nativeElement.classList.add('hidden');
     }
   }
 
   ngOnInit(): void {
+    // Check if the user is logged in when the component is initialized
+    this.authService.initializeUser();
     this.authService.userData.subscribe(() => {
       if (this.authService.userData.getValue() === null) {
         this.isLoginMode = false;
-      }
-      else {
+      } else {
         this.isLoginMode = true;
       }
-    })
+    });
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('userToken');
     this.router.navigate(['/login']);
     this.authService.userData.next(null);

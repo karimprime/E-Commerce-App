@@ -1,18 +1,21 @@
-import { inject } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { PlatFormService } from '../../services/platForm/plat-form.service';
+import { isPlatformBrowser } from '@angular/common';  // Import isPlatformBrowser
 
 export const authGuard: CanActivateFn = (route, state) => {
-
+  // Inject dependencies
   let router = inject(Router);
-  let platForm = inject(PlatFormService);
+  let platformId = inject(PLATFORM_ID);
 
-  if (platForm.checkPlatForm()) {
-    if (localStorage.getItem('userToken') != null) {
+  // Check if the platform is browser (avoid accessing localStorage in SSR)
+  if (isPlatformBrowser(platformId)) {
+    // If the user is authenticated, allow access
+    if (localStorage.getItem('userToken') !== null) {
       return true;
     }
-
   }
-  router.navigate(['/login']);  // Navigate to login page if not authenticated
+
+  // If not authenticated, navigate to login page
+  router.navigate(['/login']);
   return false;
 };
