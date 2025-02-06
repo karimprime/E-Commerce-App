@@ -70,7 +70,8 @@
         <div class="hidden md:flex items-center space-x-2">
           @if(isLoginMode){
           <button (click)="logout()"
-            class="bg-green-600 rounded-full block px-3 py-2 text-base font-medium text-white dark:text-white transition-colors duration-300 hover:bg-red-700">LogOut</button>
+            class="bg-green-600 rounded-full block px-3 py-2 text-base font-medium text-white dark:text-white transition-colors duration-300 hover:bg-red-700">
+            <i class="fa-solid fa-door-open px-2"></i>LogOut</button>
           }
         </div>
 
@@ -143,7 +144,8 @@
 
         @if(isLoginMode){
         <button (click)="logout()"
-          class="w-full bg-red-700 rounded block px-3 py-2 text-base font-medium text-white dark:text-white transition-colors duration-300 hover:bg-red-800">Logout</button>
+          class="w-full bg-red-700 rounded block px-3 py-2 text-base font-medium text-white dark:text-white transition-colors duration-300 hover:bg-red-800">
+          <i class="fa-solid fa-door-open px-2"></i>Logout</button>
         }
       </div>
     </div>
