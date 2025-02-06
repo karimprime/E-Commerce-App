@@ -1,0 +1,268 @@
+<div class="w-full md:w-9/12 lg:w-7/12 mx-auto my-8 py-20 md:my-11 px-4 md:px-0 dark:bg-gray-900 dark:text-green-500">
+
+
+  @if(errorMessage.length > 0){
+  <div class="flex justify-center items-center mb-3 ml-2">
+    <div class="flex justify-center items-center  bg-red-100 p-2 rounded dark:bg-red-100">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-600 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-700"><span class="font-medium">{{errorMessage}}</span> Please Try
+        Again!</p>
+
+    </div>
+  </div>
+  }
+
+  <h2 class="mb-4 text-xl font-bold text-green-900 dark:text-green-500">Register Now : </h2>
+  <form class="mx-auto" [formGroup]="registerForm" (ngSubmit)="RegisterSubmit()">
+
+    <div class="mb-4 md:mb-3">
+      <label for="name" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Name :</label>
+      <input type="text" id="name" formControlName="name"
+        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        placeholder="Please Enter Your Name (3-30 Characters)" required />
+
+    </div>
+
+
+    @if(registerForm.get('name')?.errors && registerForm.get('name')?.touched){
+
+    @if(registerForm.get('name')?.getError('required')){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> it is Required!
+        taken!</p>
+    </div>
+    }
+
+    @else if(registerForm.get('name')?.getError('minlength')){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> it is less than 5
+        Characters!
+        taken!</p>
+    </div>
+    }
+
+    @else if(registerForm.get('name')?.getError('maxlength')){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> it is more than 30
+        Characters!
+        taken!</p>
+    </div>
+    }
+    }
+
+    @if (registerForm.get('name')?.errors == null && registerForm.get('name')?.touched) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+        <span class="font-medium">Alright!</span> Everything Done <i class="fa-regular fa-face-smile-wink"></i>
+      </p>
+    </div>
+    }
+
+    <!--Phone Field-->
+
+    <div class="mb-4 md:mb-3">
+      <label for="phone" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Phone :</label>
+      <input id="phone" type="tel" formControlName="phone"
+        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        placeholder="Please Enter Your Phone" required />
+    </div>
+
+    @if(registerForm.get('phone')?.errors && registerForm.get('phone')?.touched){
+
+    @if(registerForm.get('phone')?.getError('required')){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> it is Required!
+        taken!</p>
+    </div>
+    }
+
+    @else if(registerForm.get('phone')?.getError('pattern')){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> Please Enter vailed Phone
+        Number!
+        taken!</p>
+    </div>
+    }
+    }
+
+    @if (registerForm.get('phone')?.errors == null && registerForm.get('phone')?.touched){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+        <span class="font-medium">Alright!</span> Everything Done <i class="fa-regular fa-face-smile-wink"></i>
+      </p>
+    </div>
+    }
+
+    <!--Email Field-->
+
+    <div class="mb-4 md:mb-3">
+      <label for="email" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Email :</label>
+      <input id="email" type="email" formControlName="email"
+        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        placeholder="name@flowbite.com" required />
+    </div>
+
+    @if(registerForm.get('email')?.errors && registerForm.get('email')?.touched){
+
+    @if(registerForm.get('email')?.getError('required')){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> it is Required!
+        taken!</p>
+    </div>
+    }
+
+    @else if(registerForm.get('email')?.getError('email')){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> Please Enter vailed
+        Email!
+        taken!</p>
+    </div>
+    }
+    }
+
+    @if (registerForm.get('email')?.errors == null && registerForm.get('email')?.touched){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+        <span class="font-medium">Alright!</span> Everything Done <i class="fa-regular fa-face-smile-wink"></i>
+      </p>
+    </div>
+    }
+
+
+    <!-- Password Field -->
+
+    <div class="mb-4 md:mb-3 relative">
+      <label for="password" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Password :</label>
+      <input id="password" #passwordInput type="password" placeholder="Please Enter Password"
+        [formControl]="passwordControl"
+        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        (focus)="passwordFocused = true" (blur)="passwordFocused = false" (input)="updatePasswordStrength()" required />
+
+      <button type="button" (click)="togglePasswordVisibility(passwordInput, 'password')"
+        class="absolute top-11 right-0 flex items-center pr-3 dark:text-gray-300"
+        [attr.aria-label]="passwordVisibility.password ? 'Hide password' : 'Show password'">
+        <i class="fa-solid text-gray-500 dark:text-gray-300 text-sm" [class.fa-eye]="!passwordVisibility.password"
+          [class.fa-eye-slash]="passwordVisibility.password"></i>
+      </button>
+
+      @if(passwordFocused) {
+      <ul class="text-sm mt-2 ml-2">
+        <li class="flex items-center"
+          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasUppercase, 'text-red-600 dark:text-red-400': !passwordChecks.hasUppercase}">
+          <i class="fa-solid"
+            [ngClass]="{'fa-check-circle': passwordChecks.hasUppercase, 'fa-circle-xmark': !passwordChecks.hasUppercase}"></i>
+          <span class="ml-2">At least one uppercase letter</span>
+        </li>
+        <li class="flex items-center"
+          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasLowercase, 'text-red-600 dark:text-red-400': !passwordChecks.hasLowercase}">
+          <i class="fa-solid"
+            [ngClass]="{'fa-check-circle': passwordChecks.hasLowercase, 'fa-circle-xmark': !passwordChecks.hasLowercase}"></i>
+          <span class="ml-2">At least one lowercase letter</span>
+        </li>
+        <li class="flex items-center"
+          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasNumber, 'text-red-600 dark:text-red-400': !passwordChecks.hasNumber}">
+          <i class="fa-solid"
+            [ngClass]="{'fa-check-circle': passwordChecks.hasNumber, 'fa-circle-xmark': !passwordChecks.hasNumber}"></i>
+          <span class="ml-2">At least one number</span>
+        </li>
+        <li class="flex items-center"
+          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasMinLength, 'text-red-600 dark:text-red-400': !passwordChecks.hasMinLength}">
+          <i class="fa-solid"
+            [ngClass]="{'fa-check-circle': passwordChecks.hasMinLength, 'fa-circle-xmark': !passwordChecks.hasMinLength}"></i>
+          <span class="ml-2">At least 8 characters</span>
+        </li>
+
+        <li class="flex items-center"
+          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasspical, 'text-red-600 dark:text-red-400': !passwordChecks.hasspical}">
+          <i class="fa-solid"
+            [ngClass]="{'fa-check-circle': passwordChecks.hasspical, 'fa-circle-xmark': !passwordChecks.hasspical}"></i>
+          <span class="ml-2">At least 1 Special Character</span>
+        </li>
+      </ul>
+      }
+
+      @if(passwordControl.errors && passwordControl.touched) {
+      @if(passwordControl.getError('required')) {
+      <div class="flex justify-start items-center mt-2 mb-3 ml-2">
+        <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+        <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> It is required!</p>
+      </div>
+      }
+      @else if(passwordControl.getError('pattern')) {
+      <div class="flex justify-start items-center mb-3 ml-2">
+        <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+        <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> Please enter a valid
+          password!</p>
+      </div>
+      }
+      }
+
+      @if(!passwordControl.errors && passwordControl.touched) {
+      <div class="flex justify-start items-center mb-3 ml-2">
+        <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+          <span class="font-medium">Alright!</span> Everything's good <i class="fa-regular fa-face-smile-wink"></i>
+        </p>
+      </div>
+      }
+    </div>
+
+
+    <!-- Repeat Password Field -->
+
+    <div class="mb-4 md:mb-3 relative">
+      <label for="repassword" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Re-Password
+        :</label>
+      <input id="repassword" #repasswordInput type="password" placeholder="Please Repeat Password"
+        formControlName="rePassword"
+        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        required />
+      <button type="button" (click)="togglePasswordVisibility(repasswordInput, 'repassword')"
+        class="absolute bottom-3 right-0 flex items-center pr-3 dark:text-gray-300"
+        [attr.aria-label]="passwordVisibility.repassword ? 'Hide password' : 'Show password'">
+        <i class="fa-solid text-gray-500 dark:text-gray-300 text-sm" [class.fa-eye]="!passwordVisibility.repassword"
+          [class.fa-eye-slash]="passwordVisibility.repassword"></i>
+      </button>
+    </div>
+
+
+    @if(registerForm.errors && registerForm.touched && registerForm.get('rePassword')?.touched){
+
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> Not Matched Password!</p>
+    </div>
+    }
+
+    @else if(registerForm.get('rePassword')?.getError('required') && registerForm.get('rePassword')?.touched){
+
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> it is Required!</p>
+    </div>
+    }
+
+    @if (registerForm.errors == null && registerForm.get('rePassword')?.touched){
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+        <span class="font-medium">Alright!</span> Everything Done <i class="fa-regular fa-face-smile-wink"></i>
+      </p>
+    </div>
+    }
+
+    <button [disabled]="registerForm.invalid" type="submit"
+      class="disabled:bg-red-900 mt-4 w-full md:w-auto text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 dark:disabled:bg-red-900">Register
+      new account
+
+      @if (isLoading) {
+      <i class="fa-solid fa-spinner fa-spin font-medium px-1 text-sm text-center"></i>
+      }
+    </button>
+  </form>
+</div>

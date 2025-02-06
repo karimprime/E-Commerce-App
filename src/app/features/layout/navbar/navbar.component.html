@@ -1,0 +1,152 @@
+<nav class="bg-white dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-600 w-full z-20">
+  <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Left section (Logo + Main nav) -->
+      <div class="flex items-center">
+        <a routerLink="/home" class="flex-shrink-0">
+          <img src="/images/freshcart-logo.svg" class="h-8" alt="FreshCart Logo">
+        </a>
+
+        @if(isLoginMode){
+        <!-- Desktop Navigation -->
+        <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">
+          <a routerLink="/home" routerLinkActive="active-link "
+            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Home</a>
+          <a routerLink="/products" routerLinkActive="active-link "
+            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Products</a>
+          <a routerLink="/categories" routerLinkActive="active-link "
+            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Categories</a>
+          <a routerLink="/brands" routerLinkActive="active-link "
+            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Brands</a>
+        </div>
+        }
+
+      </div>
+
+      <!-- Right section (Icons + Auth) -->
+      <div class="flex items-center space-x-4">
+        <!-- Social Icons (hidden on mobile) -->
+        <div class="hidden md:flex items-center space-x-2">
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-facebook"></i>
+          </a>
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-twitter"></i>
+          </a>
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+        </div>
+
+        <!-- Cart -->
+        @if(isLoginMode){
+        <a routerLink="/cart"
+          class="p-2 text-gray-700 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400">
+          <i class="fa-solid fa-cart-shopping"></i>
+        </a>
+        }
+
+        <!-- Auth Links -->
+
+        @if(!isLoginMode){
+        <div class="hidden md:flex items-center space-x-2">
+          <a routerLink="/login" routerLinkActive="active-link "
+            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Login</a>
+          <a routerLink="/register" routerLinkActive="active-link "
+            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Register</a>
+        </div>
+        }
+        <div class="hidden md:flex items-center space-x-2">
+          @if(isLoginMode){
+          <button (click)="logout()"
+            class="bg-green-600 rounded-full block px-3 py-2 text-base font-medium text-white dark:text-white transition-colors duration-300 hover:bg-red-700">LogOut</button>
+          }
+        </div>
+
+
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" (click)="toggleDarkMode()" type="button"
+          class="p-2 text-gray-700 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400">
+          <i class="fa-solid text-lg" [class.fa-sun]="!isDarkMode" [class.fa-moon]="isDarkMode"></i>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button (click)="toggleMobileMenu()"
+          class="md:hidden p-2 rounded-lg text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+          <span class="sr-only">Open menu</span>
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden" #mobileMenu>
+
+      <div class="px-2 pt-2 pb-3 space-y-5">
+
+        <div class="text-center md:flex items-center space-x-2 text-2xl">
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-facebook"></i>
+          </a>
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-twitter"></i>
+          </a>
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+
+          <a href="#" class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400">
+            <i class="fa-brands fa-youtube"></i>
+          </a>
+        </div>
+
+        @if(isLoginMode){
+        <a routerLink="/home" routerLinkActive="active-link" (click)="closeMobileMenu()"
+          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Home</a>
+        <a routerLink="/products" routerLinkActive="active-link" (click)="closeMobileMenu()"
+          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Products</a>
+        <a routerLink="/categories" routerLinkActive="active-link" (click)="closeMobileMenu()"
+          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Categories</a>
+        <a routerLink="/brands" routerLinkActive="active-link" (click)="closeMobileMenu()"
+          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Brands</a>
+
+        }
+
+        @if(!isLoginMode){
+        <a routerLink="/login" routerLinkActive="active-link "
+          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white"
+          (click)="closeMobileMenu()">Login</a>
+        <a routerLink="/register" routerLinkActive="active-link "
+          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white"
+          (click)="closeMobileMenu()">Register</a>
+        }
+
+        @if(isLoginMode){
+        <button (click)="logout()"
+          class="w-full bg-red-700 rounded block px-3 py-2 text-base font-medium text-white dark:text-white transition-colors duration-300 hover:bg-red-800">Logout</button>
+        }
+      </div>
+    </div>
+  </div>
+</nav>
