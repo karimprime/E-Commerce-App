@@ -10,14 +10,18 @@
         @if(isLoginMode){
         <!-- Desktop Navigation -->
         <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">
-          <a routerLink="/home" routerLinkActive="active-link "
-            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Home</a>
-          <a routerLink="/products" routerLinkActive="active-link "
-            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Products</a>
-          <a routerLink="/categories" routerLinkActive="active-link "
-            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Categories</a>
-          <a routerLink="/brands" routerLinkActive="active-link "
-            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Brands</a>
+          <a routerLink="/home"
+            routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+            class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Home</a>
+          <a routerLink="/products"
+            routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+            class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Products</a>
+          <a routerLink="/categories"
+            routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+            class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Categories</a>
+          <a routerLink="/brands"
+            routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+            class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Brands</a>
         </div>
         }
 
@@ -122,15 +126,18 @@
         </div>
 
         @if(isLoginMode){
-        <a routerLink="/home" routerLinkActive="active-link" (click)="closeMobileMenu()"
-          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Home</a>
-        <a routerLink="/products" routerLinkActive="active-link" (click)="closeMobileMenu()"
-          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Products</a>
-        <a routerLink="/categories" routerLinkActive="active-link" (click)="closeMobileMenu()"
-          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Categories</a>
-        <a routerLink="/brands" routerLinkActive="active-link" (click)="closeMobileMenu()"
-          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white">Brands</a>
-
+        <a routerLink="/home"
+          routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+          class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Home</a>
+        <a routerLink="/products"
+          routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+          class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Products</a>
+        <a routerLink="/categories"
+          routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+          class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Categories</a>
+        <a routerLink="/brands"
+          routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+          class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Brands</a>
         }
 
         @if(!isLoginMode){
