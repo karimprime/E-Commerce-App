@@ -48,6 +48,7 @@ export class RegisterComponent {
     return this.registerForm.get('password') as FormControl;
   }
 
+
   togglePasswordVisibility(inputEl: HTMLInputElement, field: "password" | "repassword"): void {
     this.passwordVisibility[field] = !this.passwordVisibility[field];
     inputEl.type = this.passwordVisibility[field] ? 'text' : 'password';
@@ -72,6 +73,13 @@ export class RegisterComponent {
   }
 
 
+  get agreeControl(): FormControl {
+    return this.registerForm.get('agree') as FormControl;
+  }
+  onAgreeChange() {
+    this.agreeControl.markAsTouched();
+    this.agreeControl.updateValueAndValidity();
+  }
 
   RegisterSubmit() {
     this.isLoading = true;
