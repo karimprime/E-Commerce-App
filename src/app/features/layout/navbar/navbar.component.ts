@@ -2,11 +2,12 @@ import { AuthService } from './../../../core/services/auth/auth.service';
 import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ModeService } from '../../../core/services/mode/mode.service';
+import { SidebarCartComponent } from "../sidebar-cart/sidebar-cart.component";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, SidebarCartComponent],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
