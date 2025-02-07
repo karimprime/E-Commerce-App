@@ -26,6 +26,7 @@ export class RegisterComponent {
     password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')]),
     rePassword: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required, Validators.pattern('^(01)[0125][0-9]{8}$')]),
+    agree: new FormControl(false, [Validators.requiredTrue])
   }, { validators: this.confirmPassword.bind(this) });
 
   passwordVisibility: Record<"password" | "repassword", boolean> = {
@@ -67,31 +68,30 @@ export class RegisterComponent {
     const password = control.get('password')?.value;
     const rePassword = control.get('rePassword')?.value;
 
-    if (password !== rePassword) {
-      control.get('rePassword')?.setErrors({ misMatch: true });
-      return { misMatch: true };
-    }
-    return null;
+    return password === rePassword ? null : { misMatch: true };
   }
 
-  RegisterSubmit() {
 
+
+  RegisterSubmit() {
     this.isLoading = true;
+    this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
       this.authService.sendRegistertoAPI(this.registerForm.value).subscribe({
         next: (res) => {
           if (res.message === "success") {
-
-            this.router.navigate(['/login']); //Programming Routing [(src,Data)]
+            this.router.navigate(['/login']);
           }
           this.isLoading = false;
         },
         error: (err) => {
-          this.errorMessage = err.error.message
+          this.errorMessage = err.error.message;
           this.isLoading = false;
         }
       });
+    } else {
+      this.isLoading = false;
     }
   }
 }

@@ -125,29 +125,37 @@
         @if(isLoginMode){
         <a routerLink="/home"
           routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+          (click)="closeMobileMenu()"
           class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Home</a>
         <a routerLink="/products"
           routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+          (click)="closeMobileMenu()"
           class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Products</a>
         <a routerLink="/categories"
           routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+          (click)="closeMobileMenu()"
           class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Categories</a>
         <a routerLink="/brands"
           routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white"
+          (click)="closeMobileMenu()"
           class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white">Brands</a>
         }
 
         @if(!isLoginMode){
-        <a routerLink="/login" routerLinkActive="active-link "
-          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white"
+        <a routerLink="/login"
+          routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white "
+          (click)="closeMobileMenu()"
+          class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white"
           (click)="closeMobileMenu()">Login</a>
-        <a routerLink="/register" routerLinkActive="active-link "
-          class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-white"
+        <a routerLink="/register"
+          routerLinkActive="bg-green-600 rounded text-white dark:text-white transition-colors duration-300 hover:text-white "
+          (click)="closeMobileMenu()"
+          class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-500 dark:hover:text-white"
           (click)="closeMobileMenu()">Register</a>
         }
 
         @if(isLoginMode){
-        <button (click)="logout()"
+        <button (click)="logout()" (click)="closeMobileMenu()"
           class="w-full bg-red-700 rounded block px-3 py-2 text-base font-medium text-white dark:text-white transition-colors duration-300 hover:bg-red-800">
           <i class="fa-solid fa-door-open px-2"></i>Logout</button>
         }

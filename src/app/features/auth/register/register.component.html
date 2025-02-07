@@ -256,6 +256,93 @@
     </div>
     }
 
+    <!-- Agree to Terms -->
+    <div class="mb-4 md:mb-3 flex items-start">
+      <input type="checkbox" formControlName="agree"
+        class="w-5 h-5 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-500 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+      <label class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+        I have read and accept the
+        <a type="button" data-modal-target="terms-modal" data-modal-toggle="terms-modal"
+          class="text-green-600 hover:underline dark:text-green-400 focus:ring-4 font-medium text-sm py-2.5 text-centerz">
+          Terms & Conditions
+        </a>.
+      </label>
+    </div>
+
+    <!-- Terms & Conditions Modal -->
+    <div id="terms-modal" tabindex="-1" aria-hidden="true"
+      class="hidden fixed inset-0 z-50 items-center justify-center w-full h-full bg-black bg-opacity-50">
+      <div class="relative p-6 w-full max-w-lg bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between border-b pb-4 mb-4 dark:border-gray-700">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Terms & Conditions</h3>
+          <button type="button"
+            class=" text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-500 text-xl"
+            data-modal-hide="terms-modal">
+            <i class="fa-solid fa-xmark text-xl"></i>
+            <span class="sr-only">Close</span>
+          </button>
+        </div>
+        <!-- Modal Body -->
+        <div class="max-h-96 overflow-y-auto p-8 md:p-6 sm:p-4">
+          <div class="space-y-6">
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 dark:text-white">1. Acceptance of Terms</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-base">
+                By accessing and using this service, you agree to these terms.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 dark:text-white">2. User Responsibilities</h4>
+              <ul class="text-gray-600 dark:text-gray-300 text-base list-disc pl-5">
+                <li>Provide accurate and truthful information.</li>
+                <li>Refrain from unauthorized activities or misuse.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 dark:text-white">3. Prohibited Activities</h4>
+              <ul class="text-gray-600 dark:text-gray-300 text-base list-disc pl-5">
+                <li>No illegal, fraudulent, or malicious actions.</li>
+                <li>No unauthorized access or security breaches.</li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 dark:text-white">4. Modifications to Terms</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-base">
+                Terms may be updated at any time. Continued use signifies acceptance of changes.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 dark:text-white">5. Limitation of Liability</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-base">
+                We are not responsible for losses or damages resulting from service use.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 dark:text-white">6. Termination of Access</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-base">
+                Any violation may lead to suspension or permanent removal.
+              </p>
+            </div>
+
+            <div>
+              <h4 class="text-lg font-semibold text-gray-800 dark:text-white">7. Contact & Support</h4>
+              <p class="text-gray-600 dark:text-gray-300 text-base">
+                For inquiries or support, please contact our team.
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
     <button [disabled]="registerForm.invalid" type="submit"
       class="disabled:bg-red-900 mt-4 w-full md:w-auto text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 dark:disabled:bg-red-900">Register
       new account
