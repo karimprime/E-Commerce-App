@@ -1,7 +1,7 @@
 <!-- Floating Cart Button -->
 <div class="fixed bottom-4 right-4 z-40">
   <button
-    class="relative flex items-center justify-center w-14 h-14 bg-green-600 text-white rounded-full shadow-xl hover:bg-green-700 transition-all"
+    class="relative flex items-center justify-center w-14 h-14 bg-green-600 text-white rounded-full shadow-xl hover:bg-green-700 transition-transform transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-green-300"
     type="button" (click)="toggleCart()">
     <div
       class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">
@@ -13,7 +13,7 @@
 
 <!-- Sidebar Cart Drawer -->
 <div #drawerCart
-  class="fixed top-0 right-0 z-50 h-screen w-96 p-6 bg-white dark:bg-gray-900 shadow-xl transition-transform duration-300"
+  class="fixed top-0 right-0 z-50 h-screen w-full sm:w-96 p-6 bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-in-out"
   [class.translate-x-full]="!isCartOpen()" [class.translate-x-0]="isCartOpen()" tabindex="-1"
   aria-labelledby="drawer-cart-label">
 
@@ -29,8 +29,8 @@
   </div>
 
   <!-- Cart Items -->
-  <div class="overflow-y-auto max-h-[65vh] space-y-4 pt-4">
-    <div class="flex items-center justify-between p-3 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-sm">
+  <div class="overflow-y-auto max-h-[60vh] space-y-4 pt-4">
+    <div class="flex items-center justify-between p-3 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
       <div class="flex items-center">
         <img src="https://via.placeholder.com/50" class="w-14 h-14 rounded-lg" alt="Product" />
         <div class="ml-4">
@@ -39,12 +39,12 @@
         </div>
       </div>
       <div class="flex items-center space-x-2">
-        <button class="bg-gray-300 dark:bg-gray-700 px-2 py-1 rounded-md hover:bg-gray-400 dark:hover:bg-gray-600"
+        <button class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600"
           (click)="decreaseQuantity()">
           <i class="fa-solid fa-minus"></i>
         </button>
         <span class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ quantity() }}</span>
-        <button class="bg-gray-300 dark:bg-gray-700 px-2 py-1 rounded-md hover:bg-gray-400 dark:hover:bg-gray-600"
+        <button class="bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded-md hover:bg-gray-300 dark:hover:bg-gray-600"
           (click)="increaseQuantity()">
           <i class="fa-solid fa-plus"></i>
         </button>
