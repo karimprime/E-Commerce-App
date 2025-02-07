@@ -1,50 +1,31 @@
-import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, Signal, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar-cart',
   imports: [RouterLink],
   templateUrl: './sidebar-cart.component.html',
-  styleUrl: './sidebar-cart.component.scss'
+  styleUrl: './sidebar-cart.component.scss',
 })
-export class SidebarCartComponent implements AfterViewInit {
-  @ViewChild('drawerCart', { static: false }) drawerCart!: ElementRef;
+export class SidebarCartComponent {
+  @ViewChild('drawerCart', { static: true }) drawerCart!: ElementRef;
 
-  quantity: number = 1;
+  isCartOpen = signal(false); // Using Angular Signal for reactivity
+  quantity = signal(1);
 
-  ngAfterViewInit() {
-    this.initializeCartDrawer();
-  }
-
-  initializeCartDrawer() {
-    const cartDrawer = document.getElementById('drawer-cart');
-    if (cartDrawer) {
-      cartDrawer.classList.add('translate-x-full'); // Ensure it's closed by default
-    }
-
-    // Manually add event listeners again to ensure it works after login
-    const cartButton = document.querySelector('[data-drawer-show="drawer-cart"]');
-    if (cartButton && cartDrawer) {
-      cartButton.addEventListener('click', () => {
-        cartDrawer.classList.toggle('translate-x-full');
-      });
-    }
+  toggleCart() {
+    this.isCartOpen.update((prev) => !prev);
   }
 
   increaseQuantity() {
-    this.quantity++;
+    this.quantity.update((prev) => prev + 1);
   }
 
   decreaseQuantity() {
-    if (this.quantity > 1) {
-      this.quantity--;
-    }
+    this.quantity.update((prev) => (prev > 1 ? prev - 1 : prev));
   }
 
   closeCart() {
-    const cartDrawer = document.getElementById('drawer-cart');
-    if (cartDrawer) {
-      cartDrawer.classList.add('translate-x-full');
-    }
+    this.isCartOpen.set(false);
   }
 }
