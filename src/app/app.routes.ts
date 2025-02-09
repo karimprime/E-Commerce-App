@@ -9,6 +9,8 @@ import { NotFoundComponent } from './features/pages/not-found/not-found.componen
 import { ForgetPasswordComponent } from './features/auth/forget-password/forget-password.component';
 import { authGuard } from './core/guards/auth/auth.guard';
 import { CheckoutComponent } from './features/pages/checkout/checkout.component';
+import { VerifyResetCodeComponent } from './features/auth/verify-reset-code/verify-reset-code.component';
+import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,8 +20,10 @@ export const routes: Routes = [
   { path: 'brands', component: BrandsComponent, title: 'Brands', canActivate: [authGuard] },
   { path: 'checkout', component: CheckoutComponent, title: 'Check-Out', canActivate: [authGuard] },
 
+  { path: 'register', component: RegisterComponent, title: 'Register' },
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'forget-password', component: ForgetPasswordComponent, title: 'Forget Password' },
-  { path: 'register', component: RegisterComponent, title: 'Register' },
+  { path: 'verify-reset-code', component: VerifyResetCodeComponent, title: 'Reset Code Validation' },
+  { path: 'reset-password', component: ResetPasswordComponent, title: 'Change Password' },
   { path: '**', component: NotFoundComponent },
 ];

@@ -8,11 +8,12 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root',
 })
 export class AuthService {
+  private baseApiUrl = 'https://ecommerce.routemisr.com';
+
   userData: BehaviorSubject<any> = new BehaviorSubject(null);
 
-  constructor(private httpClient: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(private httpClient: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
 
-  // On App Initialization, check if the user is already logged in
   initializeUser() {
     if (isPlatformBrowser(this.platformId)) {
       const userToken = localStorage.getItem('userToken');
@@ -26,15 +27,27 @@ export class AuthService {
     }
   }
 
-  sendRegistertoAPI(data: object): Observable<any> {
-    return this.httpClient.post(`https://ecommerce.routemisr.com/api/v1/auth/signup`, data);
+  sendRegisterToAPI(data: object): Observable<any> {
+    return this.httpClient.post(`${this.baseApiUrl}/api/v1/auth/signup`, data);
   }
 
-  sendLogintoAPI(data: object): Observable<any> {
-    return this.httpClient.post(`https://ecommerce.routemisr.com/api/v1/auth/signin`, data);
+  sendLoginToAPI(data: object): Observable<any> {
+    return this.httpClient.post(`${this.baseApiUrl}/api/v1/auth/signin`, data);
   }
 
-  saveDataUser() {
+  sendResetCodeToAPI(data: object): Observable<any> {
+    return this.httpClient.post(`${this.baseApiUrl}/api/v1/auth/forgotPasswords`, data);
+  }
+
+  sendCheckCodeToAPI(data: object): Observable<any> {
+    return this.httpClient.post(`${this.baseApiUrl}/api/v1/auth/verifyResetCode`, data);
+  }
+
+  resetPasswordToAPI(data: { email: string; newPassword: string }): Observable<any> {
+    return this.httpClient.put(`${this.baseApiUrl}/api/v1/auth/resetPassword`, data);
+  }
+
+  saveUserData() {
     if (isPlatformBrowser(this.platformId)) {
       const userToken = localStorage.getItem('userToken');
       if (userToken) {

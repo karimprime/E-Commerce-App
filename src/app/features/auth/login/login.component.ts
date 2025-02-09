@@ -62,13 +62,13 @@ export class LoginComponent {
     this.isLoading = true;
 
     if (this.loginForm.valid) {
-      this.authService.sendLogintoAPI(this.loginForm.value).subscribe({
+      this.authService.sendLoginToAPI(this.loginForm.value).subscribe({
         next: (res) => {
           if (res.message === "success") {
 
             localStorage.setItem("userToken", res.token);//set-Token in LocalStorage
 
-            this.authService.saveDataUser();
+            this.authService.initializeUser();
             this.router.navigate(['/home']); //Programming Routing [(src,Data)]
           }
           this.isLoading = false;

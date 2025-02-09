@@ -86,7 +86,7 @@ export class RegisterComponent {
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
-      this.authService.sendRegistertoAPI(this.registerForm.value).subscribe({
+      this.authService.sendRegisterToAPI(this.registerForm.value).subscribe({
         next: (res) => {
           if (res.message === "success") {
             this.router.navigate(['/login']);

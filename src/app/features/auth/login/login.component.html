@@ -57,7 +57,7 @@
       <label for="password" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Password :</label>
       <input id="password" #passwordInput type="password" placeholder="Please Enter Password"
         [formControl]="passwordControl"
-        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
         (focus)="passwordFocused = true" (blur)="passwordFocused = false" (input)="updatePasswordStrength()" required />
 
       <button type="button" (click)="togglePasswordVisibility(passwordInput, 'password')"

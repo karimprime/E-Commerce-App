@@ -142,7 +142,7 @@
       <label for="password" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Password :</label>
       <input id="password" #passwordInput type="password" placeholder="Please Enter Password"
         [formControl]="passwordControl"
-        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
         (focus)="passwordFocused = true" (blur)="passwordFocused = false" (input)="updatePasswordStrength()" required />
 
       <button type="button" (click)="togglePasswordVisibility(passwordInput, 'password')"
@@ -221,7 +221,7 @@
         :</label>
       <input id="repassword" #repasswordInput type="password" placeholder="Please Repeat Password"
         formControlName="rePassword"
-        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
         required />
       <button type="button" (click)="togglePasswordVisibility(repasswordInput, 'repassword')"
         class="absolute bottom-3 right-0 flex items-center pr-3 dark:text-gray-300"
@@ -353,7 +353,7 @@
     }
 
     <button [disabled]="registerForm.invalid" type="submit"
-      class="disabled:bg-red-900 mt-4 w-full md:w-auto text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 dark:disabled:bg-red-900">Register
+      class="disabled:bg-red-900  w-full md:w-auto text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 dark:disabled:bg-red-900">Register
       new account
 
       @if (isLoading) {

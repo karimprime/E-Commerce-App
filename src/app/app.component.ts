@@ -6,13 +6,13 @@ import { NavbarComponent } from './features/layout/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FooterComponent , NavbarComponent],
+  imports: [RouterOutlet, FooterComponent, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
 
-  constructor(private flowbiteService: FlowbiteService) {}
+  constructor(private flowbiteService: FlowbiteService) { }
 
   ngOnInit(): void {
     this.flowbiteService.loadFlowbite(flowbite => {
