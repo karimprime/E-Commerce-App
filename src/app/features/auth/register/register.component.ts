@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -12,13 +13,16 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
-  constructor(private authService: AuthService) { }
+  private authService = inject(AuthService);
   private router = inject(Router);
 
+  constructor() { }
 
   errorMessage: string = "";
 
   isLoading: boolean = false;
+
+  registerSub: Subscription = new Subscription();
 
   registerForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
@@ -86,7 +90,7 @@ export class RegisterComponent {
     this.registerForm.markAllAsTouched();
 
     if (this.registerForm.valid) {
-      this.authService.sendRegisterToAPI(this.registerForm.value).subscribe({
+      this.registerSub = this.authService.sendRegisterToAPI(this.registerForm.value).subscribe({
         next: (res) => {
           if (res.message === "success") {
             this.router.navigate(['/login']);
@@ -101,5 +105,9 @@ export class RegisterComponent {
     } else {
       this.isLoading = false;
     }
+  }
+
+  ngOnDestroy() {
+    this.registerSub.unsubscribe();
   }
 }

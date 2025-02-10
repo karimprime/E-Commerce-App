@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-forget-password',
@@ -11,14 +12,17 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 })
 export class ForgetPasswordComponent {
 
+  private authService = inject(AuthService);
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
   private router = inject(Router);
   errorMessage: string = "";
   isLoading: boolean = false;
   showResetCodeInput: boolean = false;
   showPasswordFields: boolean = false;
+
+  forgetSub: Subscription = new Subscription();
 
   forgetPasswordForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
@@ -39,7 +43,7 @@ export class ForgetPasswordComponent {
 
     this.isLoading = true;
 
-    this.authService.sendResetCodeToAPI(this.forgetPasswordForm.value).subscribe({
+    this.forgetSub = this.authService.sendResetCodeToAPI(this.forgetPasswordForm.value).subscribe({
       next: (res) => {
         console.log("API Response:", res);
         if (res.statusMsg === "success") {
@@ -53,5 +57,9 @@ export class ForgetPasswordComponent {
         this.isLoading = false;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.forgetSub.unsubscribe();
   }
 }

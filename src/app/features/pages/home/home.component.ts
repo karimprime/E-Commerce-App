@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ProductsService } from './../../../core/services/ecommerce/products/products.service';
+
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
@@ -8,6 +10,9 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+
+  private productsService = inject(ProductsService);
+
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: false,
@@ -34,7 +39,16 @@ export class HomeComponent {
   }
 
 
+  ngOnInit() {
+    this.productsService.getAllProducts().subscribe({
+      next: (res) => {
+        console.log(res);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
+  }
 
-  
 }
 

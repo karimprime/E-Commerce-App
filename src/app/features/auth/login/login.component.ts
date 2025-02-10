@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +13,15 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
 
-  constructor(private authService: AuthService) { }
+  private authService = inject(AuthService);
+
+  constructor() { }
 
   private router = inject(Router);
   errorMessage: string = "";
   isLoading: boolean = false;
+
+  loginSub: Subscription = new Subscription();
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -62,7 +67,7 @@ export class LoginComponent {
     this.isLoading = true;
 
     if (this.loginForm.valid) {
-      this.authService.sendLoginToAPI(this.loginForm.value).subscribe({
+      this.loginSub = this.authService.sendLoginToAPI(this.loginForm.value).subscribe({
         next: (res) => {
           if (res.message === "success") {
 
@@ -79,6 +84,10 @@ export class LoginComponent {
         }
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.loginSub.unsubscribe();
   }
 
 }

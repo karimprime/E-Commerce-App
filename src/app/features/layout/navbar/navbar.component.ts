@@ -16,9 +16,10 @@ export class NavbarComponent {
   @ViewChild('mobileMenu') mobileMenu!: ElementRef;
   private authService = inject(AuthService);
   private router = inject(Router);
+  private modeService = inject(ModeService);
   isLoginMode: boolean = true;
 
-  constructor(private modeService: ModeService) {
+  constructor() {
     this.isDarkMode = this.modeService.isDarkMode();
   }
 

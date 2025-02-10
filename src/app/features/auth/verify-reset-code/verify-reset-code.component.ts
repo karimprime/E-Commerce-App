@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-verify-reset-code',
@@ -14,12 +15,17 @@ export class VerifyResetCodeComponent {
     throw new Error('Method not implemented.');
   }
 
-  constructor(private authService: AuthService) { }
+  private authService = inject(AuthService);
   private router = inject(Router);
   errorMessage: string = "";
   isLoading: boolean = false;
   showResetCodeInput: boolean = false;
   showPasswordFields: boolean = false;
+
+  constructor() { }
+
+
+  verifySub: Subscription = new Subscription();
 
   resetCodeForm: FormGroup = new FormGroup({
     resetCode: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(6)])
@@ -33,7 +39,7 @@ export class VerifyResetCodeComponent {
 
     this.isLoading = true;
 
-    this.authService.sendCheckCodeToAPI(this.resetCodeForm.value).subscribe({
+    this.verifySub = this.authService.sendCheckCodeToAPI(this.resetCodeForm.value).subscribe({
       next: (res) => {
         console.log("API Response:", res);
         if (res.status === "Success") {
@@ -48,5 +54,9 @@ export class VerifyResetCodeComponent {
         this.isLoading = false;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.verifySub.unsubscribe();
   }
 }

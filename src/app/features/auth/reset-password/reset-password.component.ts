@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reset-password',
@@ -12,13 +13,16 @@ import { CommonModule } from '@angular/common';
 })
 export class ResetPasswordComponent {
 
-  constructor(private authService: AuthService) { }
+  private authService = inject(AuthService);
   private router = inject(Router);
 
+  constructor() { }
 
   errorMessage: string = "";
 
   isLoading: boolean = false;
+
+  resetrSub: Subscription = new Subscription();
 
   changePasswordForm: FormGroup = new FormGroup({
     newPassword: new FormControl('', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$')]),
@@ -71,7 +75,7 @@ export class ResetPasswordComponent {
   submitNewPassword() {
     if (this.changePasswordForm.valid) {
       this.isLoading = true;
-      this.authService.resetPasswordToAPI(this.changePasswordForm.value).subscribe({
+      this.resetrSub = this.authService.resetPasswordToAPI(this.changePasswordForm.value).subscribe({
         next: () => {
           this.isLoading = false;
           this.router.navigate(['/login']);
@@ -82,5 +86,9 @@ export class ResetPasswordComponent {
         }
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.resetrSub.unsubscribe();
   }
 }
