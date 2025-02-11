@@ -1,14 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from './../../../core/services/ecommerce/products/products.service';
 
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import { IProduct } from '../../../shared/interface/products';
 import { Subscription } from 'rxjs';
 import { CarsoulHomeComponent } from '../../layout/carsoul-home/carsoul-home.component';
+import { ProductCardComponent } from '../../layout/product-card/product-card.component';
 
 @Component({
   selector: 'app-home',
-  imports: [CarsoulHomeComponent],
+  imports: [CarsoulHomeComponent , ProductCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

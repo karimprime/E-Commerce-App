@@ -1,9 +1,14 @@
 <app-navbar />
 
-<div class="h-[90%] ">
+<div class="min-h-[80vh]">
   <router-outlet />
 </div>
 
-<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
-<app-footer />
+<ngx-spinner bdColor="rgba(0, 0, 0, 1)" size="large" type="ball-scale-multiple" color="#ffffff">
+  <div class="flex flex-col items-center">
+    <img src="/images/freshcart-logo.svg" class="h-12 animate-pulse" alt="FreshCart Logo">
+    <p class="text-white mt-2 text-lg font-semibold">Loading, please wait...</p>
+  </div>
+</ngx-spinner>
 
+<app-footer />

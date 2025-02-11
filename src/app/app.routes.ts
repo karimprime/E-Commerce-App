@@ -11,14 +11,16 @@ import { authGuard } from './core/guards/auth/auth.guard';
 import { CheckoutComponent } from './features/pages/checkout/checkout.component';
 import { VerifyResetCodeComponent } from './features/auth/verify-reset-code/verify-reset-code.component';
 import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
+import { ProductDetailsComponent } from './features/pages/product-details/product-details.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, title: 'Home', canActivate: [authGuard] },
+  { path: 'home', component: HomeComponent, title: 'Home' },
   { path: 'products', component: ProductsComponent, title: 'Products', canActivate: [authGuard] },
   { path: 'categories', component: CategoriesComponent, title: 'Categories', canActivate: [authGuard] },
   { path: 'brands', component: BrandsComponent, title: 'Brands', canActivate: [authGuard] },
   { path: 'checkout', component: CheckoutComponent, title: 'Check-Out', canActivate: [authGuard] },
+  { path: 'product-details', component: ProductDetailsComponent, title: 'Product Details', canActivate: [authGuard] },
 
   { path: 'register', component: RegisterComponent, title: 'Register' },
   { path: 'login', component: LoginComponent, title: 'Login' },

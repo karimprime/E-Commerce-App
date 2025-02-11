@@ -46,7 +46,7 @@ export class CarsoulHomeComponent {
     navText: ['', ''],
     responsive: {
       0: {
-        items: 1
+        items: 3
       },
       400: {
         items: 4
