@@ -1,47 +1,31 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProductsService } from './../../../core/services/ecommerce/products/products.service';
 
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { IProduct } from '../../../shared/interface/products';
+import { Subscription } from 'rxjs';
+import { CarsoulHomeComponent } from '../../layout/carsoul-home/carsoul-home.component';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [CarsoulHomeComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
+  allProducts: IProduct[] = [];
+  ProductSub: Subscription = new Subscription();
   private productsService = inject(ProductsService);
 
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 3
-      },
-      940: {
-        items: 4
-      }
-    },
-    nav: true
+  ngOnInit() {
+    this.getAllProductHome();
   }
 
-
-  ngOnInit() {
+  getAllProductHome() {
     this.productsService.getAllProducts().subscribe({
       next: (res) => {
+        this.allProducts = res.data;
         console.log(res);
       },
       error: (err) => {
@@ -50,5 +34,9 @@ export class HomeComponent {
     })
   }
 
+
+  ngOnDestroy() {
+    this.ProductSub.unsubscribe();
+  }
 }
 

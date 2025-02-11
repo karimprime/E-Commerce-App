@@ -1,1 +1,37 @@
-<p>home works!</p>
+<app-carsoul-home [productList]="allProducts"></app-carsoul-home>
+
+<!-- Product Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 p-4 w-[90%] mx-auto mb-12">
+  @for (product of allProducts; track $index) {
+  <div
+    class="group w-full bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700 transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+
+    <a>
+      <img class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+        [src]="product.imageCover" [alt]="product.title" />
+    </a>
+
+    <div class="p-5">
+      <h4 class="text-sm font-semibold text-gray-500 dark:text-gray-400 truncate">{{ product.category.name }}</h4>
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white truncate">{{ product.title }}</h2>
+
+      <div class="flex items-center justify-between mt-3">
+        <div class="flex items-center text-yellow-400">
+          <i class="fas fa-star"></i>
+          <span
+            class="ml-2 text-sm font-semibold bg-green-100 text-green-800 px-2.5 py-0.5 rounded-sm dark:bg-green-200 dark:text-green-800">
+            {{ product.ratingsAverage }}
+          </span>
+        </div>
+        <span class="text-xl font-bold text-gray-900 dark:text-white">{{ product.price }} EGP</span>
+      </div>
+
+      <button
+        class="mt-4 w-full opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-500 dark:hover:bg-green-600">
+        <i class="fas fa-shopping-cart mr-2"></i> Add to cart
+      </button>
+    </div>
+  </div>
+  }
+
+</div>
