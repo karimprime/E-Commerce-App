@@ -43,7 +43,7 @@ export class RegisterComponent {
     hasLowercase: false,
     hasNumber: false,
     hasMinLength: false,
-    hasspical: false
+    hasSpical: false
   };
 
   passwordFocused = false;
@@ -64,7 +64,7 @@ export class RegisterComponent {
       hasUppercase: /[A-Z]/.test(password),
       hasLowercase: /[a-z]/.test(password),
       hasNumber: /\d/.test(password),
-      hasspical: /[@$!%*?&]/.test(password),
+      hasSpical: /[@$!%*?&]/.test(password),
       hasMinLength: password.length >= 8
     };
   }
@@ -94,8 +94,9 @@ export class RegisterComponent {
         next: (res) => {
           if (res.message === "success") {
             this.router.navigate(['/login']);
+            this.isLoading = false;
           }
-          this.isLoading = false;
+
         },
         error: (err) => {
           this.errorMessage = err.error.message;

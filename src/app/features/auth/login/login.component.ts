@@ -37,7 +37,7 @@ export class LoginComponent {
     hasLowercase: false,
     hasNumber: false,
     hasMinLength: false,
-    hasspical: false
+    hasSpical: false
   };
 
   passwordFocused = false;
@@ -57,29 +57,28 @@ export class LoginComponent {
       hasUppercase: /[A-Z]/.test(password),
       hasLowercase: /[a-z]/.test(password),
       hasNumber: /\d/.test(password),
-      hasspical: /[@$!%*?&]/.test(password),
+      hasSpical: /[@$!%*?&]/.test(password),
       hasMinLength: password.length >= 8
     };
   }
 
   LoginSubmit() {
-
     this.isLoading = true;
 
     if (this.loginForm.valid) {
       this.loginSub = this.authService.sendLoginToAPI(this.loginForm.value).subscribe({
         next: (res) => {
-          if (res.message === "success") {
-
-            localStorage.setItem("userToken", res.token);//set-Token in LocalStorage
-
+          if ('token' in res && res.message === "success") {  // Check if 'token' exists
+            localStorage.setItem("userToken", res.token); // Set Token in LocalStorage
             this.authService.initializeUser();
-            this.router.navigate(['/home']); //Programming Routing [(src,Data)]
+            this.router.navigate(['/home']); // Navigate to Home Page
+          } else {
+            this.errorMessage = res.message || "An error occurred. Please try again.";
           }
           this.isLoading = false;
         },
         error: (err) => {
-          this.errorMessage = err.error.message
+          this.errorMessage = err.error.message || "Login failed.";
           this.isLoading = false;
         }
       });

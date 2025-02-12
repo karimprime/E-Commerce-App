@@ -3,8 +3,9 @@ import { ProductsService } from './../../../core/services/ecommerce/products/pro
 
 import { IProduct } from '../../../shared/interface/products';
 import { Subscription } from 'rxjs';
-import { CarsoulHomeComponent } from '../../layout/carsoul-home/carsoul-home.component';
-import { ProductCardComponent } from '../../layout/product-card/product-card.component';
+import { CarsoulHomeComponent } from '../../layout/additions/carsoul-home/carsoul-home.component';
+import { ProductCardComponent } from '../../layout/additions/product-card/product-card.component';
+
 
 @Component({
   selector: 'app-home',

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { IProduct } from '../../../shared/interface/products';
 import { RouterLink } from '@angular/router';
+import { IProduct } from '../../../../shared/interface/products';
 
 @Component({
   selector: 'app-product-card',

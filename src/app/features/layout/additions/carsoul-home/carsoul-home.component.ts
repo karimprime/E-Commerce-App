@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { IProduct } from '../../../shared/interface/products';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { IProduct } from '../../../../shared/interface/products';
+import { CarsoulCategoriesComponent } from "../carsoul-categories/carsoul-categories.component";
 
 @Component({
   selector: 'app-carsoul-home',
-  imports: [CarouselModule],
+  imports: [CarouselModule, CarsoulCategoriesComponent],
   templateUrl: './carsoul-home.component.html',
   styleUrl: './carsoul-home.component.scss'
 })
@@ -12,13 +13,20 @@ export class CarsoulHomeComponent {
   @Input({ required: true }) productList: IProduct[] = [];
 
 
-  customOptionsFirstSlider: OwlOptions = {
+  sliderOptions: OwlOptions = {
     loop: true,
+
     mouseDrag: true,
     touchDrag: true,
     pullDrag: false,
     dots: false,
     navSpeed: 1000,
+    autoplay: true,
+
+
+    autoplayTimeout: 3000,
+    autoplayHoverPause: true,
+
     navText: ['', ''],
     responsive: {
       0: {
@@ -28,34 +36,10 @@ export class CarsoulHomeComponent {
         items: 1
       },
       740: {
-        items: 2
+        items: 1
       },
       940: {
         items: 1
-      }
-    },
-    nav: true
-  }
-  customOptionsSecondSlider: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 1000,
-    navText: ['', ''],
-    responsive: {
-      0: {
-        items: 3
-      },
-      400: {
-        items: 4
-      },
-      740: {
-        items: 4
-      },
-      940: {
-        items: 6
       }
     },
     nav: true

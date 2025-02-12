@@ -1,50 +1,48 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { VerifyResetCodeRequestSuccess, APIResponseMessage } from '../../../shared/interface/data';
 
 @Component({
   selector: 'app-verify-reset-code',
-  imports: [ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './verify-reset-code.component.html',
-  styleUrl: './verify-reset-code.component.scss'
+  styleUrls: ['./verify-reset-code.component.scss']
 })
-export class VerifyResetCodeComponent {
-  resetPassword() {
-    throw new Error('Method not implemented.');
-  }
-
+export class VerifyResetCodeComponent implements OnDestroy {
   private authService = inject(AuthService);
   private router = inject(Router);
   errorMessage: string = "";
   isLoading: boolean = false;
-  showResetCodeInput: boolean = false;
-  showPasswordFields: boolean = false;
-
-  constructor() { }
-
-
   verifySub: Subscription = new Subscription();
 
-  resetCodeForm: FormGroup = new FormGroup({
-    resetCode: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(6)])
+  resetCodeForm = new FormGroup({
+    resetCode: new FormControl<string>('', [Validators.required, Validators.minLength(6), Validators.maxLength(6)])
   });
 
   checkResetCode() {
-    if (!this.resetCodeForm.valid) {
+    if (this.resetCodeForm.invalid) {
       this.errorMessage = "Please enter a valid 6-digit reset code.";
       return;
     }
 
     this.isLoading = true;
 
-    this.verifySub = this.authService.sendCheckCodeToAPI(this.resetCodeForm.value).subscribe({
-      next: (res) => {
+    // Ensure `resetCode` is a string
+    const resetCodeRequest = { resetCode: this.resetCodeForm.value.resetCode as string };
+
+    this.verifySub = this.authService.sendCheckCodeToAPI(resetCodeRequest).subscribe({
+      next: (res: VerifyResetCodeRequestSuccess | APIResponseMessage) => {
         console.log("API Response:", res);
-        if (res.status === "Success") {
+
+        // Check if response contains 'status' before accessing it
+        if ('status' in res && res.status === "Success") {
           this.router.navigate(['/reset-password']);
-          console.log("Vialed Reset Code Done");
+        } else {
+          this.errorMessage = "Invalid reset code!";
         }
         this.isLoading = false;
       },
@@ -57,6 +55,8 @@ export class VerifyResetCodeComponent {
   }
 
   ngOnDestroy() {
-    this.verifySub.unsubscribe();
+    if (this.verifySub) {
+      this.verifySub.unsubscribe();
+    }
   }
 }

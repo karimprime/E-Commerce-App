@@ -1,0 +1,57 @@
+
+
+<!-- Featured Solutions Section -->
+<section class="py-10 px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 bg-gray-50 dark:bg-gray-900">
+
+  <!-- Section Title -->
+  <h1 class="text-3xl sm:text-4xl font-extrabold text-green-800 dark:text-green-400 mb-8 text-center md:text-left">
+    Discover the Latest Tech & Innovations
+  </h1>
+
+  <!-- Image Slider -->
+  <div class="my-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Image Slider -->
+    <div class="relative">
+      <owl-carousel-o [options]="sliderOptions">
+        <ng-template carouselSlide>
+          <img src="/images/slider-image-1.jpeg" alt="Tech Trends - Stay Ahead"
+            class="w-full h-52 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl shadow-lg" loading="lazy">
+        </ng-template>
+
+        <ng-template carouselSlide>
+          <img src="/images/slider-image-2.jpeg" alt="Innovations of the Future"
+            class="w-full h-52 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl shadow-lg" loading="lazy">
+        </ng-template>
+
+        <ng-template carouselSlide>
+          <img src="/images/slider-image-3.jpeg" alt="Cutting-Edge AI & Technologies"
+            class="w-full h-52 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl shadow-lg" loading="lazy">
+        </ng-template>
+      </owl-carousel-o>
+    </div>
+
+    <!-- Blog Images (Hidden on Mobile, Visible on sm and Larger Screens) -->
+    <div class="hidden sm:grid grid-cols-1 sm:grid-rows-1 gap-4">
+      <img src="/images/img4.avif" alt="Digital Transformation - Industry Insights"
+        class="w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+        loading="lazy">
+
+      <img src="/images/banner-4.jpeg" alt="Tech Revolution - Stay Updated"
+        class="w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+        loading="lazy">
+    </div>
+
+
+  </div>
+
+  <!-- Featured Categories Section -->
+  <div class="mt-16">
+    <h2 class="text-2xl sm:text-3xl font-bold text-green-900 dark:text-green-400 mb-6 text-center md:text-left">
+      Browse Our Categories & Innovations
+    </h2>
+
+    <app-carsoul-categories />
+  </div>
+
+</section>

@@ -42,8 +42,12 @@ export class ForgetPasswordComponent {
     }
 
     this.isLoading = true;
+    const email = this.forgetPasswordForm.get('email')?.value;
 
-    this.forgetSub = this.authService.sendResetCodeToAPI(this.forgetPasswordForm.value).subscribe({
+    // Store email in sessionStorage
+    sessionStorage.setItem('resetEmail', email);
+
+    this.forgetSub = this.authService.sendResetCodeToAPI({ email }).subscribe({
       next: (res) => {
         console.log("API Response:", res);
         if (res.statusMsg === "success") {

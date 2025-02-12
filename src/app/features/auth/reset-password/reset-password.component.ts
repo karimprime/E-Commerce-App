@@ -39,7 +39,7 @@ export class ResetPasswordComponent {
     hasLowercase: false,
     hasNumber: false,
     hasMinLength: false,
-    hasspical: false
+    hasSpical: false
   };
 
   passwordFocused = false;
@@ -60,7 +60,7 @@ export class ResetPasswordComponent {
       hasUppercase: /[A-Z]/.test(password),
       hasLowercase: /[a-z]/.test(password),
       hasNumber: /\d/.test(password),
-      hasspical: /[@$!%*?&]/.test(password),
+      hasSpical: /[@$!%*?&]/.test(password),
       hasMinLength: password.length >= 8
     };
   }
@@ -75,18 +75,30 @@ export class ResetPasswordComponent {
   submitNewPassword() {
     if (this.changePasswordForm.valid) {
       this.isLoading = true;
-      this.resetrSub = this.authService.resetPasswordToAPI(this.changePasswordForm.value).subscribe({
+
+      const email = sessionStorage.getItem('resetEmail'); // Retrieve email from sessionStorage
+      const newPassword = this.changePasswordForm.get('newPassword')?.value;
+
+      if (!email) {
+        this.errorMessage = "Email not found! Please restart the process.";
+        this.isLoading = false;
+        return;
+      }
+
+      this.resetrSub = this.authService.resetPasswordToAPI({ email, newPassword }).subscribe({
         next: () => {
-          this.isLoading = false;
+          sessionStorage.removeItem('resetEmail'); // Clear stored email after reset
           this.router.navigate(['/login']);
+          this.isLoading = false;
         },
         error: (error) => {
-          this.isLoading = false;
           this.errorMessage = error.error?.message || 'Something went wrong!';
+          this.isLoading = false;
         }
       });
     }
   }
+
 
   ngOnDestroy() {
     this.resetrSub.unsubscribe();
