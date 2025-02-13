@@ -16,16 +16,7 @@ export class ProductDetailsComponent {
   productid: string | null = "";
   pSpec !: IProduct;
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe((pid) => {
-      this.productid = pid.get('productId');
-      this.productsService.getSpecProducts(this.productid).subscribe({
-        next: (res) => {
-          this.pSpec = res;
-          console.log(this.pSpec);
 
-        }
-      })
-    })
   }
 
 }
