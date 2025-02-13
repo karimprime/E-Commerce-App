@@ -1,57 +1,53 @@
-
-
-<!-- Featured Solutions Section -->
-<section class="py-10 px-4 sm:px-6 md:px-12 lg:px-16 xl:px-24 bg-gray-50 dark:bg-gray-900">
+<section class="py-12 px-6 md:px-16 lg:px-24 bg-gray-100 dark:bg-gray-900">
 
   <!-- Section Title -->
-  <h1 class="text-3xl sm:text-4xl font-extrabold text-green-800 dark:text-green-400 mb-8 text-center md:text-left">
-    Discover the Latest Tech & Innovations
+  <h1 class="text-4xl font-bold text-center text-gray-800 dark:text-gray-200 mb-10">
+    Explore the Latest Tech & Innovations
   </h1>
 
-  <!-- Image Slider -->
-  <div class="my-5 grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class=" grid grid-cols-1 md:grid-cols-4 gap-4 items-center mx-auto">
 
     <!-- Image Slider -->
-    <div class="relative">
+    <div class="md:col-span-3">
       <owl-carousel-o [options]="sliderOptions">
         <ng-template carouselSlide>
-          <img src="/images/slider-image-1.jpeg" alt="Tech Trends - Stay Ahead"
-            class="w-full h-52 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl shadow-lg" loading="lazy">
+          <img src="/images/slider-image-1.jpeg" alt="Tech Trends"
+            class="w-full object-cover h-[250px] sm:h-[300px] md:h-[250px] lg:h-[450px] rounded-lg shadow-lg"
+            loading="lazy">
         </ng-template>
-
         <ng-template carouselSlide>
-          <img src="/images/slider-image-2.jpeg" alt="Innovations of the Future"
-            class="w-full h-52 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl shadow-lg" loading="lazy">
+          <img src="/images/slider-image-2.jpeg" alt="Innovations"
+            class="w-full object-cover h-[250px] sm:h-[300px] md:h-[250px] lg:h-[450px] rounded-lg shadow-lg"
+            loading="lazy">
         </ng-template>
-
         <ng-template carouselSlide>
-          <img src="/images/slider-image-3.jpeg" alt="Cutting-Edge AI & Technologies"
-            class="w-full h-52 sm:h-64 md:h-80 lg:h-96 object-cover rounded-xl shadow-lg" loading="lazy">
+          <img src="/images/slider-image-3.jpeg" alt="AI & Tech"
+            class="w-full object-cover h-[250px] sm:h-[300px] md:h-[250px] lg:h-[450px] rounded-lg shadow-lg"
+            loading="lazy">
         </ng-template>
       </owl-carousel-o>
     </div>
 
-    <!-- Blog Images (Hidden on Mobile, Visible on sm and Larger Screens) -->
-    <div class="hidden sm:grid grid-cols-1 sm:grid-rows-1 gap-4">
-      <img src="/images/img4.avif" alt="Digital Transformation - Industry Insights"
-        class="w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+    <!-- Blog Image Grid -->
+    <!-- Blog Image Grid (Hidden on Small Screens) -->
+    <div class="hidden md:flex md:col-span-1 flex-col gap-4">
+      <img src="/images/img4.avif" alt="Digital Transformation"
+        class="w-full object-cover h-[140px] sm:h-[180px] md:h-[60px] lg:h-[130px] rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
         loading="lazy">
 
-      <img src="/images/banner-4.jpeg" alt="Tech Revolution - Stay Updated"
-        class="w-full h-40 sm:h-48 md:h-56 lg:h-64 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+      <img src="/images/banner-4.jpeg" alt="Tech Revolution"
+        class="w-full object-cover h-[140px] sm:h-[180px] md:h-[60px] lg:h-[130px] rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
         loading="lazy">
     </div>
 
 
   </div>
 
-  <!-- Featured Categories Section -->
-  <div class="mt-16">
-    <h2 class="text-2xl sm:text-3xl font-bold text-green-900 dark:text-green-400 mb-6 text-center md:text-left">
-      Browse Our Categories & Innovations
+  <!-- Featured Categories -->
+  <div class="mt-14 text-center">
+    <h2 class="text-3xl font-semibold text-gray-900 dark:text-gray-300 mb-6">
+      Discover More Categories
     </h2>
-
     <app-carsoul-categories />
   </div>
-
 </section>

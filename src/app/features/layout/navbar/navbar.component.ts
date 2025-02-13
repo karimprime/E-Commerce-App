@@ -1,50 +1,94 @@
 import { AuthService } from './../../../core/services/auth/auth.service';
-import { Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Component, inject, HostListener, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ModeService } from '../../../core/services/mode/mode.service';
 import { SidebarCartComponent } from "../additions/sidebar-cart/sidebar-cart.component";
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
+
+interface SocialLink {
+  icon: string;
+  ariaLabel: string;
+}
+
+interface NavLink {
+  route: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, SidebarCartComponent],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
-  isDarkMode = false;
-  @ViewChild('mobileMenu') mobileMenu!: ElementRef;
+export class NavbarComponent implements OnDestroy {
   private authService = inject(AuthService);
   private router = inject(Router);
   private modeService = inject(ModeService);
-  isLoginMode: boolean = false; // Ensure correct initialization
+  private userSub: Subscription;
+
+  isDarkMode = this.modeService.isDarkMode();
+  isMobileMenuOpen = false;
+  isDropdownOpen = false;
+  isLoginMode = false;
+  userName: string | null = null;
+
+  socialLinks: SocialLink[] = [
+    { icon: 'fa-facebook', ariaLabel: 'Facebook' },
+    { icon: 'fa-twitter', ariaLabel: 'Twitter' },
+    { icon: 'fa-instagram', ariaLabel: 'Instagram' },
+    { icon: 'fa-tiktok', ariaLabel: 'TikTok' },
+    { icon: 'fa-linkedin', ariaLabel: 'LinkedIn' },
+    { icon: 'fa-youtube', ariaLabel: 'YouTube' }
+  ];
+
+  navLinks: NavLink[] = [
+    { route: '/home', text: 'Home' },
+    { route: '/products', text: 'Products' },
+    { route: '/categories', text: 'Categories' },
+    { route: '/brands', text: 'Brands' }
+  ];
 
   constructor() {
-    this.isDarkMode = this.modeService.isDarkMode();
+    this.userSub = this.authService.userData.subscribe(user => {
+      this.isLoginMode = !!user;
+      this.userName = localStorage.getItem('userName');
+    });
   }
-
   toggleDarkMode(): void {
     this.modeService.toggleDarkMode();
     this.isDarkMode = !this.isDarkMode;
   }
 
-  toggleMobileMenu() {
-    this.mobileMenu?.nativeElement.classList.toggle('hidden');
+  toggleMobileMenu(): void {
+    this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
-  closeMobileMenu() {
-    if (this.mobileMenu?.nativeElement && !this.mobileMenu.nativeElement.classList.contains('hidden')) {
-      this.mobileMenu.nativeElement.classList.add('hidden');
+  closeMobileMenu(): void {
+    this.isMobileMenuOpen = false;
+  }
+
+  toggleDropdown(): void {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+    this.closeMobileMenu();
+    this.isDropdownOpen = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event): void {
+    if (!(event.target as HTMLElement).closest('.dropdown-container')) {
+      this.isDropdownOpen = false;
     }
   }
 
-  ngOnInit(): void {
-    this.authService.userData.subscribe((user) => {
-      this.isLoginMode = !!user; // Simplified check
-    });
-  }
-
-  logout() {
-    this.authService.logout();
+  ngOnDestroy(): void {
+    this.userSub.unsubscribe();
   }
 }

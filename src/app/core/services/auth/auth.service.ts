@@ -52,7 +52,9 @@ export class AuthService {
   /** Updates user data from decoded JWT token */
   private updateUserData(token: string): void {
     try {
-      this.userData.next(jwtDecode(token));
+      const decodedToken: any = jwtDecode(token);
+      this.userData.next(decodedToken);
+      localStorage.setItem('userName', decodedToken.name); // Store user name in localStorage
     } catch (error) {
       console.error('Invalid token:', error);
       this.logout();

@@ -9,22 +9,24 @@ import { ProductCardComponent } from '../../layout/additions/product-card/produc
 
 @Component({
   selector: 'app-home',
-  imports: [CarsoulHomeComponent , ProductCardComponent],
+  imports: [CarsoulHomeComponent, ProductCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-
   allProducts: IProduct[] = [];
   ProductSub: Subscription = new Subscription();
   private productsService = inject(ProductsService);
+
+  currentPage: number = 1;  // Track current page
+  totalPages: number = 2;   // Example: Set this dynamically if available
 
   ngOnInit() {
     this.getAllProductHome();
   }
 
   getAllProductHome() {
-    this.productsService.getAllProducts().subscribe({
+    this.productsService.getAllProducts(this.currentPage).subscribe({
       next: (res) => {
         this.allProducts = res.data;
         console.log(res);
@@ -32,9 +34,22 @@ export class HomeComponent implements OnInit {
       error: (err) => {
         console.log(err);
       }
-    })
+    });
   }
 
+  goToNextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getAllProductHome();
+    }
+  }
+
+  goToPreviousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getAllProductHome();
+    }
+  }
 
   ngOnDestroy() {
     this.ProductSub.unsubscribe();

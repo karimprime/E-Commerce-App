@@ -5,5 +5,15 @@
   @for (product of allProducts; track $index) {
   <app-product-card [productInfo]="product"></app-product-card>
   }
+
 </div>
 
+<div class="flex justify-center gap-4 mt-6 mb-6">
+  <button (click)="goToPreviousPage()" [disabled]="currentPage === 1"
+    class="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50">Previous</button>
+
+  <span class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg">{{ currentPage }}</span>
+
+  <button (click)="goToNextPage()" [disabled]="currentPage === totalPages"
+    class="px-4 py-2 bg-green-600 text-white rounded-lg disabled:opacity-50">Next</button>
+</div>

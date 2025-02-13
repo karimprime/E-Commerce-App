@@ -20,11 +20,9 @@ export class CarsoulHomeComponent {
     touchDrag: true,
     pullDrag: false,
     dots: false,
-    navSpeed: 1000,
+    navSpeed: 2000,
     autoplay: true,
 
-
-    autoplayTimeout: 3000,
     autoplayHoverPause: true,
 
     navText: ['', ''],
