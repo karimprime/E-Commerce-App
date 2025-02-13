@@ -46,11 +46,6 @@ export class VerifyResetCodeComponent implements OnDestroy {
         }
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error("API Error:", err);
-        this.errorMessage = err.error?.message || "Invalid reset code!";
-        this.isLoading = false;
-      }
     });
   }
 

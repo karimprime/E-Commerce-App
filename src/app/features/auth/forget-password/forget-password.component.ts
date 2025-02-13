@@ -55,11 +55,6 @@ export class ForgetPasswordComponent {
         }
         this.isLoading = false;
       },
-      error: (err) => {
-        console.error("API Error:", err);
-        this.errorMessage = err.error?.message || "Something went wrong!";
-        this.isLoading = false;
-      }
     });
   }
 

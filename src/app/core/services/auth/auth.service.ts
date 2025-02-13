@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { Env } from '../../Environment/Environment';
 import { Router } from '@angular/router';
 import {
@@ -15,6 +15,7 @@ import {
   ResetPasswordRequest,
   VerifyResetCodeRequestSuccess
 } from '../../../shared/interface/data';
+import { iJWT } from '../../../shared/interface/jwt';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class AuthService {
   private platformId = inject(PLATFORM_ID);
 
   private userTokenKey = 'userToken'; // Key for localStorage
-  userData: BehaviorSubject<JwtPayload | null> = new BehaviorSubject<JwtPayload | null>(null);
+  userData: BehaviorSubject<iJWT | null> = new BehaviorSubject<iJWT | null>(null);
 
   constructor() {
     this.initializeUser();
@@ -52,9 +53,12 @@ export class AuthService {
   /** Updates user data from decoded JWT token */
   private updateUserData(token: string): void {
     try {
-      const decodedToken: any = jwtDecode(token);
+      const decodedToken: iJWT = jwtDecode<iJWT>(token);
       this.userData.next(decodedToken);
-      localStorage.setItem('userName', decodedToken.name); // Store user name in localStorage
+
+      // Store user details in localStorage
+      localStorage.setItem('userName', decodedToken.name);
+      localStorage.setItem('userRole', decodedToken.role);
     } catch (error) {
       console.error('Invalid token:', error);
       this.logout();
@@ -82,7 +86,10 @@ export class AuthService {
 
   /** Sends verification request for reset code */
   sendCheckCodeToAPI(data: VerifyResetCodeRequest): Observable<VerifyResetCodeRequestSuccess | APIResponseMessage> {
-    return this.httpClient.post<VerifyResetCodeRequestSuccess | APIResponseMessage>(`${Env.baseApiUrl}/api/v1/auth/verifyResetCode`, data);
+    return this.httpClient.post<VerifyResetCodeRequestSuccess | APIResponseMessage>(
+      `${Env.baseApiUrl}/api/v1/auth/verifyResetCode`,
+      data
+    );
   }
 
   /** Sends reset password request */
@@ -107,6 +114,8 @@ export class AuthService {
   /** Logs out the user */
   logout(): void {
     localStorage.removeItem(this.userTokenKey);
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
     this.userData.next(null);
     this.router.navigate(['/login']);
   }

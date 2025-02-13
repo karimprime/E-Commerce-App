@@ -91,10 +91,6 @@ export class ResetPasswordComponent {
           this.router.navigate(['/login']);
           this.isLoading = false;
         },
-        error: (error) => {
-          this.errorMessage = error.error?.message || 'Something went wrong!';
-          this.isLoading = false;
-        }
       });
     }
   }

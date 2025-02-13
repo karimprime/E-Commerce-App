@@ -1,5 +1,5 @@
-<article routerLink="/product-details"
-  class="group relative w-full bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700 transform transition duration-300 hover:scale-105 hover:shadow-2xl"
+<article [routerLink]="['/product-details' , productInfo._id]"
+  class="cursor-pointer group relative w-full bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden dark:bg-gray-800 dark:border-gray-700 transform transition duration-300 hover:scale-105 hover:shadow-2xl"
   itemscope itemtype="https://schema.org/Product">
 
   <!-- Product Image -->

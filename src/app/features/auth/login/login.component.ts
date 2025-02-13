@@ -72,13 +72,7 @@ export class LoginComponent {
             localStorage.setItem("userToken", res.token); // Set Token in LocalStorage
             this.authService.initializeUser();
             this.router.navigate(['/home']); // Navigate to Home Page
-          } else {
-            this.errorMessage = res.message || "An error occurred. Please try again.";
-          }
-          this.isLoading = false;
-        },
-        error: (err) => {
-          this.errorMessage = err.error.message || "Login failed.";
+          } 
           this.isLoading = false;
         }
       });

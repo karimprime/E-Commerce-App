@@ -15,7 +15,7 @@ export class ProductsService {
   getAllProducts(page: number = 1): Observable<IProductResponse> {
     return this.httpClient.get<IProductResponse>(`${Env.baseApiUrl}/api/v1/products?page=${page}`);
   }
-  getSpecProducts(pId: string): Observable<IProduct> {
+  getSpecProducts(pId: string | null ): Observable<IProduct> {
     return this.httpClient.get<IProduct>(`${Env.baseApiUrl}/api/v1/products/${pId}`);
   }
 

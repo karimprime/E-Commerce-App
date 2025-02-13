@@ -94,14 +94,10 @@ export class RegisterComponent {
         next: (res) => {
           if (res.message === "success") {
             this.router.navigate(['/login']);
-            this.isLoading = false;
           }
+          this.isLoading = false;
 
         },
-        error: (err) => {
-          this.errorMessage = err.error.message;
-          this.isLoading = false;
-        }
       });
     } else {
       this.isLoading = false;

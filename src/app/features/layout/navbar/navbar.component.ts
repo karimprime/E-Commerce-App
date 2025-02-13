@@ -7,16 +7,6 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { navLink, socialLink } from '../../../shared/interface/nav-link';
 
-interface SocialLink {
-  icon: string;
-  ariaLabel: string;
-}
-
-interface NavLink {
-  route: string;
-  text: string;
-}
-
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -53,11 +43,13 @@ export class NavbarComponent implements OnDestroy {
   ];
 
   constructor() {
+    // ✅ Subscribe to user changes and update UI reactively
     this.userSub = this.authService.userData.subscribe(user => {
       this.isLoginMode = !!user;
-      this.userName = localStorage.getItem('userName');
+      this.userName = user ? user.name : null; // ✅ Directly update from AuthService
     });
   }
+
   toggleDarkMode(): void {
     this.modeService.toggleDarkMode();
     this.isDarkMode = !this.isDarkMode;
