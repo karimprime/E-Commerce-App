@@ -5,6 +5,7 @@ import { ModeService } from '../../../core/services/mode/mode.service';
 import { SidebarCartComponent } from "../additions/sidebar-cart/sidebar-cart.component";
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { navLink, socialLink } from '../../../shared/interface/nav-link';
 
 interface SocialLink {
   icon: string;
@@ -35,7 +36,7 @@ export class NavbarComponent implements OnDestroy {
   isLoginMode = false;
   userName: string | null = null;
 
-  socialLinks: SocialLink[] = [
+  socialLinks: socialLink[] = [
     { icon: 'fa-facebook', ariaLabel: 'Facebook' },
     { icon: 'fa-twitter', ariaLabel: 'Twitter' },
     { icon: 'fa-instagram', ariaLabel: 'Instagram' },
@@ -44,7 +45,7 @@ export class NavbarComponent implements OnDestroy {
     { icon: 'fa-youtube', ariaLabel: 'YouTube' }
   ];
 
-  navLinks: NavLink[] = [
+  navLinks: navLink[] = [
     { route: '/home', text: 'Home' },
     { route: '/products', text: 'Products' },
     { route: '/categories', text: 'Categories' },

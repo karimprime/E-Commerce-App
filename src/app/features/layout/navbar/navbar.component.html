@@ -9,11 +9,11 @@
 
         @if (isLoginMode) {
         <!-- Desktop Navigation -->
-        <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4">
+        <div class="hidden md:ml-6 md:flex md:items-center md:space-x-4 rounded">
           @for (link of navLinks; track link.route) {
-          <a [routerLink]="link.route" routerLinkActive="bg-green-600 rounded text-white dark:text-white"
+          <a [routerLink]="link.route" routerLinkActive="bg-green-600 rounded-full text-white dark:text-white"
             [routerLinkActiveOptions]="{ exact: true }"
-            class="block px-3 py-2 text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700">
+            class="block px-3 py-2 rounded text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700">
             {{ link.text }}
           </a>
           }
