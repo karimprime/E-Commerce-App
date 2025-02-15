@@ -21,10 +21,12 @@ export const routes: Routes = [
   { path: 'brands', component: BrandsComponent, title: 'Brands', canActivate: [authGuard] },
   { path: 'checkout', component: CheckoutComponent, title: 'Check-Out', canActivate: [authGuard] },
   {
-    path: 'product-details/:id', component: ProductDetailsComponent, title: 'Product Details',
-    canActivate: [authGuard], data: { renderMode: 'ssr' }
+    path: 'product-details/:id',
+    component: ProductDetailsComponent,
+    title: 'Product Details',
+    canActivate: [authGuard],
+    data: { renderMode: 'ssr' } // Use SSR for this route
   },
-
   { path: 'register', component: RegisterComponent, title: 'Register' },
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'forget-password', component: ForgetPasswordComponent, title: 'Forget Password' },
