@@ -1,9 +1,8 @@
+// ------------ auth.service.ts ------------
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, Inject, PLATFORM_ID, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
-import { isPlatformBrowser } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
-import { Env } from '../../Environment/Environment';
 import { Router } from '@angular/router';
 import {
   RegisterData,
@@ -16,6 +15,8 @@ import {
   VerifyResetCodeRequestSuccess
 } from '../../../shared/interface/data';
 import { iJWT } from '../../../shared/interface/jwt';
+import { PlatFormService } from '../platForm/plat-form.service';
+import { Env } from '../../Environment/Environment';
 
 @Injectable({
   providedIn: 'root',
@@ -23,18 +24,17 @@ import { iJWT } from '../../../shared/interface/jwt';
 export class AuthService {
   private httpClient = inject(HttpClient);
   private router = inject(Router);
-  private platformId = inject(PLATFORM_ID);
+  private platformService = inject(PlatFormService);
 
-  private userTokenKey = 'userToken'; // Key for localStorage
+  private userTokenKey = 'userToken';
   userData: BehaviorSubject<iJWT | null> = new BehaviorSubject<iJWT | null>(null);
 
   constructor() {
     this.initializeUser();
   }
 
-  /** Initializes the user session */
   initializeUser(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.platformService.checkPlatform() !== 'Browser') return;
 
     const token = this.getToken();
     if (token) {
@@ -45,46 +45,46 @@ export class AuthService {
     }
   }
 
-  /** Retrieves JWT token from local storage */
   private getToken(): string | null {
-    return localStorage.getItem(this.userTokenKey);
+    return this.platformService.safeLocalStorageGet(this.userTokenKey);
   }
 
-  /** Updates user data from decoded JWT token */
   private updateUserData(token: string): void {
     try {
       const decodedToken: iJWT = jwtDecode<iJWT>(token);
       this.userData.next(decodedToken);
 
-      // Store user details in localStorage
-      localStorage.setItem('userName', decodedToken.name);
-      localStorage.setItem('userRole', decodedToken.role);
+      if (this.platformService.checkPlatform() === 'Browser') {
+        localStorage.setItem('userName', decodedToken.name);
+        localStorage.setItem('userRole', decodedToken.role);
+      }
     } catch (error) {
       console.error('Invalid token:', error);
       this.logout();
     }
   }
 
-  /** Sends user registration request */
   sendRegisterToAPI(data: RegisterData): Observable<APIResponseMessage> {
-    return this.httpClient.post<APIResponseMessage>(`${Env.baseApiUrl}/api/v1/auth/signup`, data).pipe(
-      catchError((error) => of(error.error))
-    );
+    return this.httpClient.post<APIResponseMessage>(
+      `${Env.baseApiUrl}/api/v1/auth/signup`,
+      data
+    ).pipe(catchError((error) => of(error.error)));
   }
 
-  /** Sends login request and handles authentication */
   sendLoginToAPI(data: LoginData): Observable<AuthRequestSuccess | APIResponseMessage> {
-    return this.httpClient.post<AuthRequestSuccess>(`${Env.baseApiUrl}/api/v1/auth/signin`, data).pipe(
-      catchError((error) => of(error.error))
+    return this.httpClient.post<AuthRequestSuccess>(
+      `${Env.baseApiUrl}/api/v1/auth/signin`,
+      data
+    ).pipe(catchError((error) => of(error.error)));
+  }
+
+  sendResetCodeToAPI(data: ForgetPasswordRequest): Observable<APIResponseMessage> {
+    return this.httpClient.post<APIResponseMessage>(
+      `${Env.baseApiUrl}/api/v1/auth/forgotPasswords`,
+      data
     );
   }
 
-  /** Sends forgot password request */
-  sendResetCodeToAPI(data: ForgetPasswordRequest): Observable<APIResponseMessage> {
-    return this.httpClient.post<APIResponseMessage>(`${Env.baseApiUrl}/api/v1/auth/forgotPasswords`, data);
-  }
-
-  /** Sends verification request for reset code */
   sendCheckCodeToAPI(data: VerifyResetCodeRequest): Observable<VerifyResetCodeRequestSuccess | APIResponseMessage> {
     return this.httpClient.post<VerifyResetCodeRequestSuccess | APIResponseMessage>(
       `${Env.baseApiUrl}/api/v1/auth/verifyResetCode`,
@@ -92,12 +92,13 @@ export class AuthService {
     );
   }
 
-  /** Sends reset password request */
   resetPasswordToAPI(data: ResetPasswordRequest): Observable<APIResponseMessage> {
-    return this.httpClient.put<APIResponseMessage>(`${Env.baseApiUrl}/api/v1/auth/resetPassword`, data);
+    return this.httpClient.put<APIResponseMessage>(
+      `${Env.baseApiUrl}/api/v1/auth/resetPassword`,
+      data
+    );
   }
 
-  /** Verifies token validity */
   verifyToken(): Observable<any> {
     const token = this.getToken();
     if (!token) return of(null);
@@ -111,12 +112,26 @@ export class AuthService {
     );
   }
 
-  /** Logs out the user */
   logout(): void {
-    localStorage.removeItem(this.userTokenKey);
-    localStorage.removeItem('userName');
-    localStorage.removeItem('userRole');
+    this.platformService.safeLocalStorageRemove(this.userTokenKey);
+    if (this.platformService.checkPlatform() === 'Browser') {
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userRole');
+    }
     this.userData.next(null);
     this.router.navigate(['/login']);
+  }
+
+  get isAuthenticated(): boolean {
+    if (this.platformService.checkPlatform() !== 'Browser') return false;
+    const token = this.getToken();
+    if (!token) return false;
+
+    try {
+      const decoded = jwtDecode<iJWT>(token);
+      return Date.now() < decoded.exp * 1000;
+    } catch {
+      return false;
+    }
   }
 }

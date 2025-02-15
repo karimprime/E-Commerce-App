@@ -64,7 +64,6 @@ export class LoginComponent {
 
   LoginSubmit() {
     this.isLoading = true;
-
     if (this.loginForm.valid) {
       this.loginSub = this.authService.sendLoginToAPI(this.loginForm.value).subscribe({
         next: (res) => {
@@ -72,10 +71,10 @@ export class LoginComponent {
             localStorage.setItem("userToken", res.token); // Set Token in LocalStorage
             this.authService.initializeUser();
             this.router.navigate(['/home']); // Navigate to Home Page
-          } 
-          this.isLoading = false;
+          }
         }
       });
+      this.isLoading = false;
     }
   }
 

@@ -1,1 +1,88 @@
-<p>product-details works!</p>
+<div class="container mx-auto px-4 sm:px-6 lg:px-12 py-12">
+  <!-- Loader While Fetching Data -->
+  @if (loading) {
+  <div class="flex justify-center items-center min-h-screen" role="status" aria-live="polite">
+    <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-green-500" aria-label="Loading..."></div>
+  </div>
+  }
+
+  <!-- Error Message -->
+  @if (errorMessage) {
+  <div class="flex justify-center">
+    <div class="text-red-600 text-lg font-semibold bg-red-100 px-6 py-3 rounded-md shadow-md" role="alert">
+      {{ errorMessage }}
+    </div>
+  </div>
+  }
+
+  <!-- Product Details Section -->
+  @if (pSpec) {
+  <article class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 items-center">
+
+    <!-- Image Carousel -->
+    <div class="relative w-full max-w-lg mx-auto">
+      <owl-carousel-o [options]="sliderCategoriesOptions">
+        @for (image of pSpec.images; track image) {
+        <ng-template carouselSlide>
+          <img [src]="image" [alt]="pSpec.title" itemprop="image"
+            class="rounded-xl shadow-lg w-full max-h-[400px] sm:max-h-[450px] md:max-h-[500px] object-cover border border-gray-200 transition-transform duration-300 hover:scale-105"
+            loading="lazy" />
+        </ng-template>
+        }
+      </owl-carousel-o>
+    </div>
+
+    <!-- Product Info -->
+    <div class="flex flex-col gap-6 text-gray-800 dark:text-white">
+      <div class="flex items-center justify-between">
+        <h1 class="text-3xl sm:text-4xl font-bold">
+          {{ pSpec.title }}
+        </h1>
+        <button class="text-gray-400 hover:text-red-500 transition duration-300"
+          [attr.aria-label]="'Add ' + pSpec.title + ' to wishlist'">
+          <i class="fas fa-heart text-3xl" aria-hidden="true"></i>
+        </button>
+      </div>
+      <p class="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed" itemprop="description">
+        {{ pSpec.description }}
+      </p>
+
+      <!-- Price -->
+      <div class="text-2xl sm:text-3xl font-semibold text-green-600 dark:text-green-400" itemprop="price">
+        {{ pSpec.price }} EGP
+      </div>
+
+      <!-- Ratings & Reviews -->
+      <div class="flex items-center gap-2 sm:gap-3" aria-label="Customer Ratings">
+        <span class="text-yellow-400 text-lg sm:text-2xl">
+          <i class="fa-solid fa-star"></i> {{ pSpec.ratingsAverage }}
+        </span>
+        <span class="text-gray-500 dark:text-gray-200 text-sm sm:text-md">
+          ({{ pSpec.ratingsQuantity }} Reviews)
+        </span>
+      </div>
+
+      <!-- Category & Brand -->
+      <div class="flex flex-wrap gap-3 sm:gap-4">
+        <span
+          class="text-xs sm:text-sm bg-green-100 text-green-800 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium"
+          itemprop="category">
+          {{ pSpec.category.name }}
+        </span>
+        <span
+          class="text-xs sm:text-sm bg-green-100 text-green-800 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-medium"
+          itemprop="brand">
+          {{ pSpec.brand.name }}
+        </span>
+      </div>
+
+      <!-- Add to Cart Button -->
+      <button
+        class="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white px-5 sm:px-6 py-3 rounded-lg text-base sm:text-lg font-semibold shadow-md transition-transform duration-200 hover:scale-105"
+        [attr.aria-label]="'Add ' + pSpec.title + ' to cart'">
+        <i class="fas fa-shopping-cart mr-2" aria-hidden="true"></i>Add to Cart
+      </button>
+    </div>
+  </article>
+  }
+</div>

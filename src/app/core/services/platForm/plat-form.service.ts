@@ -1,26 +1,24 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+
 import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class PlatFormService {
+  constructor(@Inject(PLATFORM_ID) private platFormId: object) { }
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  checkPlatform() {
+    return isPlatformBrowser(this.platFormId) ? 'Browser' : 'Server';
+  }
 
-  initializeUser(): void {
-    // Check if the platform is browser before accessing localStorage
-    if (isPlatformBrowser(this.platformId)) {
-      const userToken = localStorage.getItem('userToken');
-      if (userToken) {
-        // Initialize user based on the token
-        console.log('User is authenticated');
-      } else {
-        console.log('User is not authenticated');
-      }
-    } else {
-      // Handle SSR or non-browser environments if needed
-      console.log('Running on the server or a non-browser platform');
+  safeLocalStorageGet(key: string): string | null {
+    return isPlatformBrowser(this.platFormId) ? localStorage.getItem(key) : null;
+  }
+
+  safeLocalStorageRemove(key: string): void {
+    if (isPlatformBrowser(this.platFormId)) {
+      localStorage.removeItem(key);
     }
   }
 }
