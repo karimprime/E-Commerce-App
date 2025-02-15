@@ -19,15 +19,15 @@ export const routes: Routes = [
   { path: 'categories', component: CategoriesComponent, title: 'Categories', canActivate: [authGuard] },
   { path: 'brands', component: BrandsComponent, title: 'Brands', canActivate: [authGuard] },
   { path: 'checkout', component: CheckoutComponent, title: 'Check-Out', canActivate: [authGuard] },
-  {
-    path: 'product-details/:id',
-    loadComponent: () =>
-      import('./features/pages/product-details/product-details.component').then(
-        (m) => m.ProductDetailsComponent
-      ),
-    title: 'Product Details',
-    canActivate: [authGuard],
-  },
+  // {
+  //   path: 'product-details/:id',
+  //   loadComponent: () =>
+  //     import('./features/pages/product-details/product-details.component').then(
+  //       (m) => m.ProductDetailsComponent
+  //     ),
+  //   title: 'Product Details',
+  //   canActivate: [authGuard],
+  // },
   { path: 'register', component: RegisterComponent, title: 'Register' },
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'forget-password', component: ForgetPasswordComponent, title: 'Forget Password' },
