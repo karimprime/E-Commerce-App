@@ -1,7 +1,7 @@
-import { CategoriesComponent } from './features/pages/categories/categories.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/pages/home/home.component';
 import { ProductsComponent } from './features/pages/products/products.component';
+import { CategoriesComponent } from './features/pages/categories/categories.component';
 import { BrandsComponent } from './features/pages/brands/brands.component';
 import { LoginComponent } from './features/auth/login/login.component';
 import { RegisterComponent } from './features/auth/register/register.component';
