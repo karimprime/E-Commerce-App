@@ -1,7 +1,6 @@
-// ------------ auth.service.ts ------------
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, of, tap } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import {
@@ -12,7 +11,7 @@ import {
   ForgetPasswordRequest,
   VerifyResetCodeRequest,
   ResetPasswordRequest,
-  VerifyResetCodeRequestSuccess
+  VerifyResetCodeRequestSuccess,
 } from '../../../shared/interface/data';
 import { iJWT } from '../../../shared/interface/jwt';
 import { PlatFormService } from '../platForm/plat-form.service';
@@ -75,7 +74,15 @@ export class AuthService {
     return this.httpClient.post<AuthRequestSuccess>(
       `${Env.baseApiUrl}/api/v1/auth/signin`,
       data
-    ).pipe(catchError((error) => of(error.error)));
+    ).pipe(
+      tap((response) => {
+        if (response.token) {
+          this.platformService.safeLocalStorageSet(this.userTokenKey, response.token);
+          this.updateUserData(response.token);
+        }
+      }),
+      catchError((error) => of(error.error))
+    );
   }
 
   sendResetCodeToAPI(data: ForgetPasswordRequest): Observable<APIResponseMessage> {
@@ -129,8 +136,15 @@ export class AuthService {
 
     try {
       const decoded = jwtDecode<iJWT>(token);
-      return Date.now() < decoded.exp * 1000;
+      const isTokenValid = Date.now() < decoded.exp * 1000;
+
+      if (!isTokenValid) {
+        this.logout(); // Log out if the token is expired
+      }
+
+      return isTokenValid;
     } catch {
+      this.logout(); // Log out if the token is invalid
       return false;
     }
   }

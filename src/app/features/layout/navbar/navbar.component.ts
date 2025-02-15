@@ -2,7 +2,7 @@ import { AuthService } from './../../../core/services/auth/auth.service';
 import { Component, inject, HostListener, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ModeService } from '../../../core/services/mode/mode.service';
-import { SidebarCartComponent } from "../additions/sidebar-cart/sidebar-cart.component";
+import { SidebarCartComponent } from '../additions/sidebar-cart/sidebar-cart.component';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { navLink, socialLink } from '../../../shared/interface/nav-link';
@@ -12,7 +12,7 @@ import { navLink, socialLink } from '../../../shared/interface/nav-link';
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, SidebarCartComponent],
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnDestroy {
   private authService = inject(AuthService);
@@ -32,21 +32,32 @@ export class NavbarComponent implements OnDestroy {
     { icon: 'fa-instagram', ariaLabel: 'Instagram' },
     { icon: 'fa-tiktok', ariaLabel: 'TikTok' },
     { icon: 'fa-linkedin', ariaLabel: 'LinkedIn' },
-    { icon: 'fa-youtube', ariaLabel: 'YouTube' }
+    { icon: 'fa-youtube', ariaLabel: 'YouTube' },
   ];
 
   navLinks: navLink[] = [
     { route: '/home', text: 'Home' },
     { route: '/products', text: 'Products' },
     { route: '/categories', text: 'Categories' },
-    { route: '/brands', text: 'Brands' }
+    { route: '/brands', text: 'Brands' },
   ];
 
   constructor() {
-    // ✅ Subscribe to user changes and update UI reactively
-    this.userSub = this.authService.userData.subscribe(user => {
-      this.isLoginMode = !!user;
-      this.userName = user ? user.name : null; // ✅ Directly update from AuthService
+    // Subscribe to user changes and update UI reactively
+    this.userSub = this.authService.userData.subscribe((user) => {
+      this.isLoginMode = this.authService.isAuthenticated && !!user;
+      this.userName = user ? user.name : null; // Directly update from AuthService
+    });
+
+    // Verify token on initialization
+    this.authService.verifyToken().subscribe({
+      next: () => {
+        this.isLoginMode = this.authService.isAuthenticated;
+      },
+      error: () => {
+        this.isLoginMode = false;
+        this.userName = null;
+      },
     });
   }
 

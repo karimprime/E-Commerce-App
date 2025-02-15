@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../core/services/ecommerce/products/products.service';
 import { DataSpecProduct } from '../../../shared/interface/spec-product';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-product-details',
-  imports: [CarouselModule],
+  imports: [CarouselModule , CommonModule],
   templateUrl: './product-details.component.html',
   styleUrl: './product-details.component.scss'
 })

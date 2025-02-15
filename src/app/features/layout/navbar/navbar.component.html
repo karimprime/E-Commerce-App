@@ -95,10 +95,13 @@
         </div>
         }
 
+        <!-- Mobile Logout Button -->
+        @if (isLoginMode) {
         <button (click)="logout()"
           class="sm:hidden w-full items-center justify-center bg-green-600 rounded-full px-3 py-2 text-white font-medium hover:bg-red-700 transition-colors">
-          <i class="fa-solid fa-door-open "></i>
+          <i class="fa-solid fa-door-open"></i>
         </button>
+        }
 
         <!-- Theme Toggle -->
         <button (click)="toggleDarkMode()" type="button"
@@ -113,8 +116,6 @@
           [attr.aria-expanded]="isMobileMenuOpen" aria-label="Toggle navigation menu">
           <i class="fa-solid fa-bars"></i>
         </button>
-
-
       </div>
     </div>
 
@@ -176,9 +177,22 @@
           }
         </div>
         }
+
+        <!-- Auth Links in Mobile View -->
+        @if (!isLoginMode) {
+        <div class="flex flex-col space-y-2">
+          <a routerLink="/login" (click)="closeMobileMenu()"
+            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700 rounded transition-colors">
+            Login
+          </a>
+          <a routerLink="/register" (click)="closeMobileMenu()"
+            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700 rounded transition-colors">
+            Register
+          </a>
+        </div>
+        }
       </div>
     </div>
     }
-
   </div>
 </nav>
