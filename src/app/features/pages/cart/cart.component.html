@@ -76,7 +76,7 @@
         <span> {{ cartDetails()?.data?.totalCartPrice | currency: 'EGP ' }}</span>
       </div>
 
-      <button routerLink="/checkout"
+      <button [routerLink]="['/checkout',cartDetails()?.cartId]"
         class="w-full py-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all flex items-center justify-center text-lg transform hover:scale-105 focus:ring-2 focus:ring-green-300 focus:outline-none shadow-md">
         <i class="fa-solid fa-basket-shopping mr-2"></i> Checkout
       </button>

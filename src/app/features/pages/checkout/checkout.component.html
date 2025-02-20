@@ -1,1 +1,140 @@
-<p>checkout works!</p>
+<div class="w-full md:w-9/12 lg:w-7/12 mx-auto my-8 py-20 md:my-11 px-4 md:px-0 dark:bg-gray-900 dark:text-green-500">
+  @if (errorMessage.length > 0) {
+  <div class="flex justify-center items-center mb-3 ml-2">
+    <div class="flex justify-center items-center bg-red-100 p-2 rounded dark:bg-red-100">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-600 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-700">
+        <span class="font-medium">{{ errorMessage }}</span> Please Try Again!
+      </p>
+    </div>
+  </div>
+  }
+
+  <h2 class="mb-4 text-xl font-bold text-green-900 dark:text-green-500">Checkout Now:</h2>
+  <form class="mx-auto" [formGroup]="checkForm" (ngSubmit)="onlinePayment()">
+    <!-- Details Field -->
+    <div class="mb-4 md:mb-3">
+      <label for="details" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Details:</label>
+      <input type="text" id="details" formControlName="details"
+        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        placeholder="Please Enter Your Details" required />
+    </div>
+
+    @if (checkForm.get('details')?.errors && checkForm.get('details')?.touched) {
+    @if (checkForm.get('details')?.getError('required')) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400">
+        <span class="font-medium">Oops!</span> It is Required!
+      </p>
+    </div>
+    } @else if (checkForm.get('details')?.getError('minlength')) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400">
+        <span class="font-medium">Oops!</span> It is less than 3 Characters!
+      </p>
+    </div>
+    } @else if (checkForm.get('details')?.getError('maxlength')) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400">
+        <span class="font-medium">Oops!</span> It is more than 30 Characters!
+      </p>
+    </div>
+    }
+    }
+
+    @if (checkForm.get('details')?.errors == null && checkForm.get('details')?.touched) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+        <span class="font-medium">Alright!</span> Everything Done <i class="fa-regular fa-face-smile-wink"></i>
+      </p>
+    </div>
+    }
+
+    <!-- Phone Field -->
+    <div class="mb-4 md:mb-3">
+      <label for="phone" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Phone:</label>
+      <input id="phone" type="tel" formControlName="phone"
+        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        placeholder="Please Enter Your Phone" required />
+    </div>
+
+    @if (checkForm.get('phone')?.errors && checkForm.get('phone')?.touched) {
+    @if (checkForm.get('phone')?.getError('required')) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400">
+        <span class="font-medium">Oops!</span> It is Required!
+      </p>
+    </div>
+    } @else if (checkForm.get('phone')?.getError('pattern')) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400">
+        <span class="font-medium">Oops!</span> Please Enter a Valid Phone Number!
+      </p>
+    </div>
+    }
+    }
+
+    @if (checkForm.get('phone')?.errors == null && checkForm.get('phone')?.touched) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+        <span class="font-medium">Alright!</span> Everything Done <i class="fa-regular fa-face-smile-wink"></i>
+      </p>
+    </div>
+    }
+
+    <!-- City Field -->
+    <div class="mb-4 md:mb-3">
+      <label for="city" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">City:</label>
+      <input type="text" id="city" formControlName="city"
+        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+        placeholder="Please Enter Your City" required />
+    </div>
+
+    @if (checkForm.get('city')?.errors && checkForm.get('city')?.touched) {
+    @if (checkForm.get('city')?.getError('required')) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400">
+        <span class="font-medium">Oops!</span> It is Required!
+      </p>
+    </div>
+    } @else if (checkForm.get('city')?.getError('minlength')) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400">
+        <span class="font-medium">Oops!</span> It is less than 3 Characters!
+      </p>
+    </div>
+    } @else if (checkForm.get('city')?.getError('maxlength')) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400">
+        <span class="font-medium">Oops!</span> It is more than 30 Characters!
+      </p>
+    </div>
+    }
+    }
+
+    @if (checkForm.get('city')?.errors == null && checkForm.get('city')?.touched) {
+    <div class="flex justify-start items-center mb-3 ml-2">
+      <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+        <span class="font-medium">Alright!</span> Everything Done <i class="fa-regular fa-face-smile-wink"></i>
+      </p>
+    </div>
+    }
+
+    <button [disabled]="checkForm.invalid || isLoading" type="submit"
+      class="disabled:bg-red-900 w-full md:w-auto text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 dark:disabled:bg-red-900">
+      @if (isLoading) {
+      <i class="fa-solid fa-spinner fa-spin"></i> Processing...
+      } @else {
+      Confirm Your Details
+      }
+    </button>
+  </form>
+</div>
