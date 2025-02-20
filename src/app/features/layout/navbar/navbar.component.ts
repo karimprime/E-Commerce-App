@@ -1,3 +1,4 @@
+import { ICart } from './../../../shared/interface/cart';
 import { AuthService } from './../../../core/services/auth/auth.service';
 import { Component, inject, HostListener, OnDestroy } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
@@ -6,26 +7,28 @@ import { SidebarCartComponent } from '../additions/sidebar-cart/sidebar-cart.com
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { navLink, socialLink } from '../../../shared/interface/nav-link';
+import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 
 @Component({
   selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, SidebarCartComponent],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnDestroy {
+export class NavbarComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private modeService = inject(ModeService);
   private userSub: Subscription;
+
+  private cartService = inject(CartService);
 
   isDarkMode = this.modeService.isDarkMode();
   isMobileMenuOpen = false;
   isDropdownOpen = false;
   isLoginMode = false;
   userName: string | null = null;
-
+  cartNumber!: number;
   socialLinks: socialLink[] = [
     { icon: 'fa-facebook', ariaLabel: 'Facebook' },
     { icon: 'fa-twitter', ariaLabel: 'Twitter' },
@@ -49,6 +52,7 @@ export class NavbarComponent implements OnDestroy {
       this.userName = user ? user.name : null; // Directly update from AuthService
     });
 
+
     // Verify token on initialization
     this.authService.verifyToken().subscribe({
       next: () => {
@@ -59,6 +63,12 @@ export class NavbarComponent implements OnDestroy {
         this.userName = null;
       },
     });
+
+    this.cartService.cartNumber.subscribe({
+      next: (res) => {
+        this.cartNumber = res;
+      }
+    })
   }
 
   toggleDarkMode(): void {

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IProduct } from '../../../../shared/interface/products';
 import { CartService } from '../../../../core/services/ecommerce/cart/cart.service';
@@ -11,17 +11,15 @@ import { WishListService } from '../../../../core/services/ecommerce/wishList/wi
   styleUrl: './product-card.component.scss'
 })
 export class ProductCardComponent {
-  @Input()
-  productInfo !: IProduct;
-  private cartService: CartService = inject(CartService);
-  private wishListService: WishListService = inject(WishListService);
+  @Input() productInfo !: IProduct;
 
-  addToCart(pId: string) {
-    this.cartService.AddToCartAPI(pId).subscribe({
-      next: (res) => {
-        console.log('Cart API Response:', res);
-      }
-    });
+  @Output() fireAddToCart: EventEmitter<string> = new EventEmitter();
+
+  private readonly cartService: CartService = inject(CartService);
+  private readonly wishListService: WishListService = inject(WishListService);
+
+  handleAddToCart(id: string) {
+    this.fireAddToCart.emit(id);
   }
 
 }

@@ -1,24 +1,31 @@
-import { Component, inject } from '@angular/core';
+import { Product } from './../../../shared/interface/cart';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../core/services/ecommerce/products/products.service';
 import { DataSpecProduct } from '../../../shared/interface/spec-product';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { CommonModule } from '@angular/common';
-
+import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
+import { Subscription, take } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
-  imports: [CarouselModule , CommonModule],
+  imports: [CarouselModule, CommonModule],
   templateUrl: './product-details.component.html',
-  styleUrl: './product-details.component.scss'
+  styleUrls: ['./product-details.component.scss'] // ✅ Fixed typo
 })
-export class ProductDetailsComponent {
-  private activatedRoute = inject(ActivatedRoute);
-  private productsService = inject(ProductsService);
+export class ProductDetailsComponent implements OnInit {
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly productsService = inject(ProductsService);
+  private readonly cartService = inject(CartService);
+  private subscriptions = new Subscription(); // ✅ Subscription handler
+
   productid: string | null = null;
   pSpec: DataSpecProduct | null = null;
   loading = true;
   errorMessage = '';
+
+
 
   sliderCategoriesOptions: OwlOptions = {
     loop: true,
@@ -42,27 +49,54 @@ export class ProductDetailsComponent {
   };
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe((spId) => {
-      this.productid = spId.get('id');
+    this.subscriptions.add(
+      this.activatedRoute.paramMap.pipe(take(1)).subscribe((spId) => {
+        this.productid = spId.get('id');
 
-      if (this.productid) {
-        this.productsService.getSpecProducts(this.productid).subscribe({
-          next: (res) => {
-            this.pSpec = res.data;
-            this.loading = false;
-          },
-          error: () => {
-            this.errorMessage = 'Product not found.';
-            this.loading = false;
-            this.pSpec = null;
-          }
-        });
-      } else {
-        this.errorMessage = 'Invalid product ID.';
-        this.loading = false;
-        this.pSpec = null;
-      }
-    });
+        if (this.productid) {
+          this.fetchProductDetails(this.productid);
+        } else {
+          this.handleError('Invalid product ID.');
+        }
+      })
+    );
   }
 
+  fetchProductDetails(productId: string) {
+    this.subscriptions.add(
+      this.productsService.getSpecProducts(productId).subscribe({
+        next: (res) => {
+          this.pSpec = res.data;
+          this.loading = false;
+        },
+        error: () => {
+          this.handleError('Product not found.');
+        }
+      })
+    );
+  }
+
+  addToCart(id: string) {
+    this.subscriptions.add(
+      this.cartService.AddToCartAPI(id).subscribe({
+        next: (res) => {
+          console.log('Cart API Response:', res);
+          this.cartService.cartNumber.next(res.numOfCartItems);
+        },
+        error: (err) => {
+          console.error('Error adding to cart:', err);
+        }
+      })
+    );
+  }
+
+  private handleError(message: string) {
+    this.errorMessage = message;
+    this.loading = false;
+    this.pSpec = null;
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe(); // ✅ Clean up subscriptions
+  }
 }

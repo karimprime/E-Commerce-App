@@ -1,83 +1,94 @@
-// sidebar-cart.component.ts
-import { Component, ViewChild, ElementRef, Signal, signal, inject } from '@angular/core';
+import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../../../core/services/ecommerce/cart/cart.service';
-import { ICartProduct, ICartResponse } from '../../../../shared/interface/cart';
 import { CurrencyPipe } from '@angular/common';
+import { ICart } from '../../../../shared/interface/cart';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar-cart',
-  standalone: true,
-  imports: [RouterLink, CurrencyPipe], // Import CurrencyPipe
+  imports: [RouterLink, CurrencyPipe],
   templateUrl: './sidebar-cart.component.html',
   styleUrls: ['./sidebar-cart.component.scss'],
 })
-export class SidebarCartComponent {
-  @ViewChild('drawerCart', { static: true }) drawerCart!: ElementRef;
+export class SidebarCartComponent implements OnInit {
+  isCartOpen = signal(false);
+  private readonly cartService = inject(CartService);
+  cartDetails = signal<ICart | null>(null);
+  emptyCart: boolean = false;
+  cartNumber!: number;
 
-  isCartOpen = signal(false); // Using Angular Signal for reactivity
-  private cartService: CartService = inject(CartService);
-  cartProducts: ICartProduct[] = [];
-  totalPrice: number = 0;
   ngOnInit() {
-    this.getToCart();
+    this.getCart();
+    this.cartService.cartNumber.subscribe({
+      next: (res) => {
+        this.cartNumber = res;
+      }
+    })
   }
 
-  // Fetch cart data
-  getToCart() {
-    this.cartService.GetCartAPI().subscribe((res: ICartResponse) => {
-      this.cartProducts = res.data.products;
-      this.totalPrice = res.data.totalCartPrice;
-    });
-  }
+  // Fetch the cart data
 
-  // Add to cart
-  addToCart(pId: string) {
-    this.cartService.AddToCartAPI(pId).subscribe((res: ICartResponse) => {
-      this.cartProducts = res.data.products;
-    });
-  }
 
-  // Increase quantity
-  increaseQuantity(cartItem: ICartProduct) {
-    this.cartService.UpdateCartAPI(cartItem.product._id, cartItem.count + 1).subscribe((res: ICartResponse) => {
-      cartItem.count++;
-    });
-  }
-
-  // Decrease quantity
-  decreaseQuantity(cartItem: ICartProduct) {
-    if (cartItem.count > 1) {
-      this.cartService.UpdateCartAPI(cartItem.product._id, cartItem.count - 1).subscribe((res: ICartResponse) => {
-        cartItem.count--;
+  getCart() {
+    this.cartService.GetCartAPI()
+      .pipe(tap((res) => console.log("API Res Get Cart", res)))
+      .subscribe((res) => {
+        this.cartDetails.set(res)
+        this.cartService.cartNumber.next(res.numOfCartItems);
       });
-    }
   }
 
-  // Remove item from cart
-  removeItem(cartItem: ICartProduct) {
-    this.cartService.DeleteItemFromCartAPI(cartItem.product._id).subscribe((res: ICartResponse) => {
-      this.cartProducts = this.cartProducts.filter((item) => item._id !== cartItem._id);
+  // Add to cart and refresh the cart state
+  addToCart(id: string) {
+    this.cartService.AddToCartAPI(id).subscribe({
+      next: (res) => {
+        console.log('Cart API Response:', res);
+        this.getCart(); // Refresh the cart state
+      },
+      error: (err) => {
+        console.error('Error adding to cart:', err);
+      }
     });
   }
 
-  // Clear the entire cart
+  // Update quantity and refresh the cart state
+  updateQuantity(id: string, count: number) {
+    if (count < 1) return; // Prevent negative values
+    this.cartService.UpdateCartAPI(id, count)
+      .pipe(tap((res) => console.log("Updated Cart", res)))
+      .subscribe((res) => {
+        this.cartDetails.set(res);
+        this.cartService.cartNumber.next(res.numOfCartItems);
+      }); // Refresh the cart state
+  }
+
+  // Remove item and refresh the cart state
+  removeItem(id: string) {
+    this.cartService.DeleteItemFromCartAPI(id)
+      .pipe(tap((res) => console.log("Item Removed", res)))
+      .subscribe((res) => {
+        this.cartDetails.set(res)
+        this.cartService.cartNumber.next(res.numOfCartItems);
+      }); // Refresh the cart state
+  }
+
+  // Clear cart and refresh the cart state
   clearCart() {
-    this.cartService.ClearCartAPI().subscribe((res: ICartResponse) => {
-      this.cartProducts = []; // Empty the cart
-    });
+    this.cartService.ClearCartAPI().subscribe({
+      next:(res)=>{
+        this.getCart();
+      }
+    })
   }
-
-
 
   // Toggle cart visibility
   toggleCart() {
     this.isCartOpen.update((prev) => !prev);
   }
 
-  // Close cart
+  // Close the cart
   closeCart() {
     this.isCartOpen.set(false);
   }
-
 }

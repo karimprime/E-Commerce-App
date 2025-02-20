@@ -1,47 +1,59 @@
-import { Brand, Category, Subcategory } from "./products";
-
-// cart.interface.ts
-export interface ICartResponse {
-  status: string;
-  message?: string;
-  numOfCartItems: number;
-  cartId: string;
-  data: ICart; // ICart contains the products array
-}
+import { Category } from "./products";
 
 export interface ICart {
-  _id: string;
-  cartOwner: string;
-  products: ICartProduct[]; // This is what we're using
-  createdAt: string;
-  updatedAt: string;
-  totalCartPrice: number;
-  __v?: number;
+  numOfCartItems: number;
+  cartId: string;
+  data: CartData;
 }
 
-export interface ICartProduct {
+export interface CartData {
+  _id: string;
+  products: Product[];
+  totalCartPrice: number;
+}
+
+export interface Product {
   count: number;
   _id: string;
-  product: IProduct; // Nested product details
+  product: ProductDetails;
   price: number;
 }
 
-export interface IProduct {
-  sold: number;
-  images: string[];
+export interface ProductDetails {
   subcategory: Subcategory[];
-  ratingsQuantity: number;
   _id: string;
   title: string;
-  slug: string;
-  description: string;
   quantity: number;
-  price: number;
   imageCover: string;
   category: Category;
   brand: Brand;
   ratingsAverage: number;
-  createdAt: string;
-  updatedAt: string;
   id: string;
 }
+
+export interface Subcategory {
+  _id: string;
+  name: string;
+  slug: string;
+  category: string;
+}
+
+export interface Brand {
+  _id: string;
+  name: string;
+  slug: string;
+  image: string;
+}
+
+// New interface for clearCart API response
+export interface ICartResponse {
+  message: string;
+}
+
+
+
+
+
+
+
+

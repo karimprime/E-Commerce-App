@@ -1,9 +1,8 @@
-// cart.service.ts
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Env } from '../../../Environment/Environment';
-import { ICartResponse } from '../../../../shared/interface/cart';
+import { ICart } from '../../../../shared/interface/cart';
 
 @Injectable({
   providedIn: 'root',
@@ -11,39 +10,47 @@ import { ICartResponse } from '../../../../shared/interface/cart';
 export class CartService {
   private httpClient = inject(HttpClient);
 
+  cartNumber: BehaviorSubject<any> = new BehaviorSubject<any>(0);
+
+  constructor() {
+    this.GetCartAPI().subscribe((res: ICart) => {
+      this.cartNumber.next(res.numOfCartItems);
+    });
+  }
   // Add a product to the cart
-  AddToCartAPI(pId: string): Observable<ICartResponse> {
-    return this.httpClient.post<ICartResponse>(
+  AddToCartAPI(pId: string): Observable<ICart> {
+    return this.httpClient.post<ICart>(
       `${Env.baseApiUrl}/api/v1/cart`,
       { productId: pId }
     );
   }
 
   // Get the user's cart
-  GetCartAPI(): Observable<ICartResponse> {
-    return this.httpClient.get<ICartResponse>(
+  GetCartAPI(): Observable<ICart> {
+    return this.httpClient.get<ICart>(
       `${Env.baseApiUrl}/api/v1/cart`
     );
+
   }
 
   // Update the quantity of a product in the cart
-  UpdateCartAPI(pId: string, pcount: number): Observable<ICartResponse> {
-    return this.httpClient.put<ICartResponse>(
+  UpdateCartAPI(pId: string, pcount: number): Observable<ICart> {
+    return this.httpClient.put<ICart>(
       `${Env.baseApiUrl}/api/v1/cart/${pId}`,
       { count: pcount }
     );
   }
 
   // Remove a product from the cart
-  DeleteItemFromCartAPI(pId: string): Observable<ICartResponse> {
-    return this.httpClient.delete<ICartResponse>(
+  DeleteItemFromCartAPI(pId: string): Observable<ICart> {
+    return this.httpClient.delete<ICart>(
       `${Env.baseApiUrl}/api/v1/cart/${pId}`
     );
   }
 
   // Clear the entire cart
-  ClearCartAPI(): Observable<ICartResponse> {
-    return this.httpClient.delete<ICartResponse>(
+  ClearCartAPI(): Observable<any> {
+    return this.httpClient.delete<ICart>(
       `${Env.baseApiUrl}/api/v1/cart`
     );
   }

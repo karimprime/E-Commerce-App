@@ -12,6 +12,7 @@ import { CheckoutComponent } from './features/pages/checkout/checkout.component'
 import { VerifyResetCodeComponent } from './features/auth/verify-reset-code/verify-reset-code.component';
 import { ResetPasswordComponent } from './features/auth/reset-password/reset-password.component';
 import { ProductDetailsComponent } from './features/pages/product-details/product-details.component';
+import { CartComponent } from './features/pages/cart/cart.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,7 +21,8 @@ export const routes: Routes = [
   { path: 'categories', component: CategoriesComponent, title: 'Categories', canActivate: [authGuard] },
   { path: 'brands', component: BrandsComponent, title: 'Brands', canActivate: [authGuard] },
   { path: 'checkout', component: CheckoutComponent, title: 'Check-Out', canActivate: [authGuard] },
-  { path: 'product-details/:id', component: ProductDetailsComponent, title: 'Product Details', canActivate: [authGuard], },
+  { path: 'product-details/:id', component: ProductDetailsComponent, title: 'Product Details', canActivate: [authGuard] },
+  { path: 'cart', component: CartComponent, title: 'Cart Of Products', canActivate: [authGuard] },
   { path: 'register', component: RegisterComponent, title: 'Register' },
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'forget-password', component: ForgetPasswordComponent, title: 'Forget Password' },
