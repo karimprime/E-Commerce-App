@@ -33,9 +33,9 @@ export class RegisterComponent {
     agree: new FormControl(false, [Validators.requiredTrue])
   }, { validators: this.confirmPassword.bind(this) });
 
-  passwordVisibility: Record<"password" | "repassword", boolean> = {
+  passwordVisibility: Record<"password" | "rePassword", boolean> = {
     password: false,
-    repassword: false
+    rePassword: false
   };
 
   passwordChecks = {
@@ -53,7 +53,7 @@ export class RegisterComponent {
   }
 
 
-  togglePasswordVisibility(inputEl: HTMLInputElement, field: "password" | "repassword"): void {
+  togglePasswordVisibility(inputEl: HTMLInputElement, field: "password" | "rePassword"): void {
     this.passwordVisibility[field] = !this.passwordVisibility[field];
     inputEl.type = this.passwordVisibility[field] ? 'text' : 'password';
   }

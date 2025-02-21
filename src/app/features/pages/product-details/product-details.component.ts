@@ -1,4 +1,3 @@
-import { Product } from './../../../shared/interface/cart';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../core/services/ecommerce/products/products.service';
@@ -8,9 +7,11 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 import { Subscription, take } from 'rxjs';
 
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+
 @Component({
   selector: 'app-product-details',
-  imports: [CarouselModule, CommonModule],
+  imports: [CarouselModule, CommonModule, SlickCarouselModule],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })

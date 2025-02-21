@@ -6,7 +6,6 @@ import { finalize } from 'rxjs';
 export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
   let ngxSpinnerService = inject(NgxSpinnerService);
 
-
   ngxSpinnerService.show();
   console.log("API Call Started - Showing Spinner");
 

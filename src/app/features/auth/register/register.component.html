@@ -222,11 +222,11 @@
         formControlName="rePassword"
         class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
         required />
-      <button type="button" (click)="togglePasswordVisibility(repasswordInput, 'repassword')"
+      <button type="button" (click)="togglePasswordVisibility(repasswordInput, 'rePassword')"
         class="absolute bottom-3 right-0 flex items-center pr-3 dark:text-gray-300"
-        [attr.aria-label]="passwordVisibility.repassword ? 'Hide password' : 'Show password'">
-        <i class="fa-solid text-gray-500 dark:text-gray-300 text-sm" [class.fa-eye]="!passwordVisibility.repassword"
-          [class.fa-eye-slash]="passwordVisibility.repassword"></i>
+        [attr.aria-label]="passwordVisibility.rePassword ? 'Hide password' : 'Show password'">
+        <i class="fa-solid text-gray-500 dark:text-gray-300 text-sm" [class.fa-eye]="!passwordVisibility.rePassword"
+          [class.fa-eye-slash]="passwordVisibility.rePassword"></i>
       </button>
     </div>
 
@@ -353,7 +353,7 @@
 
 
     <!--back to login-->
-    
+
     <div class="mb-4 md:mb-3 flex items-center">
       <label class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
 
