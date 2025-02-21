@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-forget-password',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule , RouterLink],
   templateUrl: './forget-password.component.html',
   styleUrl: './forget-password.component.scss'
 })
@@ -51,7 +51,7 @@ export class ForgetPasswordComponent {
       next: (res) => {
         console.log("API Response:", res);
         if (res.statusMsg === "success") {
-          this.router.navigate(['/verify-reset-code']);
+          this.router.navigate(['/auth/verify-reset-code']);
         }
         this.isLoading = false;
       },

@@ -54,20 +54,6 @@
         </button>
         }
 
-        <!-- Auth Links (Desktop) -->
-        @if (!isLoginMode) {
-        <div class="hidden md:flex items-center space-x-2">
-          <a routerLink="/login" routerLinkActive="text-green-600 font-semibold"
-            class="px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400  focus:ring-green-500 rounded-full">
-            Login
-          </a>
-          <a routerLink="/register" routerLinkActive="text-green-600 font-semibold"
-            class="px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400  focus:ring-green-500 rounded-full">
-            Register
-          </a>
-        </div>
-        }
-
         <!-- User Dropdown (Desktop) -->
         @if (isLoginMode) {
         <div class="hidden relative dropdown-container xl:block lg:block">
@@ -184,20 +170,6 @@
             </div>
           </div>
           }
-        </div>
-        }
-
-        <!-- Auth Links (Mobile) -->
-        @if (!isLoginMode) {
-        <div class="flex flex-col space-y-2">
-          <a routerLink="/login" (click)="closeMobileMenu()"
-            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700 rounded transition-colors  focus:ring-green-500">
-            Login
-          </a>
-          <a routerLink="/register" (click)="closeMobileMenu()"
-            class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700 rounded transition-colors  focus:ring-green-500">
-            Register
-          </a>
         </div>
         }
       </div>

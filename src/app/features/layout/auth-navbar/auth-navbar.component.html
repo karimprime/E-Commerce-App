@@ -1,0 +1,87 @@
+<nav class="bg-white dark:bg-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-600 w-full z-20">
+  <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Left section -->
+      <div class="flex items-center">
+        <!-- Logo -->
+        <a routerLink="/home" class="flex-shrink-0 group transition-all duration-300 ease-in-out"
+          aria-label="FreshCart Home">
+          <div class="flex items-center justify-center p-2 rounded-lg hover:scale-105 transform transition">
+            <img src="/images/loading-3-shopping-cart.svg"
+              class="w-[50px] group-hover:rotate-12 transition-transform duration-300" alt="FreshCart Logo" />
+            <span class="text-2xl font-extrabold dark:text-white tracking-wide drop-shadow-md">
+              FreshCart
+            </span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Right section -->
+      <div class="flex items-center space-x-2">
+
+        <div class="hidden md:flex items-center space-x-2 text-lg">
+          @for (social of socialLinks; track social.icon) {
+          <a class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400  focus:ring-green-500 rounded-full"
+            [attr.aria-label]="social.ariaLabel">
+            <i [class]="'fa-brands ' + social.icon"></i>
+          </a>
+          }
+        </div>
+
+        <div class="hidden md:flex items-center">
+          <a routerLink="/auth/login" routerLinkActive="text-green-600 font-semibold"
+            class="px-4 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 focus:ring-green-500 rounded-full transition">
+            Login
+          </a>
+          <a routerLink="/auth/register" routerLinkActive="text-green-600 font-semibold"
+            class="px-4 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400 focus:ring-green-500 rounded-full transition">
+            Register
+          </a>
+        </div>
+
+        <!-- Theme Toggle -->
+        <button (click)="toggleDarkMode()" type="button"
+          class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400 focus:ring-green-500 rounded-full transition"
+          [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
+          <i class="fa-solid text-lg" [class.fa-sun]="!isDarkMode" [class.fa-moon]="isDarkMode"></i>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button (click)="toggleMobileMenu()"
+          class="md:hidden p-2 rounded-lg text-gray-600 hover:text-green-700 dark:text-gray-400 dark:hover:text-green-400 focus:ring-green-500 transition"
+          [attr.aria-expanded]="isMobileMenuOpen" aria-label="Toggle navigation menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    @if (isMobileMenuOpen) {
+    <div class="md:hidden pt-4 pb-6">
+
+      <!-- Social Links (Mobile) -->
+      <div class="flex justify-center items-center gap-4 text-2xl">
+        @for (social of socialLinks; track social.icon) {
+        <a class="p-2 text-gray-600 hover:text-green-600 dark:text-gray-300 dark:hover:text-green-600  focus:ring-green-500 rounded-full"
+          [attr.aria-label]="social.ariaLabel">
+          <i [class]="'fa-brands ' + social.icon"></i>
+        </a>
+        }
+      </div>
+
+      <!-- Auth list (Mobile) -->
+
+      <div class="px-4 space-y-2">
+        <a routerLink="/auth/login" (click)="closeMobileMenu()"
+          class="block px-4 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700 rounded-lg transition">
+          Login
+        </a>
+        <a routerLink="/auth/register" (click)="closeMobileMenu()"
+          class="block px-4 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700 rounded-lg transition">
+          Register
+        </a>
+      </div>
+    </div>
+    }
+  </div>
+</nav>

@@ -8,7 +8,6 @@ import { CarsoulHomeComponent } from '../../layout/additions/carsoul-home/carsou
 import { ProductCardComponent } from '../../layout/additions/product-card/product-card.component';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 
-
 @Component({
   selector: 'app-home',
   imports: [CarsoulHomeComponent, ProductCardComponent],

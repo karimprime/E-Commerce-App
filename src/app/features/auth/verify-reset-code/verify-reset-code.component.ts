@@ -40,7 +40,7 @@ export class VerifyResetCodeComponent implements OnDestroy {
 
         // Check if response contains 'status' before accessing it
         if ('status' in res && res.status === "Success") {
-          this.router.navigate(['/reset-password']);
+          this.router.navigate(['/auth/reset-password']);
         } else {
           this.errorMessage = "Invalid reset code!";
         }

@@ -126,7 +126,7 @@ export class AuthService {
       localStorage.removeItem('userRole');
     }
     this.userData.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']);
   }
 
   get isAuthenticated(): boolean {

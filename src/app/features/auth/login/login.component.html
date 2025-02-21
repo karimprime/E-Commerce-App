@@ -1,148 +1,157 @@
-<div class="w-full md:w-9/12 lg:w-7/12 mx-auto my-8 md:my-52 px-4 md:px-0 dark:bg-gray-900 dark:text-green-500">
+@if(errorMessage.length > 0){
+<div class="flex justify-center items-center mb-3 ml-2">
+  <div class="flex justify-center items-center  bg-red-100 p-2 rounded dark:bg-red-100">
+    <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-600 pr-2"></i>
+    <p class="text-sm text-red-600 dark:text-red-700"><span class="font-medium">{{errorMessage}}</span> Please Try
+      Again!</p>
 
+  </div>
+</div>
+}
 
-  @if(errorMessage.length > 0){
-  <div class="flex justify-center items-center mb-3 ml-2">
-    <div class="flex justify-center items-center  bg-red-100 p-2 rounded dark:bg-red-100">
-      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-600 pr-2"></i>
-      <p class="text-sm text-red-600 dark:text-red-700"><span class="font-medium">{{errorMessage}}</span> Please Try
-        Again!</p>
+<h2 class="mb-7 text-xl font-bold text-green-900 dark:text-green-500">Login Now : </h2>
+<form class="mx-auto" [formGroup]="loginForm" (ngSubmit)="LoginSubmit()">
 
-    </div>
+  <!--Email Field-->
+
+  <div class="mb-4 md:mb-3">
+    <label for="email" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Email :</label>
+    <input id="email" type="email" formControlName="email"
+      class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+      placeholder="name@flowbite.com" required />
+  </div>
+
+  @if(loginForm.get('email')?.errors && loginForm.get('email')?.touched){
+
+  @if(loginForm.get('email')?.getError('required')){
+  <div class="flex justify-start items-center mb-3 ml-2">
+    <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+    <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> it is Required!
+      taken!</p>
   </div>
   }
 
-  <h2 class="mb-7 text-xl font-bold text-green-900 dark:text-green-500">Login Now : </h2>
-  <form class="mx-auto" [formGroup]="loginForm" (ngSubmit)="LoginSubmit()">
+  @else if(loginForm.get('email')?.getError('email')){
+  <div class="flex justify-start items-center mb-3 ml-2">
+    <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+    <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> Please Enter vialed
+      Email!</p>
+  </div>
+  }
+  }
 
-    <!--Email Field-->
+  @if (loginForm.get('email')?.errors == null && loginForm.get('email')?.touched){
+  <div class="flex justify-start items-center mb-3 ml-2">
+    <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+      <span class="font-medium">Alright!</span> Everything Done <i class="fa-regular fa-face-smile-wink"></i>
+    </p>
+  </div>
+  }
 
-    <div class="mb-4 md:mb-3">
-      <label for="email" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Email :</label>
-      <input id="email" type="email" formControlName="email"
-        class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
-        placeholder="name@flowbite.com" required />
+  <!-- Password Field -->
+
+  <div class="mb-4 md:mb-3 relative">
+    <label for="password" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Password :</label>
+    <input id="password" #passwordInput type="password" placeholder="Please Enter Password"
+      [formControl]="passwordControl"
+      class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
+      (focus)="passwordFocused = true" (blur)="passwordFocused = false" (input)="updatePasswordStrength()" required />
+
+    <button type="button" (click)="togglePasswordVisibility(passwordInput, 'password')"
+      class="absolute top-11 right-0 flex items-center pr-3 dark:text-gray-300"
+      [attr.aria-label]="passwordVisibility.password ? 'Hide password' : 'Show password'">
+      <i class="fa-solid text-gray-500 dark:text-gray-300 text-sm" [class.fa-eye]="!passwordVisibility.password"
+        [class.fa-eye-slash]="passwordVisibility.password"></i>
+    </button>
+
+    @if(passwordFocused) {
+    <ul class="text-sm mt-2 ml-2">
+      <li class="flex items-center"
+        [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasUppercase, 'text-red-600 dark:text-red-400': !passwordChecks.hasUppercase}">
+        <i class="fa-solid"
+          [ngClass]="{'fa-check-circle': passwordChecks.hasUppercase, 'fa-circle-xmark': !passwordChecks.hasUppercase}"></i>
+        <span class="ml-2">At least one uppercase letter</span>
+      </li>
+      <li class="flex items-center"
+        [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasLowercase, 'text-red-600 dark:text-red-400': !passwordChecks.hasLowercase}">
+        <i class="fa-solid"
+          [ngClass]="{'fa-check-circle': passwordChecks.hasLowercase, 'fa-circle-xmark': !passwordChecks.hasLowercase}"></i>
+        <span class="ml-2">At least one lowercase letter</span>
+      </li>
+      <li class="flex items-center"
+        [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasNumber, 'text-red-600 dark:text-red-400': !passwordChecks.hasNumber}">
+        <i class="fa-solid"
+          [ngClass]="{'fa-check-circle': passwordChecks.hasNumber, 'fa-circle-xmark': !passwordChecks.hasNumber}"></i>
+        <span class="ml-2">At least one number</span>
+      </li>
+      <li class="flex items-center"
+        [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasMinLength, 'text-red-600 dark:text-red-400': !passwordChecks.hasMinLength}">
+        <i class="fa-solid"
+          [ngClass]="{'fa-check-circle': passwordChecks.hasMinLength, 'fa-circle-xmark': !passwordChecks.hasMinLength}"></i>
+        <span class="ml-2">At least 8 characters</span>
+      </li>
+
+      <li class="flex items-center"
+        [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasSpical, 'text-red-600 dark:text-red-400': !passwordChecks.hasSpical}">
+        <i class="fa-solid"
+          [ngClass]="{'fa-check-circle': passwordChecks.hasSpical, 'fa-circle-xmark': !passwordChecks.hasSpical}"></i>
+        <span class="ml-2">At least 1 Special Character</span>
+      </li>
+    </ul>
+    }
+
+    @if(passwordControl.errors && passwordControl.touched) {
+    @if(passwordControl.getError('required')) {
+    <div class="flex justify-start items-center mt-2 mb-3 ml-2">
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> It is required!</p>
     </div>
-
-    @if(loginForm.get('email')?.errors && loginForm.get('email')?.touched){
-
-    @if(loginForm.get('email')?.getError('required')){
+    }
+    @else if(passwordControl.getError('pattern')) {
     <div class="flex justify-start items-center mb-3 ml-2">
       <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
-      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> it is Required!
-        taken!</p>
-    </div>
-    }
-
-    @else if(loginForm.get('email')?.getError('email')){
-    <div class="flex justify-start items-center mb-3 ml-2">
-      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
-      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> Please Enter vialed
-        Email!</p>
+      <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> Please enter a valid
+        password!</p>
     </div>
     }
     }
 
-    @if (loginForm.get('email')?.errors == null && loginForm.get('email')?.touched){
+    @if(!passwordControl.errors && passwordControl.touched) {
     <div class="flex justify-start items-center mb-3 ml-2">
       <p class="mt-2 text-sm text-green-900 dark:text-green-500">
-        <span class="font-medium">Alright!</span> Everything Done <i class="fa-regular fa-face-smile-wink"></i>
+        <span class="font-medium">Alright!</span> Everything's good <i class="fa-regular fa-face-smile-wink"></i>
       </p>
     </div>
     }
 
-    <!-- Password Field -->
+  </div>
 
-    <div class="mb-4 md:mb-3 relative">
-      <label for="password" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">Password :</label>
-      <input id="password" #passwordInput type="password" placeholder="Please Enter Password"
-        [formControl]="passwordControl"
-        class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 pr-10 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
-        (focus)="passwordFocused = true" (blur)="passwordFocused = false" (input)="updatePasswordStrength()" required />
+  <!--Register-->
 
-      <button type="button" (click)="togglePasswordVisibility(passwordInput, 'password')"
-        class="absolute top-11 right-0 flex items-center pr-3 dark:text-gray-300"
-        [attr.aria-label]="passwordVisibility.password ? 'Hide password' : 'Show password'">
-        <i class="fa-solid text-gray-500 dark:text-gray-300 text-sm" [class.fa-eye]="!passwordVisibility.password"
-          [class.fa-eye-slash]="passwordVisibility.password"></i>
-      </button>
+  <div class="mt-5 mb-2 md:mb-2 flex items-center space-x-1 group">
+    <a routerLink="/auth/register"
+      class="text-sm font-medium text-green-900 dark:text-green-500 hover:text-green-800 transition duration-300 ease-in-out flex items-center">
+      <i class="fa-regular fa-user pr-1"></i> Don't have an account?
+    </a>
+    <a routerLink="/auth/register"
+      class="text-sm font-medium text-green-900 hover:text-green-700 dark:text-green-500 group-hover:underline  dark:hover:text-white transition duration-300 ease-in-out flex items-center">
+      Sign up now!
+    </a>
+  </div>
 
-      @if(passwordFocused) {
-      <ul class="text-sm mt-2 ml-2">
-        <li class="flex items-center"
-          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasUppercase, 'text-red-600 dark:text-red-400': !passwordChecks.hasUppercase}">
-          <i class="fa-solid"
-            [ngClass]="{'fa-check-circle': passwordChecks.hasUppercase, 'fa-circle-xmark': !passwordChecks.hasUppercase}"></i>
-          <span class="ml-2">At least one uppercase letter</span>
-        </li>
-        <li class="flex items-center"
-          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasLowercase, 'text-red-600 dark:text-red-400': !passwordChecks.hasLowercase}">
-          <i class="fa-solid"
-            [ngClass]="{'fa-check-circle': passwordChecks.hasLowercase, 'fa-circle-xmark': !passwordChecks.hasLowercase}"></i>
-          <span class="ml-2">At least one lowercase letter</span>
-        </li>
-        <li class="flex items-center"
-          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasNumber, 'text-red-600 dark:text-red-400': !passwordChecks.hasNumber}">
-          <i class="fa-solid"
-            [ngClass]="{'fa-check-circle': passwordChecks.hasNumber, 'fa-circle-xmark': !passwordChecks.hasNumber}"></i>
-          <span class="ml-2">At least one number</span>
-        </li>
-        <li class="flex items-center"
-          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasMinLength, 'text-red-600 dark:text-red-400': !passwordChecks.hasMinLength}">
-          <i class="fa-solid"
-            [ngClass]="{'fa-check-circle': passwordChecks.hasMinLength, 'fa-circle-xmark': !passwordChecks.hasMinLength}"></i>
-          <span class="ml-2">At least 8 characters</span>
-        </li>
+  <!-- Forgot Password -->
+  <div class="mb-4 md:mb-3 flex items-center">
+    <a routerLink="/auth/forget-password"
+      class="text-sm font-medium text-green-900 dark:text-green-500  hover:text-green-700 transition duration-300 ease-in-out flex items-center">
+      <i class="fa-solid fa-key pr-1"></i><span class="hover:underline">Forgot Password</span>?
+    </a>
+  </div>
 
-        <li class="flex items-center"
-          [ngClass]="{'text-green-700 dark:text-green-500': passwordChecks.hasSpical, 'text-red-600 dark:text-red-400': !passwordChecks.hasSpical}">
-          <i class="fa-solid"
-            [ngClass]="{'fa-check-circle': passwordChecks.hasSpical, 'fa-circle-xmark': !passwordChecks.hasSpical}"></i>
-          <span class="ml-2">At least 1 Special Character</span>
-        </li>
-      </ul>
-      }
 
-      @if(passwordControl.errors && passwordControl.touched) {
-      @if(passwordControl.getError('required')) {
-      <div class="flex justify-start items-center mt-2 mb-3 ml-2">
-        <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
-        <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> It is required!</p>
-      </div>
-      }
-      @else if(passwordControl.getError('pattern')) {
-      <div class="flex justify-start items-center mb-3 ml-2">
-        <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
-        <p class="text-sm text-red-600 dark:text-red-400"><span class="font-medium">Oops!</span> Please enter a valid
-          password!</p>
-      </div>
-      }
-      }
+  <!--Submit Button-->
 
-      @if(!passwordControl.errors && passwordControl.touched) {
-      <div class="flex justify-start items-center mb-3 ml-2">
-        <p class="mt-2 text-sm text-green-900 dark:text-green-500">
-          <span class="font-medium">Alright!</span> Everything's good <i class="fa-regular fa-face-smile-wink"></i>
-        </p>
-      </div>
-      }
-
-    </div>
-
-    <!--Forget Password-->
-
-    <div class="mb-4 md:mb-3 relative pl-3 w-64">
-      <a routerLink="/forget-password"
-        class="flex items-center pt-3 text-green-900 dark:text-green-500 hover:underline hover:text-green-800 transition duration-300 ease-in-out">
-        <i class="fa-solid fa-key pr-1"></i>Forgot Password?
-      </a>
-    </div>
-
-    <!--Submit Button-->
-
-    <button [disabled]="loginForm.invalid" type="submit"
-      class="disabled:bg-red-900 mt-4 w-full md:w-auto text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 dark:disabled:bg-red-900">Login
-      Now
-    </button>
-  </form>
-</div>
+  <button [disabled]="loginForm.invalid" type="submit"
+    class="disabled:bg-red-900 mt-4 w-full md:w-auto text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 dark:disabled:bg-red-900">Login
+    Now
+  </button>
+</form>

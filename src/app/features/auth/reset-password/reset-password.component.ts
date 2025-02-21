@@ -88,7 +88,7 @@ export class ResetPasswordComponent {
       this.resetrSub = this.authService.resetPasswordToAPI({ email, newPassword }).subscribe({
         next: () => {
           sessionStorage.removeItem('resetEmail'); // Clear stored email after reset
-          this.router.navigate(['/login']);
+          this.router.navigate(['/auth/login']);
           this.isLoading = false;
         },
       });

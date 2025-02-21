@@ -2,12 +2,12 @@ import { Component, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/services/auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
 })
@@ -93,7 +93,7 @@ export class RegisterComponent {
       this.registerSub = this.authService.sendRegisterToAPI(this.registerForm.value).subscribe({
         next: (res) => {
           if (res.message === "success") {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/auth/login']);
           }
           this.isLoading = false;
 
