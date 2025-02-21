@@ -29,9 +29,11 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideToastr({
       closeButton: false,
-      positionClass: 'toast-below-navbar', // Ensure this CSS class is defined
+      positionClass: 'toast-below-navbar',
       timeOut: 3000,
       progressBar: true,
+      preventDuplicates: false,
+      extendedTimeOut: 1000,
     }),
     { provide: LocationStrategy, useClass: HashLocationStrategy }, // Use HashLocationStrategy
   ],

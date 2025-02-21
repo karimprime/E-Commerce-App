@@ -12,13 +12,13 @@ import { Subscription, take } from 'rxjs';
   selector: 'app-product-details',
   imports: [CarouselModule, CommonModule],
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.scss'] // ✅ Fixed typo
+  styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
-  private subscriptions = new Subscription(); // ✅ Subscription handler
+  private subscriptions = new Subscription();
 
   productid: string | null = null;
   pSpec: DataSpecProduct | null = null;
@@ -97,6 +97,6 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe(); // ✅ Clean up subscriptions
+    this.subscriptions.unsubscribe();
   }
 }

@@ -12,7 +12,6 @@ import { AuthNavbarComponent } from "../auth-navbar/auth-navbar.component";
   imports: [NavbarComponent, FooterComponent, RouterOutlet, AuthNavbarComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush // Improves performance
 })
 export class DashboardComponent implements OnDestroy {
   private authService = inject(AuthService);
