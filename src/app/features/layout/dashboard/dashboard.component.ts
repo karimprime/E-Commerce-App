@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { FooterComponent } from "../footer/footer.component";
 import { Router, RouterOutlet } from '@angular/router';

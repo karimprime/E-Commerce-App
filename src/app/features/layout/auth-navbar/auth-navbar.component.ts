@@ -10,7 +10,6 @@ import { RouterLink } from '@angular/router';
 })
 export class AuthNavbarComponent {
 
-
   private modeService = inject(ModeService);
 
   isDarkMode = this.modeService.isDarkMode();
@@ -25,7 +24,6 @@ export class AuthNavbarComponent {
     { icon: 'fa-linkedin', ariaLabel: 'LinkedIn' },
     { icon: 'fa-youtube', ariaLabel: 'YouTube' },
   ];
-
 
   constructor() { }
 
@@ -45,8 +43,7 @@ export class AuthNavbarComponent {
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
-
-
+  
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event): void {
     if (!(event.target as HTMLElement).closest('.dropdown-container')) {

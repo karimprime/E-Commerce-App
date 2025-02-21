@@ -1,4 +1,4 @@
-import { Component, inject, HostListener, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModeService } from '../../../core/services/mode/mode.service';
@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule, RouterLink, RouterLinkActive,],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush // Optimized for performance
 })
 export class NavbarComponent {
   private authService = inject(AuthService);
