@@ -7,11 +7,9 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 import { Subscription, take } from 'rxjs';
 
-import { SlickCarouselModule } from 'ngx-slick-carousel';
-
 @Component({
   selector: 'app-product-details',
-  imports: [CarouselModule, CommonModule, SlickCarouselModule],
+  imports: [CarouselModule, CommonModule],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
