@@ -6,6 +6,7 @@ import { CartService } from '../../../core/services/ecommerce/cart/cart.service'
 import { CarsoulHomeComponent } from '../../layout/additions/carsoul-home/carsoul-home.component';
 import { ProductCardComponent } from '../../layout/additions/product-card/product-card.component';
 import { RouterLink } from '@angular/router';
+import { WishListService } from '../../../core/services/ecommerce/wishList/wish-list.service';
 
 @Component({
   selector: 'app-home',
@@ -19,9 +20,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
+  private readonly wishListService = inject(WishListService);
 
-  currentPage: number = 1;
-  numProducts: number = 18;
+  currentPage = 1;
+  numProducts = 18;
 
   ngOnInit() {
     this.getAllProduct();
@@ -32,22 +34,24 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.productsService.getAllProducts(this.currentPage, this.numProducts).subscribe({
         next: (res) => {
           this.allProducts = res.data;
-          console.log(res);
         },
       })
     );
   }
 
-
   addToCart(id: string) {
-    this.productSub.add(
-      this.cartService.AddToCartAPI(id).subscribe({
-        next: (res) => {
-          console.log('Cart API Response:', res);
-          this.cartService.cartNumber.next(res.numOfCartItems);
-        },
-      })
-    );
+    this.cartService.AddToCartAPI(id).subscribe({
+      next: (res) => {
+        console.log('Cart API Response:', res);
+        this.cartService.cartNumber.next(res.numOfCartItems);
+      },
+    });
+  }
+
+  addToWishlist(id: string) {
+    this.wishListService.AddToWishListAPI(id).subscribe({
+      next: () => console.log('Added to Wishlist'),
+    });
   }
 
   ngOnDestroy() {

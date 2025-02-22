@@ -1,9 +1,7 @@
-import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ICart } from '../../../../shared/interface/cart';
-import { APIResponseMessage } from '../../../../shared/interface/data';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { Env } from '../../../Environment/Environment';
 
 @Injectable({
@@ -11,31 +9,44 @@ import { Env } from '../../../Environment/Environment';
 })
 export class WishListService {
   private httpClient = inject(HttpClient);
-  private platformId = inject(PLATFORM_ID);
-
-  private userHeader: any = {};
+  private wishlist: any[] = [];
+  private wishlistSubject = new BehaviorSubject<any[]>([]);
+  wishlist$ = this.wishlistSubject.asObservable();
 
   constructor() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.userHeader.token = localStorage.getItem('userToken');
-    }
+    this.loadWishlist();
   }
 
-  AddToWishListAPI(pId: string): Observable<ICart | APIResponseMessage> {
-    return this.httpClient.post<ICart | APIResponseMessage>(`${Env.baseApiUrl}/api/v1/wishlist`, { productId: pId }, {
-      headers: this.userHeader
+  private loadWishlist() {
+    this.GetWishListAPI().subscribe({
+      next: (response) => {
+        this.wishlist = response?.data || [];
+        this.wishlistSubject.next(this.wishlist);
+      },
+      error: (err) => console.error("Error fetching wishlist:", err)
     });
   }
 
-  GetFromWishListAPI(): Observable<ICart | APIResponseMessage> {
-    return this.httpClient.get<ICart | APIResponseMessage>(`${Env.baseApiUrl}/api/v1/wishlist`, {
-      headers: this.userHeader
+  updateWishlist() {
+    this.GetWishListAPI().subscribe(response => {
+      this.wishlist = response?.data || [];
+      this.wishlistSubject.next(this.wishlist);
     });
   }
 
-  DeleteItemFromWishListAPI(pId: string): Observable<ICart | APIResponseMessage> {
-    return this.httpClient.delete<ICart | APIResponseMessage>(`${Env.baseApiUrl}/api/v1/wishlist/${pId}`, {
-      headers: this.userHeader
-    });
+  AddToWishListAPI(pId: string): Observable<any> {
+    return this.httpClient.post<any>(`${Env.baseApiUrl}/api/v1/wishlist`, { productId: pId }).pipe(
+      tap(() => this.updateWishlist())
+    );
+  }
+
+  GetWishListAPI(): Observable<any> {
+    return this.httpClient.get<any>(`${Env.baseApiUrl}/api/v1/wishlist`);
+  }
+
+  DeleteItemFromWishListAPI(pId: string): Observable<any> {
+    return this.httpClient.delete<any>(`${Env.baseApiUrl}/api/v1/wishlist/${pId}`).pipe(
+      tap(() => this.updateWishlist())
+    );
   }
 }
