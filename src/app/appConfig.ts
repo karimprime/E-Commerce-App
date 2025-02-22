@@ -15,7 +15,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })), // Enable HashLocationStrategy
+    provideRouter(routes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
     provideClientHydration(withEventReplay()),
     provideHttpClient(
       withInterceptors([

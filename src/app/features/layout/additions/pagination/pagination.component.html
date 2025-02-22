@@ -1,0 +1,33 @@
+<!-- Pagination Component -->
+<div class="mb-12">
+  @if (totalPages > 1) {
+  <div class="flex justify-center items-center mt-6 space-x-2">
+    <!-- Previous Button -->
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="px-4 py-2 rounded-lg font-semibold transition-all duration-200
+               bg-green-600 hover:bg-green-700 text-white disabled:bg-red-900">
+      <i class="fa-solid fa-share fa-flip-horizontal"></i>
+    </button>
+
+    <!-- Page Numbers -->
+    @for (page of totalPagesArray(); track $index) {
+    @if (page === currentPage) {
+    <button (click)="changePage(page)" class="px-4 py-2 rounded-full font-semibold transition-all duration-200
+                   bg-green-700 text-white">
+      {{ page }}
+    </button>
+    } @else {
+    <button (click)="changePage(page)" class="px-4 py-2 rounded-lg font-semibold transition-all duration-200
+                   bg-green-600 text-white border border-green-500 hover:bg-green-600">
+      {{ page }}
+    </button>
+    }
+    }
+
+    <!-- Next Button -->
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="px-4 py-2 rounded-lg font-semibold transition-all duration-200
+               bg-green-600 hover:bg-green-700 text-white disabled:bg-red-900">
+      <i class="fa-solid fa-share"></i>
+    </button>
+  </div>
+  }
+</div>

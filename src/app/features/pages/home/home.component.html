@@ -1,21 +1,17 @@
-
-
 <app-carsoul-home [productList]="allProducts"></app-carsoul-home>
 
 <!-- Product Grid -->
+
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-6 p-4 w-[90%] mx-auto mb-12">
   @for (product of allProducts; track $index) {
-  <app-product-card (fireAddToCart)="addToCart($event)" [productInfo]="product"></app-product-card>
+  <app-product-card (fireAddToCart)="addToCart($event)" [productInfo]="product" />
   }
-
 </div>
 
-<div class="flex justify-center gap-4 mt-6 mb-6">
-  <button (click)="goToPreviousPage()" [disabled]="currentPage === 1"
-    class="px-4 py-2 bg-gray-700 text-white rounded-lg disabled:opacity-50">Previous</button>
-
-  <span class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg">{{ currentPage }}</span>
-
-  <button (click)="goToNextPage()" [disabled]="currentPage === totalPages"
-    class="px-4 py-2 bg-green-600 text-white rounded-lg disabled:opacity-50">Next</button>
+<div class="mb-12 flex items-center justify-center">
+  <a routerLink="/products" role="button" aria-label="View more products"
+    class="text-sm font-medium bg-green-600 dark:bg-green-600 text-white hover:bg-green-800 hover:text-white  dark:hover:bg-green-700 dark:hover:text-white transition duration-300 flex items-center px-3 py-2 rounded-lg">
+    <i class="fa-solid fa-hand-point-right pr-2"></i>
+    <span>Show More Products</span>
+  </a>
 </div>

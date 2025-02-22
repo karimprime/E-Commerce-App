@@ -1,1 +1,13 @@
-<p>products works!</p>
+<!-- Search Input -->
+<app-search (searchChange)="updateSearchQuery($event)"></app-search>
+
+<!-- Product Grid (Now Shows Only 12 Products Per Page) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 2xl:grid-cols-6 gap-6 p-4 w-[90%] mx-auto mb-12">
+  @for (product of paginatedProducts | search: searchQuery(); track $index) {
+  <app-product-card (fireAddToCart)="addToCart($event)" [productInfo]="product" />
+  }
+</div>
+
+<!-- Pagination Component (Now Works Correctly) -->
+<app-pagination [currentPage]="currentPage" [totalPages]="totalPages" (pageChanged)="onPageChanged($event)">
+</app-pagination>

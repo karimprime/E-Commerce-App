@@ -11,8 +11,10 @@ import { SpecProduct } from '../../../../shared/interface/spec-product';
 export class ProductsService {
   private httpClient = inject(HttpClient);
 
-  getAllProducts(page: number = 1): Observable<IProductResponse> {
-    return this.httpClient.get<IProductResponse>(`${Env.baseApiUrl}/api/v1/products?page=${page}`);
+  getAllProducts(page: number = 1, numProducts: number = 56): Observable<IProductResponse> {
+    return this.httpClient.get<IProductResponse>(
+      `${Env.baseApiUrl}/api/v1/products?limit=${numProducts}&page=${page}`
+    );
   }
 
   getSpecProducts(spId: string | null): Observable<SpecProduct> {
