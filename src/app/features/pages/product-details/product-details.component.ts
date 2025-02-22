@@ -1,3 +1,4 @@
+import { WishListService } from './../../../core/services/ecommerce/wishList/wish-list.service';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../core/services/ecommerce/products/products.service';
@@ -5,7 +6,7 @@ import { DataSpecProduct } from '../../../shared/interface/spec-product';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
-import { Subscription, take } from 'rxjs';
+import { BehaviorSubject, Subscription, take } from 'rxjs';
 
 @Component({
   selector: 'app-product-details',
@@ -13,18 +14,19 @@ import { Subscription, take } from 'rxjs';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent implements OnInit {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
+  private readonly wishListService = inject(WishListService);
   private subscriptions = new Subscription();
 
+  isInWishlist$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   productid: string | null = null;
-  pSpec: DataSpecProduct | null = null;
+  pSpec!: DataSpecProduct;
   loading = true;
   errorMessage = '';
-
-
 
   sliderCategoriesOptions: OwlOptions = {
     loop: true,
@@ -59,6 +61,14 @@ export class ProductDetailsComponent implements OnInit {
         }
       })
     );
+
+    this.subscriptions.add(
+      this.wishListService.wishlist$.subscribe(wishlist => {
+        if (this.pSpec) {
+          this.isInWishlist$.next(wishlist.some(product => product._id === this.pSpec._id));
+        }
+      })
+    );
   }
 
   fetchProductDetails(productId: string) {
@@ -67,9 +77,9 @@ export class ProductDetailsComponent implements OnInit {
         next: (res) => {
           this.pSpec = res.data;
           this.loading = false;
-        },
-        error: () => {
-          this.handleError('Product not found.');
+          this.wishListService.wishlist$.pipe(take(1)).subscribe(wishlist => {
+            this.isInWishlist$.next(wishlist.some(product => product._id === this.pSpec._id));
+          });
         }
       })
     );
@@ -81,18 +91,40 @@ export class ProductDetailsComponent implements OnInit {
         next: (res) => {
           console.log('Cart API Response:', res);
           this.cartService.cartNumber.next(res.numOfCartItems);
-        },
-        error: (err) => {
-          console.error('Error adding to cart:', err);
         }
       })
     );
   }
 
+  toggleWishlist(productId: string) {
+    if (productId) {
+      this.isInWishlist$.getValue() ? this.removeFromWishlist(productId) : this.addToWishlist(productId);
+    }
+  }
+
+  addToWishlist(productId: string) {
+    if (productId) {
+      this.subscriptions.add(
+        this.wishListService.AddToWishListAPI(productId).subscribe(() => {
+          this.isInWishlist$.next(true);
+        })
+      );
+    }
+  }
+
+  removeFromWishlist(productId: string) {
+    if (productId) {
+      this.subscriptions.add(
+        this.wishListService.DeleteItemFromWishListAPI(productId).subscribe(() => {
+          this.isInWishlist$.next(false);
+        })
+      );
+    }
+  }
+
   private handleError(message: string) {
     this.errorMessage = message;
     this.loading = false;
-    this.pSpec = null;
   }
 
   ngOnDestroy() {
