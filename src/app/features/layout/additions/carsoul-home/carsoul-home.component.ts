@@ -20,7 +20,7 @@ export class CarsoulHomeComponent {
 
   sliderOptions: OwlOptions = {
     loop: true,
-
+    rtl: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: false,

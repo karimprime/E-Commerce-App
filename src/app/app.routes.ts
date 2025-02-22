@@ -1,4 +1,4 @@
-import { AuthComponent } from './features/layout/auth/auth.component';
+import { AuthComponent } from './features/layout/auth-dashboard/auth.component';
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth/auth.guard';
 import { loggedGuard } from './core/guards/logged-user/logged.guard';

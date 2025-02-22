@@ -18,7 +18,7 @@ export class CarsoulCategoriesComponent implements OnInit, OnDestroy {
 
   sliderCategoriesOptions: OwlOptions = {
     loop: true,
-
+    rtl: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: false,

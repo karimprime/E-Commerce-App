@@ -1,4 +1,4 @@
-import { Component, inject, HostListener } from '@angular/core';
+import { Component, inject, HostListener, OnInit } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ModeService } from '../../../core/services/mode/mode.service';
@@ -9,14 +9,13 @@ import { CommonModule } from '@angular/common';
 import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
-
 @Component({
   selector: 'app-navbar',
   imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private modeService = inject(ModeService);
@@ -34,6 +33,7 @@ export class NavbarComponent {
 
   userName: string | null = null;
   cartNumber!: number;
+  isRTL: boolean = false; // Track RTL state
 
   socialLinks = [
     { icon: 'fa-facebook', ariaLabel: 'Facebook' },
@@ -70,6 +70,16 @@ export class NavbarComponent {
     });
   }
 
+  ngOnInit() {
+    // Initialize RTL state based on current language
+    this.isRTL = this.translationService.getCurrentLang() === 'ar';
+
+    // Listen for language changes
+    this.translationService.onLangChange.subscribe((lang) => {
+      this.isRTL = lang === 'ar'; // Update RTL state
+    });
+  }
+
   toggleDarkMode(): void {
     this.modeService.toggleDarkMode();
     this.isDarkMode = !this.isDarkMode;
@@ -96,6 +106,7 @@ export class NavbarComponent {
     this.isUserDropdownOpen = !this.isUserDropdownOpen;
     this.isLanguageDropdownOpen = false;
   }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/auth/login']);
@@ -112,6 +123,7 @@ export class NavbarComponent {
 
   changeLang(lang: string) {
     this.translationService.changeLang(lang);
+    this.isLanguageDropdownOpen = false;
   }
 
   ngOnDestroy(): void {
