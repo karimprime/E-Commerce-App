@@ -1,13 +1,26 @@
 <app-dashboard />
 
-<!-- Modern, Clean, and Responsive Loading Screen -->
+<!-- Modern, SEO & Accessibility Optimized Loading Screen -->
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.9)" size="large" type="ball-scale-multiple" color="#4ade80" [fullScreen]="true">
-  <div class="flex flex-col items-center justify-center h-screen animate-fade-in">
-    <!-- Scaling Logo Animation -->
-    <img src="/images/freshcart-logo.svg" class="h-20 md:h-24 lg:h-28 animate-scale" alt="FreshCart Logo" />
-    <!-- Loading Text -->
-    <p class="text-white mt-4 text-lg md:text-xl lg:text-2xl font-semibold tracking-widest animate-pulse">
+  <nav class="flex flex-col items-center justify-center h-screen animate-fade-in" aria-label="Loading screen">
+    <!-- Logo with Improved SEO & a11y -->
+    <a aria-label="Go to FreshCart Home" class="focus:outline-none focus:ring-4 focus:ring-green-400 rounded-md">
+      <figure class="flex items-center justify-center shadow-lg duration-300">
+        <img src="/images/loading-3-shopping-cart.svg" loading="lazy" width="120" height="120"
+          class="w-[120px] h-20 md:h-24 lg:h-28 drop-shadow-xl" alt="FreshCart Shopping Cart Logo" />
+        <figcaption>
+          <h1
+            class="text-6xl font-bold dark:text-white tracking-wide drop-shadow-lg bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-transparent">
+            FreshCart
+          </h1>
+        </figcaption>
+      </figure>
+    </a>
+
+    <!-- Loading Text with High Contrast and a11y Enhancements -->
+    <p class="text-white mt-4 text-lg md:text-xl lg:text-2xl font-semibold tracking-widest animate-pulse drop-shadow-lg"
+      role="alert" aria-live="polite">
       Loading, please wait...
     </p>
-  </div>
+  </nav>
 </ngx-spinner>
