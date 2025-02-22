@@ -8,9 +8,12 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 import { BehaviorSubject, Subscription, take } from 'rxjs';
 
+import { TranslationService } from '../../../core/services/i18n/translation.service';
+import { TranslatePipe } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-product-details',
-  imports: [CarouselModule, CommonModule],
+  imports: [CarouselModule, CommonModule, TranslatePipe],
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
@@ -22,6 +25,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   isInWishlist$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private readonly translationService: TranslationService = inject(TranslationService);
 
   productid: string | null = null;
   pSpec!: DataSpecProduct;
@@ -127,6 +131,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
+  changeLang(lang: string) {
+    this.translationService.changeLang(lang);
+  }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }

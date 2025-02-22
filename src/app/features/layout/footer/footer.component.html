@@ -3,10 +3,10 @@
     <!-- Header Section -->
     <header class="space-y-4">
       <h2 class="text-3xl font-semibold text-gray-800 dark:text-white">
-        Get the FreshCart App
+        {{'Get the FreshCart App' | translate}}
       </h2>
       <p class="text-gray-600 dark:text-gray-400 text-lg">
-        We will send you a link, open it on your phone to download the app.
+        {{'We will send you a link, open it on your phone to download the app.' | translate}}
       </p>
     </header>
 
@@ -14,13 +14,13 @@
     <form class="space-y-4 max-w-3xl">
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div class="sm:col-span-2">
-          <label for="email" class="sr-only">Email address</label>
-          <input type="email" id="email" required placeholder="Enter your email..."
+          <label for="email" class="sr-only">{{'Email address' | translate}}</label>
+          <input type="email" id="email" required [placeholder]="['Enter your email...' | translate]"
             class="w-full p-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:text-white" />
         </div>
         <button type="submit"
           class="w-full sm:w-auto px-6 py-1 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors duration-200 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-800">
-          Share App Link
+          {{'Share App Link' | translate}}
         </button>
       </div>
     </form>
@@ -33,7 +33,7 @@
       <!-- Payment Partners -->
       <div class="flex flex-wrap items-center gap-4">
         <span class="text-gray-600 dark:text-gray-400 text-lg">
-          Payment Partners
+          {{'Payment Partners' | translate }}
         </span>
         <div class="flex items-center gap-4 flex-wrap">
           <img src="/images/amazon-pay.png" alt="Amazon Pay" class="h-6 w-auto object-contain" loading="lazy" />
@@ -47,7 +47,7 @@
       <!-- App Downloads -->
       <div class="flex flex-wrap items-center gap-4">
         <span class="text-gray-600 dark:text-gray-400 text-lg">
-          Get deliveries with FreshCart
+          {{'Get deliveries with FreshCart' | translate}}
         </span>
         <div class="flex items-center gap-4">
           <img src="/images/get-apple-store.png" alt="Download on App Store" class="h-10 w-auto object-contain"

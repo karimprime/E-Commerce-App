@@ -5,15 +5,20 @@ import { Subscription, tap } from 'rxjs';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 import { ICart } from '../../../shared/interface/cart';
 
+import { TranslationService } from '../../../core/services/i18n/translation.service';
+import { TranslatePipe } from '@ngx-translate/core';
+
+
 @Component({
   selector: 'app-cart',
-  imports: [RouterLink, CurrencyPipe],
+  imports: [RouterLink, CurrencyPipe , TranslatePipe],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
   isCartOpen = signal(false);
   private readonly cartService = inject(CartService);
+  private readonly translationService = inject(TranslationService);
   cartDetails = signal<ICart | null>(null);
   emptyCart: boolean = false;
   cartNumber!: number;
@@ -94,6 +99,10 @@ export class CartComponent implements OnInit {
         this.getCart();
       }
     });
+  }
+
+  changeLang(lang: string) {
+    this.translationService.changeLang(lang);
   }
 
 

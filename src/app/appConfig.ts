@@ -13,6 +13,14 @@ import { provideToastr } from 'ngx-toastr';
 import { successInterceptor } from './core/interceptors/success/success.interceptor';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
+import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './i18n/', '.json');
+}
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withHashLocation(), withInMemoryScrolling({ scrollPositionRestoration: 'enabled' })),
@@ -25,7 +33,14 @@ export const appConfig: ApplicationConfig = {
         loadingInterceptor,
       ])
     ),
-    importProvidersFrom(CarouselModule, NgxSpinnerModule), // Combine imports
+    importProvidersFrom(CarouselModule, NgxSpinnerModule,
+      TranslateModule.forRoot({
+        loader: {
+          provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+        }
+      })),
     provideAnimations(),
     provideToastr({
       closeButton: false,
@@ -35,6 +50,6 @@ export const appConfig: ApplicationConfig = {
       preventDuplicates: false,
       extendedTimeOut: 1000,
     }),
-    { provide: LocationStrategy, useClass: HashLocationStrategy }, // Use HashLocationStrategy
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
 };

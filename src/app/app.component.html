@@ -7,11 +7,11 @@
     <a aria-label="Go to FreshCart Home" class="focus:outline-none focus:ring-4 focus:ring-green-400 rounded-md">
       <figure class="flex items-center justify-center shadow-lg duration-300">
         <img src="/images/loading-3-shopping-cart.svg" loading="lazy" width="120" height="120"
-          class="w-[120px] h-20 md:h-24 lg:h-28 drop-shadow-xl" alt="FreshCart Shopping Cart Logo" />
+          class="w-[120px] h-20 md:h-24 lg:h-28 drop-shadow-xl" [alt]="['FreshCart Shopping Cart Logo' | translate ]" />
         <figcaption>
           <h1
             class="text-6xl font-bold dark:text-white tracking-wide drop-shadow-lg bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-transparent">
-            FreshCart
+            {{'FreshCart' | translate}}
           </h1>
         </figcaption>
       </figure>
@@ -20,7 +20,7 @@
     <!-- Loading Text with High Contrast and a11y Enhancements -->
     <p class="text-white mt-4 text-lg md:text-xl lg:text-2xl font-semibold tracking-widest animate-pulse drop-shadow-lg"
       role="alert" aria-live="polite">
-      Loading, please wait...
+      {{'Loading, please wait...' | translate}}
     </p>
   </nav>
 </ngx-spinner>

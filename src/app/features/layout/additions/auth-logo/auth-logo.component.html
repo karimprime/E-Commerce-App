@@ -5,9 +5,10 @@
     aria-label="Go to FreshCart Home">
     <div class="flex items-center justify-center p-2 rounded-lg hover:scale-105 transition-transform duration-300">
       <img src="/images/loading-3-shopping-cart.svg"
-        class="w-[55px] group-hover:rotate-12 transition-transform duration-300" alt="FreshCart Logo" />
+        class="w-[55px] group-hover:rotate-12 transition-transform duration-300"
+        [alt]="['FreshCart Logo' | translate]" />
       <span class="text-3xl font-bold dark:text-white tracking-wide drop-shadow-lg">
-        FreshCart
+        {{'FreshCart' | translate}}
       </span>
     </div>
   </a>

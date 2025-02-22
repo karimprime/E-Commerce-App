@@ -10,7 +10,7 @@
             <img src="/images/loading-3-shopping-cart.svg"
               class="w-[50px] group-hover:rotate-12 transition-transform duration-300" alt="FreshCart Logo" />
             <span class="text-2xl font-extrabold dark:text-white tracking-wide drop-shadow-md">
-              FreshCart
+              {{ 'FreshCart' | translate }}
             </span>
           </div>
         </a>
@@ -22,7 +22,7 @@
           <a [routerLink]="link.route" routerLinkActive="bg-green-600 rounded-full text-white dark:text-white"
             [routerLinkActiveOptions]="{ exact: true }"
             class="block px-3 py-2 rounded text-base font-medium transition-colors duration-300 text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700  focus:ring-green-500">
-            {{ link.text }}
+            {{ link.text | translate }}
           </a>
           }
         </div>
@@ -35,11 +35,13 @@
         <div class="hidden md:flex items-center space-x-2">
           @for (social of socialLinks; track social.icon) {
           <a class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400  focus:ring-green-500 rounded-full"
-            [attr.aria-label]="social.ariaLabel">
+            [attr.aria-label]="social.ariaLabel | translate">
             <i [class]="'fa-brands ' + social.icon"></i>
           </a>
           }
         </div>
+
+
 
         <!-- Cart Button -->
         @if (isLoginMode) {
@@ -57,14 +59,14 @@
         <!-- User Dropdown (Desktop) -->
         @if (isLoginMode) {
         <div class="hidden relative dropdown-container xl:block lg:block">
-          <button id="dropdownAvatarNameButton" (click)="toggleDropdown()" [attr.aria-expanded]="isDropdownOpen"
+          <button id="dropdownAvatarNameButton" (click)="toggleUserDropdown()" [attr.aria-expanded]="isUserDropdownOpen"
             class="flex items-center text-sm font-medium text-gray-900 dark:text-white rounded-lg px-4 py-2 transition-all duration-300 hover:text-green-600 dark:hover:text-green-400 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 border-4 border-green-600">
             <span class="mr-2 font-semibold lg:text-sm">{{userName}}</span>
             <i class="fa-solid fa-chevron-down transition-transform duration-300"
-              [class.rotate-180]="isDropdownOpen"></i>
+              [class.rotate-180]="isUserDropdownOpen"></i>
           </button>
 
-          @if (isDropdownOpen) {
+          @if (isUserDropdownOpen) {
           <div
             class="absolute right-0 mt-4 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg divide-y divide-gray-200 dark:divide-gray-700 z-50"
             role="menu">
@@ -74,14 +76,14 @@
                   class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white transition-colors  focus:ring-green-500"
                   role="menuitem">
                   <i class="fa-solid fa-heart mr-2 text-red-500"></i>
-                  Your Wish List
+                  {{ 'Your WishList' | translate }}
                 </a>
               </li>
               <li>
                 <a class="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:text-white transition-colors  focus:ring-green-500"
                   role="menuitem">
                   <i class="fa-solid fa-cog mr-2 text-gray-600 dark:text-gray-300"></i>
-                  Settings
+                  {{ 'Settings' | translate }}
                 </a>
               </li>
             </ul>
@@ -90,7 +92,7 @@
               <button (click)="logout()"
                 class="w-full flex items-center justify-center bg-red-600 rounded-full px-4 py-2 text-white font-medium hover:bg-red-700 transition-colors  focus:ring-red-500">
                 <i class="fa-solid fa-door-open mr-2"></i>
-                Log Out
+                {{ 'Log Out' | translate }}
               </button>
             </div>
           </div>
@@ -98,12 +100,59 @@
         </div>
         }
 
+
+
         <!-- Theme Toggle -->
         <button (click)="toggleDarkMode()" type="button"
           class="p-2 text-gray-600 hover:text-green-700 dark:text-gray-300 dark:hover:text-green-400  focus:ring-green-500 rounded-full"
-          [attr.aria-label]="isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'">
+          [attr.aria-label]="isDarkMode ? ('Switch to light mode' | translate) : ('Switch to dark mode' | translate)">
           <i class="fa-solid text-lg" [class.fa-sun]="!isDarkMode" [class.fa-moon]="isDarkMode"></i>
         </button>
+
+        <!-- Language Dropdown -->
+        <div class="relative">
+          <button (click)="toggleLanguageDropdown()" [attr.aria-expanded]="isLanguageDropdownOpen"
+            class="flex items-center text-sm font-medium text-gray-900 dark:text-white rounded-lg px-4 py-2 transition-all duration-300 hover:text-green-600 dark:hover:text-green-400 focus:outline-none focus:ring-4 focus:ring-green-300 dark:focus:ring-green-700 border-2 border-green-600">
+            <i class="fa-solid fa-globe mr-2 font-semibold lg:text-sm"></i>
+            <i class="fa-solid fa-chevron-down transition-transform duration-300"
+              [class.rotate-180]="isLanguageDropdownOpen"></i>
+          </button>
+
+          @if (isLanguageDropdownOpen) {
+          <div
+            class="z-50 absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-lg shadow-lg divide-y divide-gray-100 dark:divide-gray-600">
+            <ul class="py-2 font-medium" role="none">
+              <li>
+                <a (click)="changeLang('ar')"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">
+                  <div class="inline-flex items-center">
+                    {{ 'Arabic' | translate }}
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a (click)="changeLang('en')"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">
+                  <div class="inline-flex items-center">
+                    {{ 'English (US)' | translate }}
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a (click)="changeLang('de')"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+                  role="menuitem">
+                  <div class="inline-flex items-center">
+                    {{ 'German' | translate }}
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          }
+        </div>
 
         <!-- Mobile Menu Button -->
         <button (click)="toggleMobileMenu()"
@@ -122,7 +171,7 @@
         <div class="flex justify-center items-center gap-4 text-2xl">
           @for (social of socialLinks; track social.icon) {
           <a class="p-2 text-gray-600 hover:text-green-600 dark:text-gray-300 dark:hover:text-green-600  focus:ring-green-500 rounded-full"
-            [attr.aria-label]="social.ariaLabel">
+            [attr.aria-label]="social.ariaLabel | translate">
             <i [class]="'fa-brands ' + social.icon"></i>
           </a>
           }
@@ -133,7 +182,7 @@
         @for (link of navLinks; track link.route) {
         <a [routerLink]="link.route" (click)="closeMobileMenu()" routerLinkActive="bg-green-600 text-white"
           class="block px-3 py-2 text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-green-100 dark:hover:bg-gray-700 rounded transition-colors  focus:ring-green-500">
-          {{ link.text }}
+          {{ link.text | translate }}
         </a>
         }
 
@@ -153,20 +202,20 @@
               <li>
                 <a class="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700  focus:ring-green-500"
                   role="menuitem">
-                  <i class="fa-solid fa-heart mr-2 text-red-500"></i> Your Wish List
+                  <i class="fa-solid fa-heart mr-2 text-red-500"></i> {{ 'Your WishList' | translate }}
                 </a>
               </li>
               <li>
                 <a class="block px-4 py-2 text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700  focus:ring-green-500"
                   role="menuitem">
-                  <i class="fa-solid fa-cog mr-2 text-gray-600 dark:text-gray-300"></i> Settings
+                  <i class="fa-solid fa-cog mr-2 text-gray-600 dark:text-gray-300"></i> {{ 'Settings' | translate }}
                 </a>
               </li>
             </ul>
             <div class="py-2 px-4">
               <button (click)="logout()"
                 class="w-full flex items-center justify-center bg-red-600 rounded-full px-4 py-2 text-white font-medium hover:bg-red-700 transition-colors  focus:ring-red-500">
-                <i class="fa-solid fa-door-open mr-2"></i> Log Out
+                <i class="fa-solid fa-door-open mr-2"></i> {{ 'Log Out' | translate }}
               </button>
             </div>
           </div>

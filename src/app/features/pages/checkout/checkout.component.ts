@@ -1,12 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersService } from '../../../core/services/ecommerce/orders/orders.service';
 
+import { TranslationService } from '../../../core/services/i18n/translation.service';
+import { TranslatePipe } from '@ngx-translate/core';
+
 @Component({
   selector: 'app-checkout',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, TranslatePipe],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss'
 })
@@ -14,6 +17,8 @@ export class CheckoutComponent {
 
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly ordersService = inject(OrdersService);
+  private readonly translationService: TranslationService = inject(TranslationService);
+
   private router = inject(Router);
   errorMessage: string = "";
   isLoading: boolean = false;
@@ -31,8 +36,8 @@ export class CheckoutComponent {
 
   initForm() {
     this.checkForm = new FormGroup({
-      details: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
-      city: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+      details: new FormControl('', [Validators.required]),
+      city: new FormControl('', [Validators.required]),
       phone: new FormControl('', [Validators.required, Validators.pattern('^(01)[0125][0-9]{8}$')])
     })
   }
@@ -51,6 +56,10 @@ export class CheckoutComponent {
         window.location.href = res.session.url
       }
     })
+  }
+
+  changeLang(lang: string) {
+    this.translationService.changeLang(lang);
   }
 
 }

@@ -6,10 +6,13 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 import { CommonModule } from '@angular/common';
 
+import { TranslationService } from '../../../core/services/i18n/translation.service';
+import { TranslatePipe } from '@ngx-translate/core';
+
+
 @Component({
   selector: 'app-navbar',
-  standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive,],
+  imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
@@ -20,10 +23,15 @@ export class NavbarComponent {
   private cartService = inject(CartService);
   private userSub: Subscription;
 
+  private readonly translationService = inject(TranslationService);
+
   isDarkMode = this.modeService.isDarkMode();
   isMobileMenuOpen = false;
   isDropdownOpen = false;
+  isLanguageDropdownOpen = false;
+  isUserDropdownOpen = false;
   isLoginMode = false;
+
   userName: string | null = null;
   cartNumber!: number;
 
@@ -79,6 +87,15 @@ export class NavbarComponent {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  toggleLanguageDropdown() {
+    this.isLanguageDropdownOpen = !this.isLanguageDropdownOpen;
+    this.isUserDropdownOpen = false;
+  }
+
+  toggleUserDropdown() {
+    this.isUserDropdownOpen = !this.isUserDropdownOpen;
+    this.isLanguageDropdownOpen = false;
+  }
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/auth/login']);
@@ -91,6 +108,10 @@ export class NavbarComponent {
     if (!(event.target as HTMLElement).closest('.dropdown-container')) {
       this.isDropdownOpen = false;
     }
+  }
+
+  changeLang(lang: string) {
+    this.translationService.changeLang(lang);
   }
 
   ngOnDestroy(): void {

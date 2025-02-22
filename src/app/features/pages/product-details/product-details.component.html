@@ -46,7 +46,7 @@
 
       <!-- Price -->
       <div class="text-2xl sm:text-3xl font-semibold text-green-600 dark:text-green-400 mb-6" itemprop="price">
-        {{ pSpec.price }} EGP
+        {{ pSpec.price }} {{'EGP' | translate}}
       </div>
 
       <!-- Ratings & Reviews -->
@@ -55,7 +55,7 @@
           <i class="fa-solid fa-star"></i> {{ pSpec.ratingsAverage }}
         </span>
         <span class="text-gray-500 dark:text-gray-200 text-sm sm:text-md">
-          ({{ pSpec.ratingsQuantity }} Reviews)
+          ({{ pSpec.ratingsQuantity }} {{'Reviews' | translate}})
         </span>
       </div>
 
@@ -75,7 +75,7 @@
       <button (click)="addToCart(pSpec.id)"
         class="bg-gradient-to-r from-green-500 to-green-700 hover:from-green-600 hover:to-green-800 text-white px-6 py-3 rounded-lg text-base sm:text-lg font-semibold shadow-md transition-transform duration-200 hover:scale-105"
         [attr.aria-label]="'Add ' + pSpec.title + ' to cart'">
-        <i class="fas fa-shopping-cart mr-2" aria-hidden="true"></i> Add to Cart
+        <i class="fas fa-shopping-cart mr-2" aria-hidden="true"></i> {{'Add to cart' | translate}}
       </button>
     </div>
   </article>

@@ -22,6 +22,8 @@
     "@angular/router": "^19.1.0",
     "@angular/ssr": "^19.1.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@ngx-translate/core": "^16.0.4",
+    "@ngx-translate/http-loader": "^16.0.1",
     "@types/jquery": "^3.5.32",
     "@types/slick-carousel": "^1.6.40",
     "e-commerce-app": "file:",

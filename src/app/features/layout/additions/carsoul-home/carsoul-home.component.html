@@ -2,7 +2,7 @@
 
   <!-- Section Title -->
   <h1 class="text-4xl font-bold text-center text-gray-800 dark:text-gray-200 mb-10">
-    Explore the Latest Tech & Innovations
+    {{'Explore the Latest Tech & Innovations' | translate}}
   </h1>
 
   <div class=" grid grid-cols-1 md:grid-cols-4 gap-4 items-center mx-auto">
@@ -11,17 +11,17 @@
     <div class="md:col-span-3">
       <owl-carousel-o [options]="sliderOptions">
         <ng-template carouselSlide>
-          <img src="/images/slider-image-1.jpeg" alt="Tech Trends"
+          <img src="/images/slider-image-1.jpeg" [alt]="['Tech Trends' | translate ]"
             class="w-full object-cover h-[250px] sm:h-[300px] md:h-[250px] lg:h-[450px] rounded-lg shadow-lg"
             loading="lazy">
         </ng-template>
         <ng-template carouselSlide>
-          <img src="/images/slider-image-2.jpeg" alt="Innovations"
+          <img src="/images/slider-image-2.jpeg" [alt]="['Innovations' | translate ]"
             class="w-full object-cover h-[250px] sm:h-[300px] md:h-[250px] lg:h-[450px] rounded-lg shadow-lg"
             loading="lazy">
         </ng-template>
         <ng-template carouselSlide>
-          <img src="/images/slider-image-3.jpeg" alt="AI & Tech"
+          <img src="/images/slider-image-3.jpeg" [alt]="['AI & Tech' | translate ]"
             class="w-full object-cover h-[250px] sm:h-[300px] md:h-[250px] lg:h-[450px] rounded-lg shadow-lg"
             loading="lazy">
         </ng-template>
@@ -31,11 +31,11 @@
     <!-- Blog Image Grid -->
     <!-- Blog Image Grid (Hidden on Small Screens) -->
     <div class="hidden md:flex md:col-span-1 flex-col gap-4">
-      <img src="/images/img4.avif" alt="Digital Transformation"
+      <img src="/images/img4.avif" [alt]="['Digital Transformation' | translate ]"
         class="w-full object-cover h-[140px] sm:h-[180px] md:h-[60px] lg:h-[130px] rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
         loading="lazy">
 
-      <img src="/images/banner-4.jpeg" alt="Tech Revolution"
+      <img src="/images/banner-4.jpeg" [alt]="['Tech Revolution' | translate ]"
         class="w-full object-cover h-[140px] sm:h-[180px] md:h-[60px] lg:h-[130px] rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
         loading="lazy">
     </div>
@@ -46,7 +46,7 @@
   <!-- Featured Categories -->
   <div class="mt-14 text-center">
     <h2 class="text-3xl font-semibold text-gray-900 dark:text-gray-300 mb-6">
-      Discover More Categories
+      {{'Discover More Categories' | translate}}
     </h2>
     <app-carsoul-categories />
   </div>
