@@ -17,4 +17,18 @@ export interface ICategory {
   image: string;
   createdAt: string;
   updatedAt: string;
+  // Add the products property here, assuming each category contains a list of products
+  products: IProduct[]; // New property to hold products for each category
+}
+
+
+export interface IProduct {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  categoryId: string;
+  createdAt: string;
+  updatedAt: string;
 }
