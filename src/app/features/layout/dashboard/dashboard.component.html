@@ -10,9 +10,9 @@
   <router-outlet />
 </div>
 
-@if (isLoginMode) {
+@else if (isLoginMode) {
 <app-footer />
 }
-@else if (!isLoginMode || currentRoute === '/home') {
+@if (!isLoginMode || currentRoute === '/home') {
 <app-footer />
 }
