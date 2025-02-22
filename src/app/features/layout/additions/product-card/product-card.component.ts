@@ -11,7 +11,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-card',
-  standalone: true,
   imports: [CommonModule, RouterLink, TranslatePipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss'

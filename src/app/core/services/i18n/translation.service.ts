@@ -32,18 +32,19 @@ export class TranslationService {
     }
   }
 
+
   changeDir() {
     const savedLang = localStorage.getItem('lng');
-    if (savedLang === 'en' || savedLang === 'de') {
-      document.body.dir = 'ltr';
-    } else if (savedLang === 'ar') {
+
+    if (savedLang === 'ar') {
       document.body.dir = 'rtl';
+      document.body.style.textAlign = 'right';
     } else {
       document.body.dir = 'ltr';
+      document.body.style.textAlign = 'left';
     }
   }
 
-  // Add this method to get the current language
   getCurrentLang(): string {
     return this.translateService.currentLang || this.defaultLang;
   }

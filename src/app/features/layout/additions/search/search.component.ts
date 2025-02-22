@@ -6,7 +6,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-search',
-  standalone: true,
   imports: [FormsModule, TranslatePipe],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss'
