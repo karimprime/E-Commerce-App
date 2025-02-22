@@ -5,12 +5,12 @@ import { ModeService } from '../../../core/services/mode/mode.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 import { CommonModule } from '@angular/common';
-
 import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
@@ -71,12 +71,10 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Initialize RTL state based on current language
     this.isRTL = this.translationService.getCurrentLang() === 'ar';
 
-    // Listen for language changes
     this.translationService.onLangChange.subscribe((lang) => {
-      this.isRTL = lang === 'ar'; // Update RTL state
+      this.isRTL = lang === 'ar';
     });
   }
 
@@ -118,6 +116,7 @@ export class NavbarComponent implements OnInit {
   onClickOutside(event: Event): void {
     if (!(event.target as HTMLElement).closest('.dropdown-container')) {
       this.isDropdownOpen = false;
+      this.isUserDropdownOpen = false;
     }
   }
 
