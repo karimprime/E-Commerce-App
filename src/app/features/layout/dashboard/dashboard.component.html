@@ -13,3 +13,6 @@
 @if (isLoginMode) {
 <app-footer />
 }
+@else if (!isLoginMode || currentRoute === '/home') {
+<app-footer />
+}
