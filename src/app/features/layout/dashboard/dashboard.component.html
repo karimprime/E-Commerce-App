@@ -1,15 +1,17 @@
-@if (isLoginMode) {
-<app-navbar />
+@if (isLoginMode) 
+{
+  <app-navbar />
 }
-@else if (!isLoginMode && currentRoute === '/home') {
-<app-auth-navbar />
+@else if (!isLoginMode && currentRoute === '/home') 
+{
+  <app-auth-navbar />
 }
-
 
 <div class="min-h-[100vh]">
   <router-outlet />
 </div>
 
-@if (isLoginMode) {
-<app-footer />
+@if (isLoginMode || currentRoute === '/home') 
+{
+  <app-footer />
 }
