@@ -1,144 +1,146 @@
 <!-- Form Title -->
-<h2 class="mb-7 text-xl font-bold text-green-900 dark:text-green-500">
-  {{'Login Now:' | translate}}
-</h2>
 
-<!-- Login Form -->
-<form class="mx-auto" [formGroup]="loginForm" (ngSubmit)="LoginSubmit()" aria-labelledby="login-form-title">
+<div>
+  <h2 class="mb-7 text-xl font-bold text-green-900 dark:text-green-500">
+    {{'Login Now:' | translate}}
+  </h2>
 
-  <!-- Email Field -->
-  <div class="mb-4 md:mb-3">
-    <label for="email" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">{{'Email:' |
-      translate}}</label>
-    <input id="email" type="email" formControlName="email"
-      class="w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-      placeholder="{{'name@example.com' | translate}}" aria-describedby="email-error" required />
+  <!-- Login Form -->
+  <form class="mx-auto" [formGroup]="loginForm" (ngSubmit)="LoginSubmit()" aria-labelledby="login-form-title">
 
-    <!-- Email Validation Messages -->
-    @if (loginForm.get('email')?.errors && loginForm.get('email')?.touched) {
-    <div id="email-error">
-      @if (loginForm.get('email')?.getError('required')) {
-      <div class="flex justify-start items-center mb-3 ml-2 mt-2">
-        <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-1" aria-hidden="true"></i>
-        <p class="text-sm text-red-600 dark:text-red-400">
-          <span class="font-medium">{{'Oops!' | translate}}</span> {{'It is Required!' | translate}}
-        </p>
+    <!-- Email Field -->
+    <div class="mb-4 md:mb-3">
+      <label for="email" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">{{'Email:' |
+        translate}}</label>
+      <input id="email" type="email" formControlName="email"
+        class="w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+        placeholder="{{'name@example.com' | translate}}" aria-describedby="email-error" required />
+
+      <!-- Email Validation Messages -->
+      @if (loginForm.get('email')?.errors && loginForm.get('email')?.touched) {
+      <div id="email-error">
+        @if (loginForm.get('email')?.getError('required')) {
+        <div class="flex justify-start items-center mb-3 ml-2 mt-2">
+          <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-1" aria-hidden="true"></i>
+          <p class="text-sm text-red-600 dark:text-red-400">
+            <span class="font-medium">{{'Oops!' | translate}}</span> {{'It is Required!' | translate}}
+          </p>
+        </div>
+        }
+        @if (loginForm.get('email')?.getError('email')) {
+        <div class="flex justify-start items-center mb-3 ml-2 mt-2">
+          <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-1" aria-hidden="true"></i>
+          <p class="text-sm text-red-600 dark:text-red-400">
+            <span class="font-medium">{{'Oops!' | translate}}</span> {{'Please enter a valid Email!' | translate}}
+          </p>
+        </div>
+        }
       </div>
       }
-      @if (loginForm.get('email')?.getError('email')) {
+
+      <!-- Email Success Message -->
+      @if (!loginForm.get('email')?.errors && loginForm.get('email')?.touched) {
       <div class="flex justify-start items-center mb-3 ml-2 mt-2">
-        <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-1" aria-hidden="true"></i>
-        <p class="text-sm text-red-600 dark:text-red-400">
-          <span class="font-medium">{{'Oops!' | translate}}</span> {{'Please enter a valid Email!' | translate}}
+        <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+          <span class="font-medium">{{'Alright!' | translate}}</span> {{'Everything Done' | translate}} <i
+            class="fa-regular fa-face-smile-wink" aria-hidden="true"></i>
         </p>
       </div>
       }
     </div>
-    }
 
-    <!-- Email Success Message -->
-    @if (!loginForm.get('email')?.errors && loginForm.get('email')?.touched) {
-    <div class="flex justify-start items-center mb-3 ml-2 mt-2">
-      <p class="mt-2 text-sm text-green-900 dark:text-green-500">
-        <span class="font-medium">{{'Alright!' | translate}}</span> {{'Everything Done' | translate}} <i
-          class="fa-regular fa-face-smile-wink" aria-hidden="true"></i>
-      </p>
+    <!-- Password Field -->
+    <div class="mb-4 md:mb-3 relative">
+      <label for="password" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">{{'Password:' |
+        translate}}</label>
+      <input id="password" #passwordInput type="password" [placeholder]="'Please Enter Password' | translate"
+        [formControl]="passwordControl"
+        class="w-full p-2.5 pr-10 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
+        (focus)="passwordFocused.set(true)" (blur)="passwordFocused.set(false)" (input)="updatePasswordStrength()"
+        aria-describedby="password-error" required />
+
+      <!-- Password Visibility Toggle -->
+      <button type="button" (click)="togglePasswordVisibility(passwordInput, 'password')"
+        class="absolute top-11 right-0 flex items-center pr-3 dark:text-gray-300"
+        [attr.aria-label]="passwordVisibility().password ? ('Hide password' | translate) : ('Show password' | translate)">
+        <i class="fa-solid text-gray-500 dark:text-gray-300 text-sm" [class.fa-eye]="passwordVisibility().password"
+          [class.fa-eye-slash]="!passwordVisibility().password"></i>
+      </button>
+
+      <!-- Password Strength Checks -->
+      @if (passwordFocused()) {
+      <ul class="text-sm mt-2 ml-2" aria-live="polite">
+        @for (check of passwordChecks() | keyvalue; track check.key) {
+        <li class="flex items-center"
+          [ngClass]="{'text-green-700 dark:text-green-500': check.value, 'text-red-600 dark:text-red-400': !check.value}">
+          <i class="fa-solid p-1" [ngClass]="{'fa-check-circle': check.value, 'fa-circle-xmark': !check.value}"></i>
+          <span class="ml-2">{{ check.key | passwordCheckLabel | translate }}</span>
+        </li>
+        }
+      </ul>
+      }
+
+      <!-- Password Validation Messages -->
+      @if (passwordControl.errors && passwordControl.touched) {
+      <div id="password-error">
+        @if (passwordControl.getError('required')) {
+        <div class="flex justify-start items-center pt-4 mb-3 ml-2 mt-2">
+          <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-1" aria-hidden="true"></i>
+          <p class="text-sm text-red-600 dark:text-red-400">
+            <span class="font-medium">{{'Oops!' | translate}}</span> {{'It is required!' | translate}}
+          </p>
+        </div>
+        }
+        @if (passwordControl.getError('pattern')) {
+        <div class="flex justify-start items-center mb-3 ml-2 mt-2">
+          <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-1" aria-hidden="true"></i>
+          <p class="text-sm text-red-600 dark:text-red-400">
+            <span class="font-medium">{{'Oops!' | translate}}</span> {{'Please enter a valid password!' | translate}}
+          </p>
+        </div>
+        }
+      </div>
+      }
+
+      <!-- Password Success Message -->
+      @if (!passwordControl.errors && passwordControl.touched) {
+      <div class="flex justify-start items-center mb-3 ml-2 mt-2">
+        <p class="mt-2 text-sm text-green-900 dark:text-green-500">
+          <span class="font-medium">{{'Alright!' | translate}}</span> {{'Everything\'s good' | translate}} <i
+            class="fa-regular fa-face-smile-wink" aria-hidden="true"></i>
+        </p>
+      </div>
+      }
     </div>
-    }
-  </div>
 
-  <!-- Password Field -->
-  <div class="mb-4 md:mb-3 relative">
-    <label for="password" class="block mb-2 text-sm font-bold text-green-900 dark:text-green-500">{{'Password:' |
-      translate}}</label>
-    <input id="password" #passwordInput type="password" [placeholder]="'Please Enter Password' | translate"
-      [formControl]="passwordControl"
-      class="w-full p-2.5 pr-10 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500"
-      (focus)="passwordFocused.set(true)" (blur)="passwordFocused.set(false)" (input)="updatePasswordStrength()"
-      aria-describedby="password-error" required />
+    <!-- Register Link -->
+    <div class="mt-5 mb-2 md:mb-2 flex items-center space-x-1 group">
+      <a routerLink="/auth/register"
+        class="text-sm font-medium text-green-900 dark:text-green-500 hover:text-green-800 transition duration-300 ease-in-out flex items-center">
+        <i class="fa-regular fa-user p-1" aria-hidden="true"></i> {{'Don\'t have an account?' | translate}}
+      </a>
+      <a routerLink="/auth/register"
+        class="text-sm font-medium text-green-900 hover:text-green-700 dark:text-green-500 group-hover:underline dark:hover:text-white transition duration-300 ease-in-out flex items-center">
+        {{'Sign up now!' | translate}}
+      </a>
+    </div>
 
-    <!-- Password Visibility Toggle -->
-    <button type="button" (click)="togglePasswordVisibility(passwordInput, 'password')"
-      class="absolute top-11 right-0 flex items-center pr-3 dark:text-gray-300"
-      [attr.aria-label]="passwordVisibility().password ? ('Hide password' | translate) : ('Show password' | translate)">
-      <i class="fa-solid text-gray-500 dark:text-gray-300 text-sm" [class.fa-eye]="passwordVisibility().password"
-        [class.fa-eye-slash]="!passwordVisibility().password"></i>
+    <!-- Forgot Password Link -->
+    <div class="mb-4 md:mb-3 flex items-center">
+      <a routerLink="/auth/forget-password"
+        class="text-sm font-medium text-green-900 dark:text-green-500 hover:text-green-700 transition duration-300 ease-in-out flex items-center">
+        <i class="fa-solid fa-key p-1" aria-hidden="true"></i>
+        <span class="hover:underline">{{'Forgot Password' | translate}}</span>?
+      </a>
+    </div>
+
+    <!-- Submit Button -->
+    <button [disabled]="loginForm.invalid || isLoading()" type="submit"
+      class="w-full md:w-auto mt-4 px-5 py-2.5 text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 rounded-lg dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 disabled:bg-red-900 dark:disabled:bg-red-900">
+      @if (isLoading()) {
+      <i class="fa-solid fa-spinner fa-spin p-1"></i>
+      } @else {
+      {{'Login Now' | translate}}
+      }
     </button>
-
-    <!-- Password Strength Checks -->
-    @if (passwordFocused()) {
-    <ul class="text-sm mt-2 ml-2" aria-live="polite">
-      @for (check of passwordChecks() | keyvalue; track check.key) {
-      <li class="flex items-center"
-        [ngClass]="{'text-green-700 dark:text-green-500': check.value, 'text-red-600 dark:text-red-400': !check.value}">
-        <i class="fa-solid p-1" [ngClass]="{'fa-check-circle': check.value, 'fa-circle-xmark': !check.value}"></i>
-        <span class="ml-2">{{ check.key | passwordCheckLabel | translate }}</span>
-      </li>
-      }
-    </ul>
-    }
-
-    <!-- Password Validation Messages -->
-    @if (passwordControl.errors && passwordControl.touched) {
-    <div id="password-error">
-      @if (passwordControl.getError('required')) {
-      <div class="flex justify-start items-center pt-4 mb-3 ml-2 mt-2">
-        <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-1" aria-hidden="true"></i>
-        <p class="text-sm text-red-600 dark:text-red-400">
-          <span class="font-medium">{{'Oops!' | translate}}</span> {{'It is required!' | translate}}
-        </p>
-      </div>
-      }
-      @if (passwordControl.getError('pattern')) {
-      <div class="flex justify-start items-center mb-3 ml-2 mt-2">
-        <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-1" aria-hidden="true"></i>
-        <p class="text-sm text-red-600 dark:text-red-400">
-          <span class="font-medium">{{'Oops!' | translate}}</span> {{'Please enter a valid password!' | translate}}
-        </p>
-      </div>
-      }
-    </div>
-    }
-
-    <!-- Password Success Message -->
-    @if (!passwordControl.errors && passwordControl.touched) {
-    <div class="flex justify-start items-center mb-3 ml-2 mt-2">
-      <p class="mt-2 text-sm text-green-900 dark:text-green-500">
-        <span class="font-medium">{{'Alright!' | translate}}</span> {{'Everything\'s good' | translate}} <i
-          class="fa-regular fa-face-smile-wink" aria-hidden="true"></i>
-      </p>
-    </div>
-    }
-  </div>
-
-  <!-- Register Link -->
-  <div class="mt-5 mb-2 md:mb-2 flex items-center space-x-1 group">
-    <a routerLink="/auth/register"
-      class="text-sm font-medium text-green-900 dark:text-green-500 hover:text-green-800 transition duration-300 ease-in-out flex items-center">
-      <i class="fa-regular fa-user p-1" aria-hidden="true"></i> {{'Don\'t have an account?' | translate}}
-    </a>
-    <a routerLink="/auth/register"
-      class="text-sm font-medium text-green-900 hover:text-green-700 dark:text-green-500 group-hover:underline dark:hover:text-white transition duration-300 ease-in-out flex items-center">
-      {{'Sign up now!' | translate}}
-    </a>
-  </div>
-
-  <!-- Forgot Password Link -->
-  <div class="mb-4 md:mb-3 flex items-center">
-    <a routerLink="/auth/forget-password"
-      class="text-sm font-medium text-green-900 dark:text-green-500 hover:text-green-700 transition duration-300 ease-in-out flex items-center">
-      <i class="fa-solid fa-key p-1" aria-hidden="true"></i>
-      <span class="hover:underline">{{'Forgot Password' | translate}}</span>?
-    </a>
-  </div>
-
-  <!-- Submit Button -->
-  <button [disabled]="loginForm.invalid || isLoading()" type="submit"
-    class="w-full md:w-auto mt-4 px-5 py-2.5 text-sm font-medium text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 rounded-lg dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 disabled:bg-red-900 dark:disabled:bg-red-900">
-    @if (isLoading()) {
-    <i class="fa-solid fa-spinner fa-spin p-1"></i>
-    } @else {
-    {{'Login Now' | translate}}
-    }
-  </button>
-</form>
+  </form>
