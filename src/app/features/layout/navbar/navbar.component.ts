@@ -5,13 +5,14 @@ import { ModeService } from '../../../core/services/mode/mode.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 import { CommonModule } from '@angular/common';
-import { TranslationService } from '../../../core/services/i18n/translation.service';
+
 import { TranslatePipe } from '@ngx-translate/core';
+import { BtnTranslateComponent } from "../additions/btn-translate/btn-translate.component";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe],
+  imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe, BtnTranslateComponent],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
@@ -22,18 +23,15 @@ export class NavbarComponent implements OnInit {
   private cartService = inject(CartService);
   private userSub: Subscription;
 
-  private readonly translationService = inject(TranslationService);
-
   isDarkMode = this.modeService.isDarkMode();
   isMobileMenuOpen = false;
   isDropdownOpen = false;
-  isLanguageDropdownOpen = false;
   isUserDropdownOpen = false;
   isLoginMode = false;
 
   userName: string | null = null;
   cartNumber!: number;
-  isRTL: boolean = false; // Track RTL state
+
 
   socialLinks = [
     { icon: 'fa-facebook', ariaLabel: 'Facebook' },
@@ -69,13 +67,8 @@ export class NavbarComponent implements OnInit {
       this.cartNumber = res;
     });
   }
-
-  ngOnInit() {
-    this.isRTL = this.translationService.getCurrentLang() === 'ar';
-
-    this.translationService.onLangChange.subscribe((lang) => {
-      this.isRTL = lang === 'ar';
-    });
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
 
   toggleDarkMode(): void {
@@ -96,13 +89,11 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleLanguageDropdown() {
-    this.isLanguageDropdownOpen = !this.isLanguageDropdownOpen;
     this.isUserDropdownOpen = false;
   }
 
   toggleUserDropdown() {
     this.isUserDropdownOpen = !this.isUserDropdownOpen;
-    this.isLanguageDropdownOpen = false;
   }
 
   logout(): void {
@@ -118,11 +109,6 @@ export class NavbarComponent implements OnInit {
       this.isDropdownOpen = false;
       this.isUserDropdownOpen = false;
     }
-  }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-    this.isLanguageDropdownOpen = false;
   }
 
   ngOnDestroy(): void {

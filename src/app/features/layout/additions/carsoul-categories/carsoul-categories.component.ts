@@ -23,7 +23,7 @@ export class CarsoulCategoriesComponent implements OnInit, OnDestroy {
     touchDrag: true,
     pullDrag: false,
     dots: false,
-    navSpeed: 2000,
+    navSpeed: 3000,
     autoplay: true,
     margin: 30,
 

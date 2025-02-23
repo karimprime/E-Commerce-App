@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { BrandsService } from '../../../core/services/ecommerce/brands/brands.service';
 import { IBrands } from '../../../shared/interface/brands';
 
-import { TranslationService } from '../../../core/services/i18n/translation.service';
+
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -17,7 +17,6 @@ export class BrandsComponent implements OnInit {
   errorMessage = '';
 
   private readonly brandsService = inject(BrandsService);
-  private readonly translationService = inject(TranslationService);
 
 
   ngOnInit() {
@@ -32,9 +31,4 @@ export class BrandsComponent implements OnInit {
       }
     });
   }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-  }
-
 }

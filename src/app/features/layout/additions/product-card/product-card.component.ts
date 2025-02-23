@@ -6,7 +6,6 @@ import { CartService } from '../../../../core/services/ecommerce/cart/cart.servi
 import { WishListService } from '../../../../core/services/ecommerce/wishList/wish-list.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
-import { TranslationService } from '../../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -22,7 +21,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   private readonly cartService: CartService = inject(CartService);
   private readonly wishListService: WishListService = inject(WishListService);
-  private readonly translationService: TranslationService = inject(TranslationService);
+
 
   isInWishlist$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private wishlistSubscription!: Subscription;
@@ -54,9 +53,4 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       });
     }
   }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-  }
-
 }

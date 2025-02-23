@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 import { BehaviorSubject, Subscription, take } from 'rxjs';
 
-import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -25,7 +24,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   isInWishlist$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private readonly translationService: TranslationService = inject(TranslationService);
+
 
   productid: string | null = null;
   pSpec!: DataSpecProduct;
@@ -34,15 +33,16 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   sliderCategoriesOptions: OwlOptions = {
     loop: true,
+    rtl: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: false,
-    dots: false,
-    navSpeed: 2000,
+    dots: true,
+    navSpeed: 3000,
     autoplay: true,
     margin: 30,
     autoplayHoverPause: true,
-    navText: ['', ''],
+
     responsive: {
       0: { items: 1 },
       400: { items: 1 },
@@ -50,7 +50,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       900: { items: 1 },
       1080: { items: 1 },
     },
-    nav: true
   };
 
   ngOnInit() {
@@ -131,9 +130,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.loading = false;
   }
 
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-  }
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }

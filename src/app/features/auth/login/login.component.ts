@@ -5,7 +5,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { PasswordCheckLabelPipe } from '../../../shared/pipes/passwordCheckLabel/password-check-label.pipe';
-import { TranslationService } from '../../../core/services/i18n/translation.service';
+
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -17,7 +17,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class LoginComponent implements OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
-  public readonly translationService = inject(TranslationService);
+
 
   // Form State
   loginForm: FormGroup = new FormGroup({
@@ -83,19 +83,8 @@ export class LoginComponent implements OnDestroy {
           this.authService.initializeUser();
           this.router.navigate(['/home']);
         }
-      },
-      error: (err) => {
-        this.errorMessage.set(err.error?.message || 'An error occurred. Please try again.');
-        this.isLoading.set(false);
-      },
-      complete: () => {
-        this.isLoading.set(false);
       }
     });
-  }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
   }
 
   // Clean up subscriptions

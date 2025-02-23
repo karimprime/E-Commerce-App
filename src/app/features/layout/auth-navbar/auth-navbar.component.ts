@@ -2,31 +2,28 @@ import { Component, HostListener, inject } from '@angular/core';
 import { ModeService } from '../../../core/services/mode/mode.service';
 import { RouterLink } from '@angular/router';
 
-import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
+import { BtnTranslateComponent } from "../additions/btn-translate/btn-translate.component";
 
 @Component({
   selector: 'app-auth-navbar',
-  imports: [RouterLink, TranslatePipe, CommonModule],
+  imports: [RouterLink, TranslatePipe, CommonModule, BtnTranslateComponent],
   templateUrl: './auth-navbar.component.html',
   styleUrl: './auth-navbar.component.scss'
 })
 export class AuthNavbarComponent {
 
   private modeService = inject(ModeService);
-  private readonly translationService = inject(TranslationService);
 
   isDarkMode = this.modeService.isDarkMode();
   isMobileMenuOpen = false;
   isDropdownOpen = false;
-  isLanguageDropdownOpen = false;
   isUserDropdownOpen = false;
   isLoginMode = false;
 
   userName: string | null = null;
   cartNumber!: number;
-  isRTL: boolean = false; // Track RTL state
 
   socialLinks = [
     { icon: 'fa-facebook', ariaLabel: 'Facebook' },
@@ -36,21 +33,6 @@ export class AuthNavbarComponent {
     { icon: 'fa-linkedin', ariaLabel: 'LinkedIn' },
     { icon: 'fa-youtube', ariaLabel: 'YouTube' },
   ];
-
-
-
-  constructor() {
-  }
-
-  ngOnInit() {
-    // Initialize RTL state based on current language
-    this.isRTL = this.translationService.getCurrentLang() === 'ar';
-
-    // Listen for language changes
-    this.translationService.onLangChange.subscribe((lang) => {
-      this.isRTL = lang === 'ar'; // Update RTL state
-    });
-  }
 
   toggleDarkMode(): void {
     this.modeService.toggleDarkMode();
@@ -69,14 +51,9 @@ export class AuthNavbarComponent {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  toggleLanguageDropdown() {
-    this.isLanguageDropdownOpen = !this.isLanguageDropdownOpen;
-    this.isUserDropdownOpen = false;
-  }
 
   toggleUserDropdown() {
     this.isUserDropdownOpen = !this.isUserDropdownOpen;
-    this.isLanguageDropdownOpen = false;
   }
 
   @HostListener('document:click', ['$event'])
@@ -85,10 +62,4 @@ export class AuthNavbarComponent {
       this.isDropdownOpen = false;
     }
   }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-    this.isLanguageDropdownOpen = false;
-  }
-
 }

@@ -5,7 +5,6 @@ import { IWishList } from '../../../shared/interface/wishlist';
 import { WishListService } from '../../../core/services/ecommerce/wishList/wish-list.service';
 import { RouterLink } from '@angular/router';
 
-import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 @Component({
   imports: [RouterLink, TranslatePipe],
@@ -16,7 +15,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 export class WishlistComponent implements OnInit, OnDestroy {
   wishlistDetails = signal<IWishList[]>([]);
   private getWishlistSub?: Subscription;
-  private readonly translationService: TranslationService = inject(TranslationService);
 
   constructor(private wishListService: WishListService) { }
 
@@ -44,11 +42,6 @@ export class WishlistComponent implements OnInit, OnDestroy {
       },
     });
   }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-  }
-
   ngOnDestroy(): void {
     this.getWishlistSub?.unsubscribe();
   }

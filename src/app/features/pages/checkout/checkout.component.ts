@@ -4,7 +4,6 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrdersService } from '../../../core/services/ecommerce/orders/orders.service';
 
-import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -17,7 +16,6 @@ export class CheckoutComponent {
 
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly ordersService = inject(OrdersService);
-  private readonly translationService: TranslationService = inject(TranslationService);
 
   private router = inject(Router);
   errorMessage: string = "";
@@ -57,11 +55,6 @@ export class CheckoutComponent {
       }
     })
   }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-  }
-
 }
 
 

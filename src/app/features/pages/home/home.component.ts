@@ -8,7 +8,6 @@ import { ProductCardComponent } from '../../layout/additions/product-card/produc
 import { RouterLink } from '@angular/router';
 import { WishListService } from '../../../core/services/ecommerce/wishList/wish-list.service';
 
-import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -24,8 +23,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
   private readonly wishListService = inject(WishListService);
-
-  private readonly translationService = inject(TranslationService);
 
 
   currentPage = 1;
@@ -58,10 +55,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.wishListService.AddToWishListAPI(id).subscribe({
       next: () => console.log('Added to Wishlist'),
     });
-  }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
   }
 
   ngOnDestroy() {

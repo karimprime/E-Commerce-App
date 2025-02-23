@@ -5,24 +5,22 @@ import { Subscription, tap } from 'rxjs';
 import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 import { ICart } from '../../../shared/interface/cart';
 
-import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-cart',
-  imports: [RouterLink, CurrencyPipe , TranslatePipe],
+  imports: [RouterLink, CurrencyPipe, TranslatePipe],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
   isCartOpen = signal(false);
-  private readonly cartService = inject(CartService);
-  private readonly translationService = inject(TranslationService);
   cartDetails = signal<ICart | null>(null);
   emptyCart: boolean = false;
   cartNumber!: number;
 
+  private readonly cartService = inject(CartService);
   getCartSub: Subscription = new Subscription();
   subscribeToCartNumberSub: Subscription = new Subscription();
   addToCartSub: Subscription = new Subscription();
@@ -35,7 +33,6 @@ export class CartComponent implements OnInit {
     this.subscribeToCartNumber();
   }
 
-  // Fetch cart data from the API
   getCart() {
     this.getCartSub = this.cartService.GetCartAPI()
       .pipe(tap((res) => console.log("API Res Get Cart", res)))
@@ -68,7 +65,7 @@ export class CartComponent implements OnInit {
 
   // Update the quantity of a product in the cart
   updateQuantity(id: string, count: number) {
-    if (count < 1) return; // Prevent negative values
+    if (count < 1) return;
     this.updateQuantitySub = this.cartService.UpdateCartAPI(id, count)
       .pipe(tap((res) => console.log("Updated Cart", res)))
       .subscribe({
@@ -100,11 +97,6 @@ export class CartComponent implements OnInit {
       }
     });
   }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-  }
-
 
   ngOnDestroy() {
     this.updateQuantitySub.unsubscribe();

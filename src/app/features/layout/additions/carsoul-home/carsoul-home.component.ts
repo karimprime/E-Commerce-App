@@ -3,7 +3,6 @@ import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { IProduct } from '../../../../shared/interface/products';
 import { CarsoulCategoriesComponent } from "../carsoul-categories/carsoul-categories.component";
 
-import { TranslationService } from '../../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 
@@ -15,8 +14,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class CarsoulHomeComponent {
   @Input({ required: true }) productList: IProduct[] = [];
-  private readonly translationService = inject(TranslationService);
-
 
   sliderOptions: OwlOptions = {
     loop: true,
@@ -46,10 +43,6 @@ export class CarsoulHomeComponent {
       }
     },
     nav: true
-  }
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
   }
 
 }

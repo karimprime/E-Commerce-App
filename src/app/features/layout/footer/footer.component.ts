@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -10,9 +9,4 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class FooterComponent {
 
-  private readonly translationService = inject(TranslationService);
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-  }
 }

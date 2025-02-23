@@ -1,7 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { TranslationService } from '../../../core/services/i18n/translation.service';
 import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
@@ -11,11 +10,5 @@ import { TranslatePipe } from '@ngx-translate/core';
   styleUrl: './not-found.component.scss'
 })
 export class NotFoundComponent {
-
-  private readonly translationService = inject(TranslationService);
-
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-  }
 
 }
