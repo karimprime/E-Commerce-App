@@ -6,6 +6,7 @@ import { WishListService } from '../../../core/services/ecommerce/wishList/wish-
 import { RouterLink } from '@angular/router';
 
 import { TranslatePipe } from '@ngx-translate/core';
+import { CartService } from '../../../core/services/ecommerce/cart/cart.service';
 @Component({
   imports: [RouterLink, TranslatePipe],
   selector: 'app-wishlist',
@@ -16,7 +17,8 @@ export class WishlistComponent implements OnInit, OnDestroy {
   wishlistDetails = signal<IWishList[]>([]);
   private getWishlistSub?: Subscription;
 
-  constructor(private wishListService: WishListService) { }
+  private readonly cartService = inject(CartService);
+  private readonly wishListService = inject(WishListService);
 
   ngOnInit(): void {
     this.getWishlist();
@@ -42,6 +44,23 @@ export class WishlistComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  addToCart(id: string) {
+    this.cartService.AddToCartAPI(id).subscribe({
+      next: (res) => {
+        console.log('Cart API Response:', res);
+        this.cartService.cartNumber.next(res.numOfCartItems);
+      },
+    });
+  }
+
+  translateDir(): 'ltr' | 'rtl' {
+    return document.documentElement.dir === 'rtl' ? 'rtl' : 'ltr';
+  }
+
+
+
+
   ngOnDestroy(): void {
     this.getWishlistSub?.unsubscribe();
   }

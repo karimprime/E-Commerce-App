@@ -17,6 +17,10 @@ export class PaginationComponent {
       this.pageChanged.emit(newPage);
     }
   }
+  translateDir(): boolean {
+    return localStorage.getItem('lng') === 'ar';
+  }
+
 
   totalPagesArray(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);

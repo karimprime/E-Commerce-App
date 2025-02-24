@@ -49,4 +49,5 @@ export class WishListService {
       tap(() => this.updateWishlist())
     );
   }
+
 }
