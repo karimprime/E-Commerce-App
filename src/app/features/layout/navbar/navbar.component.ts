@@ -16,7 +16,7 @@ import { BtnTranslateComponent } from "../additions/btn-translate/btn-translate.
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
   private modeService = inject(ModeService);
@@ -66,9 +66,6 @@ export class NavbarComponent implements OnInit {
     this.cartService.cartNumber.subscribe((res) => {
       this.cartNumber = res;
     });
-  }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
   }
 
   toggleDarkMode(): void {
