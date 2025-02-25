@@ -24,7 +24,7 @@ export class OrdersService {
   }
 
   onlinePayment(id: string, shippingAddress: { details: string, phone: number, city: string }): Observable<any> {
-    return this.httpClient.post(`${Env.baseApiUrl}/api/v1/orders/checkout-session/${id}?url=http://localhost:3000`, { shippingAddress });
+    return this.httpClient.post(`${Env.baseApiUrl}/api/v1/orders/checkout-session/${id}?url=${Env.domain}`, { shippingAddress });
   }
 }
 

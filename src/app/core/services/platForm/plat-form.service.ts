@@ -5,24 +5,28 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
   providedIn: 'root',
 })
 export class PlatFormService {
-  constructor(@Inject(PLATFORM_ID) private platFormId: object) { }
+  private isBrowser: boolean;
 
-  checkPlatform() {
-    return isPlatformBrowser(this.platFormId) ? 'Browser' : 'Server';
+  constructor(@Inject(PLATFORM_ID) private platformId: object) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
+
+  checkPlatform(): string {
+    return this.isBrowser ? 'Browser' : 'Server';
   }
 
   safeLocalStorageGet(key: string): string | null {
-    return isPlatformBrowser(this.platFormId) ? localStorage.getItem(key) : null;
+    return this.isBrowser ? localStorage.getItem(key) : null;
   }
 
   safeLocalStorageSet(key: string, value: string): void {
-    if (isPlatformBrowser(this.platFormId)) {
+    if (this.isBrowser) {
       localStorage.setItem(key, value);
     }
   }
 
   safeLocalStorageRemove(key: string): void {
-    if (isPlatformBrowser(this.platFormId)) {
+    if (this.isBrowser) {
       localStorage.removeItem(key);
     }
   }

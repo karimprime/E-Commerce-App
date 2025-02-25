@@ -3,9 +3,8 @@ import { FlowbiteService } from './core/services/flowbite/flowbite.service';
 import { NgxSpinnerModule, } from 'ngx-spinner';
 import { DashboardComponent } from "./features/layout/dashboard/dashboard.component";
 
-
 import { TranslatePipe } from '@ngx-translate/core';
-import { TranslationService } from './core/services/i18n/translation.service';
+
 @Component({
   selector: 'app-root',
   imports: [NgxSpinnerModule, DashboardComponent, TranslatePipe],
@@ -14,7 +13,6 @@ import { TranslationService } from './core/services/i18n/translation.service';
 })
 export class AppComponent {
 
-  private readonly translationService: TranslationService = inject(TranslationService);
   private flowbiteService = inject(FlowbiteService);
   ngOnInit(): void {
     this.flowbiteService.loadFlowbite(flowbite => {
@@ -22,7 +20,4 @@ export class AppComponent {
     });
   }
 
-  changeLang(lang: string) {
-    this.translationService.changeLang(lang);
-  }
 }
