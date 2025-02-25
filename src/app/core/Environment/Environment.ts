@@ -1,4 +1,4 @@
 export let Env = {
   baseApiUrl: 'https://ecommerce.routemisr.com',
-  domain: 'http://localhost:4200/%23'
+  domain: 'https://e-commerce-app-nine-tan.vercel.app/%23'
 }
