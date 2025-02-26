@@ -1,28 +1,28 @@
 <app-dashboard />
 
 <!-- Modern, SEO & Accessibility Optimized Loading Screen -->
-<ngx-spinner bdColor="rgba(0, 0, 0, 0.9)" size="large" type="ball-scale-multiple" color="#4ade80" [fullScreen]="true">
-  <nav class="flex flex-col items-center justify-center min-h-screen w-full animate-fade-in"
+<ngx-spinner bdColor="rgba(0, 0, 0, 0.95)" size="large" type="ball-scale-multiple" color="#22c55e" [fullScreen]="true">
+  <div class="flex flex-col items-center justify-center min-h-screen w-full animate-fade-in"
     aria-label="Loading screen">
-    <!-- Logo with Improved SEO & a11y -->
-    <a aria-label="Go to FreshCart Home" class="focus:outline-none focus:ring-4 focus:ring-green-400 rounded-md">
-      <figure class="flex flex-col items-center justify-center space-y-4 shadow-lg duration-300">
-        <img src="/images/loading-3-shopping-cart.svg" loading="lazy" width="120" height="120"
-          class="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 drop-shadow-xl"
-          [alt]="['FreshCart Shopping Cart Logo' | translate]" />
+    <!-- Logo with SEO & Accessibility Enhancements -->
+    <a aria-label="Go to FreshCart Home" class="focus:outline-none focus:ring-4 focus:ring-green-500 rounded-lg">
+      <figure class="flex items-center justify-center shadow-xl ">
+        <img src="/images/loading-3-shopping-cart.svg" loading="lazy" width="128" height="128"
+          class="w-36 h-36 md:w-44 md:h-44 lg:w-52 lg:h-52 drop-shadow-2xl"
+          [alt]="'FreshCart Shopping Cart Logo' | translate" />
         <figcaption>
           <h1
-            class="text-4xl md:text-6xl lg:text-7xl font-bold dark:text-white tracking-wide drop-shadow-lg bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-transparent text-center">
+            class="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-wide text-transparent bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-center drop-shadow-2xl">
             {{ 'FreshCart' | translate }}
           </h1>
         </figcaption>
       </figure>
     </a>
 
-    <!-- Loading Text with High Contrast and a11y Enhancements -->
-    <p class="text-white mt-6 text-lg md:text-2xl lg:text-3xl font-semibold tracking-widest animate-pulse drop-shadow-lg text-center"
+    <!-- Loading Text with Enhanced Readability & Accessibility -->
+    <p class="text-gray-200 text-lg md:text-2xl lg:text-3xl font-semibold tracking-widest animate-pulse text-center"
       role="alert" aria-live="polite">
       {{ 'Loading, please wait...' | translate }}
     </p>
-  </nav>
+  </div>
 </ngx-spinner>
