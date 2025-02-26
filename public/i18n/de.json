@@ -125,5 +125,20 @@
   "Everything's good": "Alles ist gut",
   "Don't have an account?": "Sie haben kein Konto?",
   "Sign up now!": "Jetzt registrieren!",
-  "Forgot Password": "Passwort vergessen"
+  "Forgot Password": "Passwort vergessen",
+  "yourOrders": "Ihre Bestellungen",
+  "productId": "Produkt-ID",
+  "isPaid": "Bezahlt",
+  "paymentType": "Zahlungsart",
+  "date": "Datum",
+  "totalPrice": "Gesamtpreis",
+  "view": "Anzeigen",
+  "orderDetails": "Bestelldetails",
+  "image": "Bild",
+  "product": "Produkt",
+  "qty": "Menge",
+  "price": "Preis",
+  "close": "Schließen",
+  "yes": "Ja",
+  "no": "Nein"
 }

@@ -20,7 +20,7 @@ export class OrdersService {
   }
 
   getUserOrders(id: string): Observable<any> {
-    return this.httpClient.get(`${Env.baseApiUrl}/api/v1/orders/${id}`);
+    return this.httpClient.get(`${Env.baseApiUrl}/api/v1/orders/user/${id}`);
   }
 
   onlinePayment(id: string, shippingAddress: { details: string, phone: number, city: string }): Observable<any> {

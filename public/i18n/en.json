@@ -125,5 +125,20 @@
   "Everything's good": "Everything's good",
   "Don't have an account?": "Don't have an account?",
   "Sign up now!": "Sign up now!",
-  "Forgot Password": "Forgot Password"
+  "Forgot Password": "Forgot Password",
+  "yourOrders": "Your Orders",
+  "productId": "Product ID",
+  "isPaid": "Is Paid",
+  "paymentType": "Payment Type",
+  "date": "Date",
+  "totalPrice": "Total Price",
+  "view": "View",
+  "orderDetails": "Order Details",
+  "image": "Image",
+  "product": "Product",
+  "qty": "Qty",
+  "price": "Price",
+  "close": "Close",
+  "yes": "Yes",
+  "no": "No"
 }

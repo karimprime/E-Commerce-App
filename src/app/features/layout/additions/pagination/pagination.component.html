@@ -1,36 +1,39 @@
 <!-- Pagination Component -->
 <div class="mb-12">
   @if (totalPages > 1) {
-  <div class="flex justify-center items-center mt-6  space-x-2">
+  <div class="flex justify-center items-center mt-6 space-x-2">
     <!-- Previous Button -->
-    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1" class="px-4 py-2 rounded-lg font-semibold transition-all duration-200
-               bg-green-600 hover:bg-green-700 text-white disabled:bg-red-900">
-      <i class="fa-solid fa-share  transition-transform duration-300" [class]="{'fa-flip-horizontal': !translateDir()}">
+    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"
+      class="px-4 py-2 rounded-lg font-semibold transition-all duration-200 bg-green-600 hover:bg-green-700 text-white disabled:bg-red-900 focus:outline-none focus:ring focus:ring-green-300"
+      aria-label="Previous Page">
+      <i class="fa-solid fa-share transition-transform duration-300" [class]="{'fa-flip-horizontal': !translateDir()}">
       </i>
     </button>
 
-    <div class="p-2">
+    <div class="p-2 flex justify-center">
       <!-- Page Numbers -->
-      @for (page of totalPagesArray(); track $index) {
+      @for (page of visiblePages(); track $index) {
       @if (page === currentPage) {
-      <button (click)="changePage(page)" class="px-4 py-2 mx-1 rounded-full font-semibold transition-all duration-200
-                   bg-green-700 text-white">
+      <button (click)="changePage(page)"
+        class="px-4 py-2 mx-1 rounded-full font-semibold transition-all duration-200 bg-green-700 text-white"
+        aria-current="page">
         {{ page }}
       </button>
       } @else {
-      <button (click)="changePage(page)" class="px-4 py-2 mx-1 rounded-lg font-semibold transition-all duration-200
-                   bg-green-600 text-white border border-green-500 hover:bg-green-600">
+      <button (click)="changePage(page)"
+        class="px-4 py-2 mx-1 rounded-lg font-semibold transition-all duration-200 bg-green-600 text-white border border-green-500 hover:bg-green-700">
         {{ page }}
       </button>
       }
       }
     </div>
+
     <!-- Next Button -->
-    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages" class="px-4 py-2 rounded-lg font-semibold transition-all duration-200
-               bg-green-600 hover:bg-green-700 text-white disabled:bg-red-900">
+    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages"
+      class="px-4 py-2 rounded-lg font-semibold transition-all duration-200 bg-green-600 hover:bg-green-700 text-white disabled:bg-red-900 focus:outline-none focus:ring focus:ring-green-300"
+      aria-label="Next Page">
       <i class="fa-solid fa-share transition-transform duration-300" [class]="{'fa-flip-horizontal': translateDir()}">
       </i>
-
     </button>
   </div>
   }

@@ -25,4 +25,19 @@ export class PaginationComponent {
   totalPagesArray(): number[] {
     return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
+
+  visiblePages(): number[] {
+    let pagesToShow = 3;
+    if (window.innerWidth > 640) pagesToShow = 5;
+
+    let start = Math.max(1, this.currentPage - Math.floor(pagesToShow / 2));
+    let end = Math.min(this.totalPages, start + pagesToShow - 1);
+
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  }
+
+  ngOnInit() {
+    this.visiblePages();
+  }
+
 }

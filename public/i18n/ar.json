@@ -126,5 +126,20 @@
   "Everything's good": "كل شيء على ما يرام",
   "Don't have an account?": "ليس لديك حساب؟",
   "Sign up now!": "سجل الآن!",
-  "Forgot Password": "نسيت كلمة المرور"
+  "Forgot Password": "نسيت كلمة المرور",
+  "yourOrders": "طلباتك",
+  "productId": "معرف المنتج",
+  "isPaid": "تم الدفع",
+  "paymentType": "طريقة الدفع",
+  "date": "التاريخ",
+  "totalPrice": "السعر الإجمالي",
+  "view": "عرض",
+  "orderDetails": "تفاصيل الطلب",
+  "image": "الصورة",
+  "product": "المنتج",
+  "qty": "الكمية",
+  "price": "السعر",
+  "close": "إغلاق",
+  "yes": "نعم",
+  "no": "لا"
 }

@@ -1,1 +1,102 @@
-<p>allorders works!</p>
+<div class="max-w-7xl mx-auto p-6 mb-10">
+  <!-- Title: Your Orders (SEO Optimized) -->
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">
+    <i class="fa-solid fa-truck fa-bounce text-green-600"></i> {{ 'yourOrders' | translate }}
+  </h1>
+
+  <!-- Orders Table -->
+  <div class="relative overflow-x-auto shadow-lg rounded-lg bg-white dark:bg-gray-800 w-[90%] mx-auto">
+    <table class="w-full min-w-max text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+          @for (header of ['productId', 'isPaid', 'paymentType', 'date', 'totalPrice', 'view']; track header) {
+          <th scope="col" class="px-4 py-2 text-start whitespace-nowrap">{{ header | translate }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (order of getPaginatedOrders(); track order._id) {
+        <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <td class="px-4 py-2 sm:text-xs md:text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap"
+            [class.text-right]="translateDir()">
+            {{ order._id }}
+          </td>
+
+          <td class="px-4 py-2 text-start sm:text-xs md:text-sm whitespace-nowrap">
+            {{ order.isPaid ? ('yes' | translate) : ('no' | translate) }}
+          </td>
+          <td class="px-4 py-2 text-start sm:text-xs md:text-sm whitespace-nowrap">{{ order.paymentMethodType }}</td>
+          <td class="px-4 py-2 text-start sm:text-xs md:text-sm whitespace-nowrap">
+            {{ order.updatedAt | date:'yyyy-MM-dd' }}
+          </td>
+          <td class="px-4 py-2 text-start sm:text-xs md:text-sm whitespace-nowrap">
+            {{ order.totalOrderPrice }} {{'EGP' | translate}}
+          </td>
+          <td class="px-4 py-2 text-start">
+            <button
+              class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all focus:ring focus:ring-green-300 whitespace-nowrap"
+              (click)="openModal($index)" aria-label="View order details">
+              {{ 'view' | translate }}
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <app-pagination [currentPage]="currentPage" [totalPages]="getTotalPages()" (pageChanged)="onPageChange($event)" />
+
+  @if (isOpen()) {
+  <div class="fixed inset-0 flex items-center justify-center bg-black/60 z-50" role="dialog" aria-modal="true"
+    aria-labelledby="modal-title">
+    <div id="modal-content"
+      class="bg-white p-6 rounded-lg shadow-lg w-[90%] max-h-[80vh] overflow-y-auto md:w-[50%] lg:w-[40%] dark:bg-gray-800"
+      tabindex="-1" (keydown)="handleKeydown($event)" aria-describedby="modal-description">
+
+      <!-- Modal Header (Fixed at the top of modal list) -->
+      <div class="sticky top-0 bg-white dark:bg-gray-800 w-full p-4 border-b shadow-md z-10">
+        <div class="flex justify-between items-center">
+          <h2 id="modal-title" class="text-xl font-semibold text-gray-900 dark:text-white">{{ 'orderDetails' | translate
+            }}</h2>
+          <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg transition-all"
+            (click)="closeModal()" aria-label="Close modal">
+            <i class="fa fa-x"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Order Details Table -->
+      <table class="w-full text-sm text-gray-500 dark:text-gray-400 table-auto text-center">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            @for (header of ['image', 'product', 'qty', 'price']; track header) {
+            <th scope="col" class="px-4 py-3">{{ header | translate }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+          @for (cartItem of cartItems(); track cartItem.product._id) {
+          <tr class="border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <td class="p-4">
+              <img [routerLink]="['/product-details', cartItem.product._id]" [src]="cartItem.product.imageCover"
+                class="w-16 md:w-12 rounded-lg  transition-transform transform hover:scale-110 cursor-pointer"
+                alt="{{ cartItem.product.title }}" loading="lazy">
+            </td>
+            <td class="px-4 py-3 font-semibold">
+              {{ cartItem.product.title.split(' ').slice(0, 2).join(' ') }}
+              @if (cartItem.product.title.split(' ').length > 1) {
+              <span class="inline-block">...</span>
+              }
+            </td>
+            <td class="px-4 py-3">{{ cartItem.count }}</td>
+            <td class="px-1 py-1">{{ cartItem.price }} {{'EGP' | translate}}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+  }
+</div>

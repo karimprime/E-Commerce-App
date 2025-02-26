@@ -3,12 +3,12 @@
   <div
     class="flex flex-col md:flex-row items-center justify-between p-6 border-b bg-gray-100 dark:bg-gray-900 rounded-xl mb-8 shadow-lg">
     <h1 class="text-3xl font-bold text-gray-900 dark:text-white flex items-center mb-4 md:mb-0">
-      <i class="fa-solid fa-bag-shopping text-green-600 mr-3 animate-bounce"></i> {{'Your Cart' | translate}}
+      <i class="fa-solid fa-bag-shopping text-green-600 m-2 animate-bounce"></i> {{'Your Cart' | translate}}
     </h1>
 
     <button (click)="clearCart()"
       class="w-52 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all flex items-center justify-center transform hover:scale-105 focus:ring-2 focus:ring-red-300 focus:outline-none shadow-md">
-      <i class="fa-solid fa-trash-can mr-2"></i> {{'Clear Cart' | translate }}
+      <i class="fa-solid fa-trash-can m-2"></i> {{'Clear Cart' | translate }}
     </button>
   </div>
 
@@ -64,7 +64,7 @@
         <p class="text-gray-500 dark:text-gray-400 text-lg">{{'Your cart is empty.' | translate }}</p>
         <a routerLink="/products" class="mt-6 inline-block px-6 py-3  bg-green-600 text-white rounded-lg hover:bg-green-700 hover:text-white transition-all items-center justify-center text-lg transform hover:scale-105 focus:ring-2 focus:ring-green-300 focus:outline-none shadow-md
           dark:text-white dark:hover:bg-green-600 ">
-          <i class="fa-solid fa-store mr-2"></i> {{'Browse Products' | translate }}
+          <i class="fa-solid fa-store m-2"></i> {{'Browse Products' | translate }}
         </a>
       </div>
       }
@@ -81,7 +81,7 @@
         [disabled]="!cartDetails()?.data?.totalCartPrice || cartDetails()?.data?.totalCartPrice === 0" class="w-full py-4 text-white rounded-lg transition-all flex items-center justify-center text-lg transform focus:ring-2 focus:outline-none shadow-md
              bg-green-600 hover:bg-green-700 hover:scale-105 focus:ring-green-300
              disabled:bg-red-700 disabled:cursor-not-allowed disabled:hover:scale-100">
-        <i class="fa-solid fa-basket-shopping mr-2"></i>
+        <i class="fa-solid fa-basket-shopping m-2"></i>
         {{ 'Checkout' | translate }}
       </button>
     </div>
