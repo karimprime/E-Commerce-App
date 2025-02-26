@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 
 import { TranslatePipe } from '@ngx-translate/core';
 import { BtnTranslateComponent } from "../additions/btn-translate/btn-translate.component";
+import { UserDropdownComponent } from "../additions/user-dropdown/user-dropdown.component";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe, BtnTranslateComponent],
+  imports: [CommonModule, RouterLink, RouterLinkActive, TranslatePipe, BtnTranslateComponent, UserDropdownComponent],
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
 })
@@ -21,7 +22,6 @@ export class NavbarComponent {
   private router = inject(Router);
   private modeService = inject(ModeService);
   private cartService = inject(CartService);
-  private userSub: Subscription;
 
   isDarkMode = this.modeService.isDarkMode();
   isMobileMenuOpen = false;
@@ -50,10 +50,6 @@ export class NavbarComponent {
   ];
 
   constructor() {
-    this.userSub = this.authService.userData.subscribe((user) => {
-      this.isLoginMode = this.authService.isAuthenticated && !!user;
-      this.userName = user ? user.name : null;
-    });
 
     this.authService.verifyToken().subscribe({
       next: () => (this.isLoginMode = this.authService.isAuthenticated),
@@ -85,14 +81,6 @@ export class NavbarComponent {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  toggleLanguageDropdown() {
-    this.isUserDropdownOpen = false;
-  }
-
-  toggleUserDropdown() {
-    this.isUserDropdownOpen = !this.isUserDropdownOpen;
-  }
-
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/auth/login']);
@@ -104,11 +92,7 @@ export class NavbarComponent {
   onClickOutside(event: Event): void {
     if (!(event.target as HTMLElement).closest('.dropdown-container')) {
       this.isDropdownOpen = false;
-      this.isUserDropdownOpen = false;
     }
   }
 
-  ngOnDestroy(): void {
-    this.userSub.unsubscribe();
-  }
 }
