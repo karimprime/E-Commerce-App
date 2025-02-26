@@ -2,25 +2,27 @@
 
 <!-- Modern, SEO & Accessibility Optimized Loading Screen -->
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.9)" size="large" type="ball-scale-multiple" color="#4ade80" [fullScreen]="true">
-  <nav class="flex flex-col items-center justify-center h-screen animate-fade-in" aria-label="Loading screen">
+  <nav class="flex flex-col items-center justify-center min-h-screen w-full animate-fade-in"
+    aria-label="Loading screen">
     <!-- Logo with Improved SEO & a11y -->
     <a aria-label="Go to FreshCart Home" class="focus:outline-none focus:ring-4 focus:ring-green-400 rounded-md">
-      <figure class="flex items-center justify-center shadow-lg duration-300">
+      <figure class="flex flex-col items-center justify-center space-y-4 shadow-lg duration-300">
         <img src="/images/loading-3-shopping-cart.svg" loading="lazy" width="120" height="120"
-          class="w-[120px] h-20 md:h-24 lg:h-28 drop-shadow-xl" [alt]="['FreshCart Shopping Cart Logo' | translate ]" />
+          class="w-32 h-32 md:w-40 md:h-40 lg:w-48 lg:h-48 drop-shadow-xl"
+          [alt]="['FreshCart Shopping Cart Logo' | translate]" />
         <figcaption>
           <h1
-            class="text-6xl font-bold dark:text-white tracking-wide drop-shadow-lg bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-transparent">
-            {{'FreshCart' | translate}}
+            class="text-4xl md:text-6xl lg:text-7xl font-bold dark:text-white tracking-wide drop-shadow-lg bg-gradient-to-r from-green-400 to-lime-300 bg-clip-text text-transparent text-center">
+            {{ 'FreshCart' | translate }}
           </h1>
         </figcaption>
       </figure>
     </a>
 
     <!-- Loading Text with High Contrast and a11y Enhancements -->
-    <p class="text-white mt-4 text-lg md:text-xl lg:text-2xl font-semibold tracking-widest animate-pulse drop-shadow-lg"
+    <p class="text-white mt-6 text-lg md:text-2xl lg:text-3xl font-semibold tracking-widest animate-pulse drop-shadow-lg text-center"
       role="alert" aria-live="polite">
-      {{'Loading, please wait...' | translate}}
+      {{ 'Loading, please wait...' | translate }}
     </p>
   </nav>
 </ngx-spinner>

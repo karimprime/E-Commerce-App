@@ -24,7 +24,7 @@
     @if (checkForm.get('details')?.errors && checkForm.get('details')?.touched) {
     @if (checkForm.get('details')?.getError('required')) {
     <div class="flex justify-start items-center mb-3 ml-2">
-      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-2"></i>
       <p class="text-sm text-red-600 dark:text-red-400">
         <span class="font-medium">{{'Oops!' | translate }}</span> {{'It is Required!' | translate}}
       </p>
@@ -47,20 +47,20 @@
         }}</label>
       <input id="phone" type="tel" formControlName="phone"
         class="autocomplete shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-green-500 dark:focus:border-green-500 dark:shadow-xs-light"
-        [placeholder]="['Please Enter Your Phone' | translate ]" required />
+        [placeholder]="['Please Enter Your Phone' | translate ]" [dir]="translateDir() ? 'rtl' : 'ltr'" required />
     </div>
 
     @if (checkForm.get('phone')?.errors && checkForm.get('phone')?.touched) {
     @if (checkForm.get('phone')?.getError('required')) {
     <div class="flex justify-start items-center mb-3 ml-2">
-      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-2"></i>
       <p class="text-sm text-red-600 dark:text-red-400">
         <span class="font-medium">{{'Oops!' | translate}}</span> {{'It is Required!' | translate}}
       </p>
     </div>
     } @else if (checkForm.get('phone')?.getError('pattern')) {
     <div class="flex justify-start items-center mb-3 ml-2">
-      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-2"></i>
       <p class="text-sm text-red-600 dark:text-red-400">
         <span class="font-medium">{{'Oops!' | translate}}</span> {{'Please Enter a Valid Phone Number!' | translate}}
       </p>
@@ -89,7 +89,7 @@
     @if (checkForm.get('city')?.errors && checkForm.get('city')?.touched) {
     @if (checkForm.get('city')?.getError('required')) {
     <div class="flex justify-start items-center mb-3 ml-2">
-      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 pr-2"></i>
+      <i class="fa-solid fa-circle-exclamation text-red-600 dark:text-red-400 p-2"></i>
       <p class="text-sm text-red-600 dark:text-red-400">
         <span class="font-medium">{{'Oops!' | translate }}</span> {{'It is Required!' | translate}}
       </p>

@@ -23,6 +23,11 @@ export class CheckoutComponent {
   cartId!: string;
   checkForm!: FormGroup;
 
+  translateDir(): boolean {
+    return localStorage.getItem('lng') === 'ar';
+  }
+
+
   ngOnInit() {
     this.getCartId();
     this.initForm();

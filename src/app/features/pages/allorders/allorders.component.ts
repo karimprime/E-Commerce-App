@@ -41,7 +41,6 @@ export class AllordersComponent implements OnInit {
     return localStorage.getItem('lng') === 'ar';
   }
 
-
   // Compute paginated orders
   getTotalPages(): number {
     return Math.ceil(this.allOrders().length / this.ordersPerPage);
@@ -49,7 +48,11 @@ export class AllordersComponent implements OnInit {
 
   getPaginatedOrders() {
     const startIndex = (this.currentPage - 1) * this.ordersPerPage;
-    return this.allOrders().slice(startIndex, startIndex + this.ordersPerPage);
+    return this.allOrders()
+      .slice()
+      .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
+      .slice(startIndex, startIndex + this.ordersPerPage);
+
   }
 
   onPageChange(newPage: number) {
