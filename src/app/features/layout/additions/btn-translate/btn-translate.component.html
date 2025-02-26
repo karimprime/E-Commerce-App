@@ -1,7 +1,7 @@
 <!-- Language Dropdown -->
 <div class="relative">
   <button (click)="toggleLanguageDropdown()" [attr.aria-expanded]="isLanguageDropdownOpen"
-    class="flex items-center text-sm font-medium text-gray-900 dark:text-white rounded-lg px-3 sm:px-1 py-2 transition-all duration-300 hover:text-green-600 dark:hover:text-green-400 focus:outline-none ">
+    class="flex items-center text-sm font-medium text-gray-900 dark:text-white rounded-lg px-3 sm:px-1 py-2 transition-all duration-300 hover:text-green-600 dark:hover:text-green-400 ">
     <i class="fa-solid fa-globe px-2 font-semibold text-sm sm:text-base"></i>
     <i class="fa-solid fa-chevron-down transition-transform duration-300"
       [class.rotate-180]="isLanguageDropdownOpen"></i>
@@ -10,7 +10,7 @@
 
   @if (isLanguageDropdownOpen) {
   <div [ngClass]="{'rtl': isRTL, 'ltr': !isRTL}"
-    class="cursor-pointer absolute mt-5 mx-auto md:w-[120px] xl:w-[120px] 2xl:w-[120px] bg-white dark:bg-gray-800 rounded-lg shadow-lg divide-y divide-gray-200 dark:divide-gray-700 z-50">
+    class="cursor-pointer absolute mt-5 mx-auto w-[120px] bg-white dark:bg-gray-800 rounded-lg shadow-lg divide-y divide-gray-200 dark:divide-gray-700 z-50">
     <ul class="py-2 font-medium" role="none">
       <li>
         <a (click)="changeLang('ar')"

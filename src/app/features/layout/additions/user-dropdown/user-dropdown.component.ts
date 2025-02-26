@@ -6,7 +6,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-user-dropdown',
-  imports: [TranslatePipe , RouterLink],
+  imports: [TranslatePipe, RouterLink],
   templateUrl: './user-dropdown.component.html',
   styleUrl: './user-dropdown.component.scss'
 })
@@ -17,9 +17,14 @@ export class UserDropdownComponent {
   private userSub: Subscription;
 
   isUserDropdownOpen = false;
+  activeAccordion: string | null = null; // For tracking active accordion section
   isLoginMode = false;
-
   userName: string | null = null;
+
+  userMenuItems = [
+    { route: 'wishlist', label: 'Your WishList', icon: 'fa-solid fa-heart text-red-500' },
+    { route: 'settings', label: 'Settings', icon: 'fa-solid fa-cog text-gray-600 dark:text-gray-300' }
+  ];
 
   constructor() {
     this.userSub = this.authService.userData.subscribe((user) => {
@@ -40,6 +45,10 @@ export class UserDropdownComponent {
     this.isUserDropdownOpen = !this.isUserDropdownOpen;
   }
 
+  toggleAccordion(route: string) {
+    this.activeAccordion = this.activeAccordion === route ? null : route;
+  }
+
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event): void {
     if (!(event.target as HTMLElement).closest('.dropdown-container')) {
@@ -57,5 +66,4 @@ export class UserDropdownComponent {
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
   }
-
 }
