@@ -1,35 +1,34 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../core/services/auth/auth.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-forget-password',
-  imports: [ReactiveFormsModule , RouterLink],
+  standalone: true,
+  imports: [ReactiveFormsModule, RouterLink, TranslateModule],
   templateUrl: './forget-password.component.html',
-  styleUrl: './forget-password.component.scss'
+  styleUrls: ['./forget-password.component.scss']
 })
-export class ForgetPasswordComponent {
-
+export class ForgetPasswordComponent implements OnDestroy {
   private authService = inject(AuthService);
-
-  constructor() { }
-
   private router = inject(Router);
-  errorMessage: string = "";
-  isLoading: boolean = false;
-  showResetCodeInput: boolean = false;
-  showPasswordFields: boolean = false;
+  private translate = inject(TranslateService);
+
+  errorMessage = signal<string>('');
+  isLoading = signal<boolean>(false);
+  showResetCodeInput = signal<boolean>(false);
+  showPasswordFields = signal<boolean>(false);
 
   forgetSub: Subscription = new Subscription();
 
-  forgetPasswordForm: FormGroup = new FormGroup({
+  forgetPasswordForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email])
   });
 
-
-  passwordResetForm: FormGroup = new FormGroup({
+  passwordResetForm = new FormGroup({
     currentPassword: new FormControl('', [Validators.required, Validators.minLength(6)]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     rePassword: new FormControl('', [Validators.required])
@@ -37,27 +36,28 @@ export class ForgetPasswordComponent {
 
   sendResetEmail() {
     if (!this.forgetPasswordForm.valid) {
-      this.errorMessage = "Please enter a valid email address.";
+      this.errorMessage.set(this.translate.instant('auth.forget_password.invalid_email'));
       return;
     }
 
-    this.isLoading = true;
-    const email = this.forgetPasswordForm.get('email')?.value;
+    this.isLoading.set(true);
+    const email = this.forgetPasswordForm.get('email')?.value ?? '';
 
-    // Store email in sessionStorage
-    sessionStorage.setItem('resetEmail', email);
+    // Store email in sessionStorage only if it's a valid string
+    if (email) {
+      sessionStorage.setItem('resetEmail', email);
+    }
 
     this.forgetSub = this.authService.sendResetCodeToAPI({ email }).subscribe({
       next: (res) => {
-        console.log("API Response:", res);
         if (res.statusMsg === "success") {
           this.router.navigate(['/auth/verify-reset-code']);
         }
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
+      error: () => this.isLoading.set(false)
     });
   }
-
   ngOnDestroy() {
     this.forgetSub.unsubscribe();
   }

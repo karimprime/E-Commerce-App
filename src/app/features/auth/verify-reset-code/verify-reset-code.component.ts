@@ -1,22 +1,26 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { VerifyResetCodeRequestSuccess, APIResponseMessage } from '../../../shared/interface/data';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-verify-reset-code',
-  imports: [CommonModule, ReactiveFormsModule],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './verify-reset-code.component.html',
   styleUrls: ['./verify-reset-code.component.scss']
 })
 export class VerifyResetCodeComponent implements OnDestroy {
   private authService = inject(AuthService);
   private router = inject(Router);
-  errorMessage: string = "";
-  isLoading: boolean = false;
+  private translate = inject(TranslateService);
+
+  errorMessage = signal<string>('');
+  isLoading = signal<boolean>(false);
   verifySub: Subscription = new Subscription();
 
   resetCodeForm = new FormGroup({
@@ -25,27 +29,25 @@ export class VerifyResetCodeComponent implements OnDestroy {
 
   checkResetCode() {
     if (this.resetCodeForm.invalid) {
-      this.errorMessage = "Please enter a valid 6-digit reset code.";
+      this.errorMessage.set(this.translate.instant('auth.verify_reset_code.invalid_code'));
       return;
     }
 
-    this.isLoading = true;
+    this.isLoading.set(true);
 
     // Ensure `resetCode` is a string
     const resetCodeRequest = { resetCode: this.resetCodeForm.value.resetCode as string };
 
     this.verifySub = this.authService.sendCheckCodeToAPI(resetCodeRequest).subscribe({
       next: (res: VerifyResetCodeRequestSuccess | APIResponseMessage) => {
-        console.log("API Response:", res);
-
-        // Check if response contains 'status' before accessing it
         if ('status' in res && res.status === "Success") {
           this.router.navigate(['/auth/reset-password']);
         } else {
-          this.errorMessage = "Invalid reset code!";
+          this.errorMessage.set(this.translate.instant('auth.verify_reset_code.invalid_code'));
         }
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
+      error: () => this.isLoading.set(false)
     });
   }
 
