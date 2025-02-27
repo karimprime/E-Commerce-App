@@ -1,5 +1,5 @@
 import { WishListService } from './../../../core/services/ecommerce/wishList/wish-list.service';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '../../../core/services/ecommerce/products/products.service';
 import { DataSpecProduct } from '../../../shared/interface/spec-product';
@@ -16,7 +16,7 @@ import { TranslatePipe } from '@ngx-translate/core';
   templateUrl: './product-details.component.html',
   styleUrls: ['./product-details.component.scss']
 })
-export class ProductDetailsComponent implements OnInit, OnDestroy {
+export class ProductDetailsComponent implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly productsService = inject(ProductsService);
   private readonly cartService = inject(CartService);
