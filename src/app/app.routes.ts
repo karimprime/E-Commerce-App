@@ -30,5 +30,5 @@ export const routes: Routes = [
   { path: 'checkout/:cartId', title: 'Checkout', canActivate: [authGuard], loadComponent: () => import('./features/pages/checkout/checkout.component').then(c => c.CheckoutComponent) },
 
   // Not Found Page
-  { path: '**', title: 'Not Found', loadComponent: () => import('./features/pages/not-found/not-found.component').then(c => c.NotFoundComponent) },
+  { path: '***', title: 'Not Found', loadComponent: () => import('./features/pages/not-found/not-found.component').then(c => c.NotFoundComponent) },
 ];
