@@ -27,7 +27,7 @@
     "@types/jquery": "^3.5.32",
     "@types/slick-carousel": "^1.6.40",
     "e-commerce-app": "file:",
-    "express": "^4.18.2",
+    "express": "^4.22.1",
     "flowbite": "^3.1.1",
     "jquery": "^3.7.1",
     "jwt-decode": "^4.0.0",
